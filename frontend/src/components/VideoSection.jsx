@@ -1,0 +1,133 @@
+import React from 'react';
+import { motion } from 'framer-motion';
+
+const VideoSection = () => {
+  return (
+    <section className="py-5">
+      <div className="container">
+        <motion.div
+          className="text-center mb-5"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
+          <h2 className="display-4 fw-bold mb-3">Our Story</h2>
+          <p className="lead text-muted mb-0">
+            Watch how we're making a difference in communities around the world
+          </p>
+        </motion.div>
+
+        <motion.div
+          className="row justify-content-center"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        >
+          <div className="col-lg-8">
+            <div className="video-container position-relative">
+              <motion.div
+                className="video-wrapper"
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.3 }}
+              >
+                <div className="ratio ratio-16x9">
+                  <iframe
+                    src="https://www.youtube.com/embed/TqhNILVX8IE?si=3Dc-x-lHLaKXx7Lo"
+                    title="YouTube video player"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    allowFullScreen
+                    className="rounded-3 shadow-lg"
+                  ></iframe>
+                </div>
+              </motion.div>
+              
+              {/* Video overlay with play button */}
+              <motion.div
+                className="video-overlay position-absolute top-50 start-50 translate-middle"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+              >
+                <div className="play-button-wrapper">
+                  <motion.div
+                    className="play-button"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                  >
+                    <i className="fas fa-play text-white fs-2"></i>
+                  </motion.div>
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        </motion.div>
+
+        <motion.div
+          className="row mt-5"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+        >
+          <div className="col-lg-4">
+            <div className="text-center">
+              <motion.div
+                className="feature-icon mb-3"
+                whileHover={{ scale: 1.1 }}
+                transition={{ duration: 0.3 }}
+              >
+                <i className="fas fa-heart text-primary fs-1"></i>
+              </motion.div>
+              <h5 className="fw-bold mb-2">Compassionate Care</h5>
+              <p className="text-muted">
+                We provide compassionate care and support to those in need, 
+                ensuring everyone feels valued and heard.
+              </p>
+            </div>
+          </div>
+          
+          <div className="col-lg-4">
+            <div className="text-center">
+              <motion.div
+                className="feature-icon mb-3"
+                whileHover={{ scale: 1.1 }}
+                transition={{ duration: 0.3 }}
+              >
+                <i className="fas fa-hands-helping text-primary fs-1"></i>
+              </motion.div>
+              <h5 className="fw-bold mb-2">Community Support</h5>
+              <p className="text-muted">
+                Our dedicated team works tirelessly to support communities 
+                through various programs and initiatives.
+              </p>
+            </div>
+          </div>
+          
+          <div className="col-lg-4">
+            <div className="text-center">
+              <motion.div
+                className="feature-icon mb-3"
+                whileHover={{ scale: 1.1 }}
+                transition={{ duration: 0.3 }}
+              >
+                <i className="fas fa-star text-primary fs-1"></i>
+              </motion.div>
+              <h5 className="fw-bold mb-2">Excellence</h5>
+              <p className="text-muted">
+                We strive for excellence in everything we do, 
+                ensuring the highest quality of service and support.
+              </p>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+};
+
+export default VideoSection;

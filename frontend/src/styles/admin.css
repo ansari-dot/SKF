@@ -1,0 +1,308 @@
+/* Admin Panel Styles using Bootstrap */
+
+
+/* Admin Layout */
+
+.admin-layout {
+    min-height: 100vh;
+    background-color: #f8f9fa;
+}
+
+
+/* Sidebar */
+
+.admin-sidebar {
+    background-color: #343a40;
+    color: #fff;
+    min-height: 100vh;
+    width: 280px;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s;
+}
+
+.admin-sidebar .logo-container {
+    padding: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.admin-sidebar .nav-link {
+    color: rgba(255, 255, 255, 0.75);
+    padding: 0.8rem 1.5rem;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s;
+    border-radius: 0.25rem;
+    margin: 0.2rem 0.5rem;
+}
+
+.admin-sidebar .nav-link:hover {
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.admin-sidebar .nav-link.active {
+    color: #fff;
+    background-color: var(--bs-primary);
+}
+
+.admin-sidebar .nav-link i,
+.admin-sidebar .nav-link span.icon {
+    margin-right: 0.75rem;
+    font-size: 1.1rem;
+    width: 1.5rem;
+    text-align: center;
+}
+
+.admin-sidebar .sidebar-footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1rem;
+}
+
+
+/* Main Content Area */
+
+.admin-content {
+    flex: 1;
+    padding: 1.5rem;
+    overflow-y: auto;
+}
+
+
+/* Admin Cards */
+
+.admin-card {
+    background-color: #fff;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    margin-bottom: 1.5rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.admin-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.admin-card .card-header {
+    background-color: rgba(0, 0, 0, 0.03);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+    padding: 1rem 1.25rem;
+    font-weight: 600;
+}
+
+
+/* Dashboard Stats */
+
+.stat-card {
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    transition: transform 0.2s;
+    height: 100%;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+}
+
+.stat-card .stat-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    display: inline-block;
+    padding: 1rem;
+    border-radius: 50%;
+    background-color: rgba(var(--bs-primary-rgb), 0.1);
+    color: var(--bs-primary);
+}
+
+.stat-card .stat-title {
+    font-size: 1rem;
+    color: #6c757d;
+    margin-bottom: 0.5rem;
+}
+
+.stat-card .stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0;
+}
+
+
+/* Tables */
+
+.admin-table {
+    width: 100%;
+    margin-bottom: 1rem;
+    background-color: transparent;
+}
+
+.admin-table th {
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+    background-color: rgba(0, 0, 0, 0.03);
+    font-weight: 600;
+}
+
+.admin-table td {
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+}
+
+.admin-table tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.075);
+}
+
+
+/* Forms */
+
+.admin-form .form-label {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.admin-form .form-control {
+    border-radius: 0.25rem;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #ced4da;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 14px;
+}
+
+.admin-form .form-control:focus {
+    border-color: var(--bs-primary);
+    box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary-rgb), 0.25);
+}
+
+
+/* Media Form Specific Styles */
+
+.card .form-label {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 500;
+    color: #333;
+}
+
+.card .form-control,
+.card .form-select {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 14px;
+    color: #333;
+}
+
+.card .form-control::placeholder {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #6c757d;
+}
+
+.card textarea.form-control {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.5;
+}
+
+
+/* Buttons */
+
+.admin-btn {
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.admin-btn-primary {
+    background-color: #1E3A8A !important;
+    border-color: #1E3A8A;
+    color: #fff;
+}
+
+.admin-btn-primary:hover {
+    background-color: #3B82F6 !important;
+    border-color: #3B82F6 !important;
+    color: #fff !important;
+}
+
+.admin-btn-outline {
+    background-color: transparent;
+    border: 1px solid #1E3A8A;
+    color: #1E3A8A;
+}
+
+.admin-btn-outline:hover {
+    background-color: #3B82F6 !important;
+    border-color: #3B82F6 !important;
+    color: #fff !important;
+}
+
+
+/* Modals */
+
+.admin-modal .modal-header {
+    background-color: var(--bs-primary);
+    color: #fff;
+    border-radius: 0.3rem 0.3rem 0 0;
+}
+
+.admin-modal .modal-footer {
+    border-top: 1px solid #dee2e6;
+    padding: 1rem;
+}
+
+
+/* Alerts */
+
+.admin-alert {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+}
+
+.admin-alert-success {
+    color: #0f5132;
+    background-color: #d1e7dd;
+    border-color: #badbcc;
+}
+
+.admin-alert-danger {
+    color: #842029;
+    background-color: #f8d7da;
+    border-color: #f5c2c7;
+}
+
+
+/* Loading Spinner */
+
+.admin-spinner {
+    width: 3rem;
+    height: 3rem;
+    border: 0.25rem solid rgba(var(--bs-primary-rgb), 0.3);
+    border-radius: 50%;
+    border-top-color: var(--bs-primary);
+    animation: spinner 1s linear infinite;
+}
+
+@keyframes spinner {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+/* Responsive adjustments */
+
+@media (max-width: 768px) {
+    .admin-sidebar {
+        width: 100%;
+        position: fixed;
+        z-index: 1030;
+        height: auto;
+        min-height: auto;
+    }
+    .admin-content {
+        margin-top: 60px;
+    }
+}
