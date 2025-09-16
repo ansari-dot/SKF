@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import axios from 'axios';
-import styles from './UserProfile.module.css';
-
-const API_URL = `${import.meta.env.VITE_API_URL}/api`;
+import axios from '../utils/axiosConfig';
+import { toast } from 'react-toastify';
 
 const UserProfile = () => {
   const { user } = useSelector((state) => state.auth);
@@ -15,8 +13,47 @@ const UserProfile = () => {
     confirmPassword: ''
   });
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState('');
-  const [error, setError] = useState('');
+  const [isEditing, setIsEditing] = useState(false);
+  const [currentVerse, setCurrentVerse] = useState({
+    arabic: "وَمَن يَعْمَلْ مِثْقَالَ ذَرَّةٍ خَيْرًا يَرَهُ",
+    translation: "And whoever does an atom's weight of good will see it.",
+    reference: "Quran 99:7"
+  });
+
+  const API_URL = import.meta.env.VITE_API_URL;
+
+  // Islamic verses for profile inspiration
+  const islamicContent = [
+    {
+      arabic: "وَمَن يَعْمَلْ مِثْقَالَ ذَرَّةٍ خَيْرًا يَرَهُ",
+      translation: "And whoever does an atom's weight of good will see it.",
+      reference: "Quran 99:7"
+    },
+    {
+      arabic: "إِنَّمَا الْأَعْمَالُ بِالنِّيَّاتِ",
+      translation: "Actions are but by intention.",
+      reference: "Hadith - Bukhari"
+    },
+    {
+      arabic: "خَيْرُ النَّاسِ أَنفَعُهُمْ لِلنَّاسِ",
+      translation: "The best of people are those who are most beneficial to others.",
+      reference: "Hadith"
+    },
+    {
+      arabic: "وَتَعَاوَنُوا عَلَى الْبِرِّ وَالتَّقْوَىٰ",
+      translation: "And cooperate in righteousness and piety.",
+      reference: "Quran 5:2"
+    }
+  ];
+
+  // Rotate verses every 10 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const randomIndex = Math.floor(Math.random() * islamicContent.length);
+      setCurrentVerse(islamicContent[randomIndex]);
+    }, 10000);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     if (user) {
@@ -39,63 +76,39 @@ const UserProfile = () => {
   const handleProfileUpdate = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
-    setMessage('');
 
     try {
-      const token = localStorage.getItem('token');
-      const response = await axios.put(
-        `${API_URL}/user/profile`,
-        {
-          username: formData.username,
-          email: formData.email
-        },
-        {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          }
-        }
-      );
+      const response = await axios.put(`${API_URL}/api/user/profile`, {
+        username: formData.username,
+        email: formData.email
+      });
 
-      setMessage('Profile updated successfully!');
-      // Update user info in localStorage if needed
+      toast.success('Profile updated successfully!');
+      setIsEditing(false);
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to update profile');
+      toast.error(err.response?.data?.message || 'Failed to update profile');
     } finally {
       setLoading(false);
     }
   };
 
-  const handlePasswordReset = async (e) => {
+  const handlePasswordChange = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
-    setMessage('');
 
     if (formData.newPassword !== formData.confirmPassword) {
-      setError('New passwords do not match');
+      toast.error('New passwords do not match');
       setLoading(false);
       return;
     }
 
     try {
-      const token = localStorage.getItem('token');
-      const response = await axios.post(
-        `${API_URL}/user/change-password`,
-        {
-          currentPassword: formData.currentPassword,
-          newPassword: formData.newPassword
-        },
-        {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          }
-        }
-      );
+      await axios.post(`${API_URL}/api/user/change-password`, {
+        currentPassword: formData.currentPassword,
+        newPassword: formData.newPassword
+      });
 
-      setMessage('Password changed successfully!');
+      toast.success('Password changed successfully!');
       setFormData(prev => ({
         ...prev,
         currentPassword: '',
@@ -103,48 +116,342 @@ const UserProfile = () => {
         confirmPassword: ''
       }));
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to change password');
+      toast.error(err.response?.data?.message || 'Failed to change password');
     } finally {
       setLoading(false);
     }
   };
 
+  const getInitials = (name) => {
+    return name
+      .split(' ')
+      .map(word => word.charAt(0))
+      .join('')
+      .toUpperCase()
+      .slice(0, 2);
+  };
+
+  const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  };
+
+  const getRoleColor = (role) => {
+    switch (role) {
+      case 'admin': return 'admin-badge-danger';
+      case 'moderator': return 'admin-badge-warning';
+      default: return 'admin-badge-success';
+    }
+  };
+
+  const getRoleIcon = (role) => {
+    switch (role) {
+      case 'admin': return '👑';
+      case 'moderator': return '🛡️';
+      default: return '👤';
+    }
+  };
+
   return (
-    <div className={styles.profileContainer}>
-      <h1 className={styles.profileTitle}>User Profile</h1>
-      {(message || error) && (
-        <div className={error ? styles.errorMsg : styles.successMsg}>
-          {message || error}
+    <div className="container-fluid py-4" style={{ height: '100vh', overflow: 'auto' }}>
+      {/* Header */}
+      <div className="admin-header mb-4">
+        <h1 className="display-6 fw-bold mb-2">👤 User Profile</h1>
+        <nav aria-label="breadcrumb">
+          <ol className="breadcrumb">
+            <li className="breadcrumb-item">Admin</li>
+            <li className="breadcrumb-item active">User Profile</li>
+          </ol>
+        </nav>
+      </div>
+
+      {/* Islamic Verse Card */}
+      <div className="admin-card mb-4 islamic-content-card">
+        <div className="admin-card-body text-center">
+          <div className="islamic-verse-container">
+            <div className="arabic-text mb-3">
+              {currentVerse.arabic}
+            </div>
+            <div className="translation mb-2">
+              "{currentVerse.translation}"
+            </div>
+            <small className="reference">
+              — {currentVerse.reference}
+            </small>
+          </div>
         </div>
-      )}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Profile Update Form */}
-        <div className={styles.formSection}>
-          <h2 className="text-xl font-semibold text-gray-700 mb-4">Update Profile</h2>
-          <form onSubmit={handleProfileUpdate}>
-            <label className={styles.formLabel}>Username</label>
-            <input type="text" name="username" value={formData.username} onChange={handleChange} className={styles.formInput} required />
-            <label className={styles.formLabel}>Email</label>
-            <input type="email" name="email" value={formData.email} onChange={handleChange} className={styles.formInput} required />
-            <button type="submit" disabled={loading} className={styles.formButton}>
-              {loading ? 'Updating...' : 'Update Profile'}
-            </button>
-          </form>
+      </div>
+
+      <div className="row">
+        {/* Profile Summary Card */}
+        <div className="col-lg-4 mb-4">
+          <div className="admin-card h-100">
+            <div className="admin-card-body text-center">
+              {/* Avatar */}
+              <div className="profile-avatar-container mb-4">
+                <div className="profile-avatar">
+                  {getInitials(formData.username || user?.username || 'User')}
+                  <div className="role-badge">
+                    {getRoleIcon(user?.role)}
+                  </div>
+                </div>
+              </div>
+
+              {/* Basic Info */}
+              <h3 className="fw-bold mb-2">{formData.username || user?.username || 'User Name'}</h3>
+              <div className="mb-3">
+                <span className={`admin-badge ${getRoleColor(user?.role)}`}>
+                  {getRoleIcon(user?.role)} {user?.role || 'User'}
+                </span>
+              </div>
+              <p className="text-muted mb-4">
+                <i className="fas fa-envelope me-2"></i>
+                {formData.email || user?.email}
+              </p>
+
+              {/* Stats */}
+              <div className="row text-center mb-4">
+                <div className="col-6">
+                  <div className="border-end">
+                    <h4 className="fw-bold mb-1 text-success">
+                      {user?.createdAt ? Math.floor((new Date() - new Date(user.createdAt)) / (1000 * 60 * 60 * 24)) : 0}
+                    </h4>
+                    <small className="text-muted">Days Active</small>
+                  </div>
+                </div>
+                <div className="col-6">
+                  <h4 className="fw-bold mb-1 text-primary">
+                    {user?.role === 'admin' ? '∞' : '24/7'}
+                  </h4>
+                  <small className="text-muted">Dedication</small>
+                </div>
+              </div>
+
+              {/* Edit Button */}
+              <button
+                className={`btn w-100 ${isEditing ? 'admin-btn-danger' : 'admin-btn-primary'}`}
+                onClick={() => setIsEditing(!isEditing)}
+              >
+                <i className={`fas ${isEditing ? 'fa-times' : 'fa-edit'} me-2`}></i>
+                {isEditing ? 'Cancel Edit' : 'Edit Profile'}
+              </button>
+            </div>
+          </div>
         </div>
-        {/* Password Reset Form */}
-        <div className={styles.formSection}>
-          <h2 className="text-xl font-semibold text-gray-700 mb-4">Change Password</h2>
-          <form onSubmit={handlePasswordReset}>
-            <label className={styles.formLabel}>Current Password</label>
-            <input type="password" name="currentPassword" value={formData.currentPassword} onChange={handleChange} className={styles.formInput} required />
-            <label className={styles.formLabel}>New Password</label>
-            <input type="password" name="newPassword" value={formData.newPassword} onChange={handleChange} className={styles.formInput} required />
-            <label className={styles.formLabel}>Confirm New Password</label>
-            <input type="password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} className={styles.formInput} required />
-            <button type="submit" disabled={loading} className={styles.formButton}>
-              {loading ? 'Changing...' : 'Change Password'}
-            </button>
-          </form>
+
+        {/* Profile Details */}
+        <div className="col-lg-8">
+          <div className="admin-card mb-4">
+            <div className="admin-card-header">
+              <h3>🔧 Account Information</h3>
+            </div>
+            <div className="admin-card-body">
+              <form onSubmit={handleProfileUpdate}>
+                <div className="row">
+                  {/* Username */}
+                  <div className="col-md-6 mb-4">
+                    <label className="form-label fw-semibold">
+                      <i className="fas fa-user me-2"></i>Username
+                    </label>
+                    {isEditing ? (
+                      <input
+                        type="text"
+                        className="form-control"
+                        name="username"
+                        value={formData.username}
+                        onChange={handleChange}
+                        required
+                      />
+                    ) : (
+                      <div className="form-control-plaintext fw-semibold">
+                        {formData.username || 'Not provided'}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Email */}
+                  <div className="col-md-6 mb-4">
+                    <label className="form-label fw-semibold">
+                      <i className="fas fa-envelope me-2"></i>Email Address
+                    </label>
+                    {isEditing ? (
+                      <input
+                        type="email"
+                        className="form-control"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        required
+                      />
+                    ) : (
+                      <div className="form-control-plaintext fw-semibold">
+                        {formData.email}
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Save Button */}
+                {isEditing && (
+                  <div className="text-end mt-4">
+                    <button
+                      type="submit"
+                      className="btn admin-btn-success me-2"
+                      disabled={loading}
+                    >
+                      {loading ? (
+                        <>
+                          <div className="admin-spinner-sm me-2"></div>
+                          Saving...
+                        </>
+                      ) : (
+                        <>
+                          <i className="fas fa-save me-2"></i>
+                          Save Changes
+                        </>
+                      )}
+                    </button>
+                    <button
+                      type="button"
+                      className="btn admin-btn-secondary"
+                      onClick={() => setIsEditing(false)}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                )}
+              </form>
+            </div>
+          </div>
+
+          {/* Password Change Card */}
+          <div className="admin-card">
+            <div className="admin-card-header">
+              <h3>🔒 Change Password</h3>
+            </div>
+            <div className="admin-card-body">
+              <form onSubmit={handlePasswordChange}>
+                <div className="row">
+                  <div className="col-md-4 mb-3">
+                    <label className="form-label fw-semibold">
+                      <i className="fas fa-lock me-2"></i>Current Password
+                    </label>
+                    <input
+                      type="password"
+                      className="form-control"
+                      name="currentPassword"
+                      value={formData.currentPassword}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div className="col-md-4 mb-3">
+                    <label className="form-label fw-semibold">
+                      <i className="fas fa-key me-2"></i>New Password
+                    </label>
+                    <input
+                      type="password"
+                      className="form-control"
+                      name="newPassword"
+                      value={formData.newPassword}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div className="col-md-4 mb-3">
+                    <label className="form-label fw-semibold">
+                      <i className="fas fa-check-circle me-2"></i>Confirm Password
+                    </label>
+                    <input
+                      type="password"
+                      className="form-control"
+                      name="confirmPassword"
+                      value={formData.confirmPassword}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                </div>
+                <div className="text-end mt-3">
+                  <button
+                    type="submit"
+                    className="btn admin-btn-warning"
+                    disabled={loading}
+                  >
+                    {loading ? (
+                      <>
+                        <div className="admin-spinner-sm me-2"></div>
+                        Changing...
+                      </>
+                    ) : (
+                      <>
+                        <i className="fas fa-shield-alt me-2"></i>
+                        Change Password
+                      </>
+                    )}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Activity Summary */}
+      <div className="admin-card mt-4">
+        <div className="admin-card-header">
+          <h3>📊 Activity Summary</h3>
+        </div>
+        <div className="admin-card-body">
+          <div className="row text-center">
+            <div className="col-md-3 mb-3">
+              <div className="activity-stat">
+                <div className="stat-icon text-primary">
+                  <i className="fas fa-sign-in-alt"></i>
+                </div>
+                <h4 className="fw-bold mb-1">Active</h4>
+                <small className="text-muted">Status</small>
+              </div>
+            </div>
+            <div className="col-md-3 mb-3">
+              <div className="activity-stat">
+                <div className="stat-icon text-success">
+                  <i className="fas fa-tasks"></i>
+                </div>
+                <h4 className="fw-bold mb-1">Serving</h4>
+                <small className="text-muted">Community</small>
+              </div>
+            </div>
+            <div className="col-md-3 mb-3">
+              <div className="activity-stat">
+                <div className="stat-icon text-warning">
+                  <i className="fas fa-heart"></i>
+                </div>
+                <h4 className="fw-bold mb-1">Helping</h4>
+                <small className="text-muted">Others</small>
+              </div>
+            </div>
+            <div className="col-md-3 mb-3">
+              <div className="activity-stat">
+                <div className="stat-icon text-info">
+                  <i className="fas fa-hands-helping"></i>
+                </div>
+                <h4 className="fw-bold mb-1">Growing</h4>
+                <small className="text-muted">Together</small>
+              </div>
+            </div>
+          </div>
+          
+          <div className="text-center mt-4">
+            <div className="islamic-decoration">
+              <span>🤲</span>
+              <span className="mx-3">May Allah bless your service to humanity</span>
+              <span>🤲</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>

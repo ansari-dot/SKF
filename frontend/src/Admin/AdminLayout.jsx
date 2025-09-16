@@ -3,6 +3,7 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import './AdminStyles.css';
 
 const AdminLayout = () => {
   const navigate = useNavigate();
@@ -53,14 +54,14 @@ const AdminLayout = () => {
 
   if (loading) {
     return (
-      <div className="d-flex align-items-center justify-content-center vh-100 bg-light">
+      <div className="d-flex align-items-center justify-content-center vh-100" style={{background: 'var(--bg-primary)'}}>
         <div className="admin-spinner"></div>
       </div>
     );
   }
 
   return (
-    <div className="d-flex admin-layout">
+    <div className="admin-layout">
       <Sidebar />
       <div className="admin-content">
         <Outlet />

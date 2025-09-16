@@ -1,0 +1,901 @@
+/* Modern Admin Dashboard Styles with Green & Blue Brand Colors */
+
+:root {
+  /* Brand Colors */
+  --primary-green: #28a745;
+  --primary-blue: #007bff;
+  --light-green: #d4edda;
+  --light-blue: #cce7ff;
+  --dark-green: #1e7e34;
+  --dark-blue: #0056b3;
+  
+  /* Modern Color Palette */
+  --bg-primary: #f8f9fa;
+  --bg-secondary: #ffffff;
+  --text-primary: #2c3e50;
+  --text-secondary: #6c757d;
+  --border-color: #e9ecef;
+  --shadow-light: 0 2px 10px rgba(0, 0, 0, 0.08);
+  --shadow-medium: 0 4px 20px rgba(0, 0, 0, 0.12);
+  --shadow-heavy: 0 8px 30px rgba(0, 0, 0, 0.15);
+  
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, var(--primary-blue), var(--primary-green));
+  --gradient-light: linear-gradient(135deg, var(--light-blue), var(--light-green));
+  --gradient-card: linear-gradient(145deg, #ffffff, #f8f9fa);
+}
+
+/* Global Admin Styles */
+.admin-layout {
+  min-height: 100vh;
+  background: var(--bg-primary);
+  font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Sidebar Styles */
+.admin-sidebar {
+  width: 280px;
+  min-height: 100vh;
+  max-height: 100vh;
+  background: var(--gradient-primary);
+  color: white;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-medium);
+  transition: all 0.3s ease;
+  overflow-y: auto;
+}
+
+.logo-container {
+  padding: 2rem 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
+}
+
+.logo-container .logo-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.logo-container h2 {
+  color: white;
+  font-weight: 700;
+  font-size: 1.4rem;
+  margin: 0;
+  letter-spacing: -0.5px;
+}
+
+.logo-container .subtitle {
+  font-size: 0.85rem;
+  opacity: 0.8;
+  margin-top: 0.25rem;
+}
+
+/* Navigation Styles */
+.admin-sidebar nav {
+  flex: 1;
+  padding: 1rem 0;
+}
+
+.admin-sidebar .nav {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.admin-sidebar .nav-item {
+  margin: 0.25rem 0;
+}
+
+.admin-sidebar .nav-link {
+  display: flex;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border-radius: 0;
+  position: relative;
+  font-weight: 500;
+}
+
+.admin-sidebar .nav-link:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  transform: translateX(5px);
+}
+
+.admin-sidebar .nav-link.active {
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  border-right: 4px solid white;
+}
+
+.admin-sidebar .nav-link .icon {
+  font-size: 1.2rem;
+  margin-right: 1rem;
+  width: 24px;
+  text-align: center;
+}
+
+.sidebar-footer {
+  padding: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-footer .nav-link,
+.sidebar-footer button {
+  padding: 0.75rem 0;
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.sidebar-footer button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+}
+
+/* Main Content Area */
+.admin-content {
+  margin-left: 280px;
+  min-height: 100vh;
+  background: var(--bg-primary);
+  transition: margin-left 0.3s ease;
+}
+
+/* Header Styles */
+.admin-header {
+  background: var(--bg-secondary);
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: var(--shadow-light);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.admin-header h1 {
+  color: var(--text-primary);
+  font-weight: 700;
+  font-size: 2rem;
+  margin: 0;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.admin-header .breadcrumb {
+  background: none;
+  padding: 0;
+  margin: 0.5rem 0 0 0;
+}
+
+/* Card Styles */
+.admin-card {
+  background: var(--gradient-card);
+  border-radius: 16px;
+  box-shadow: var(--shadow-light);
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.admin-card:hover {
+  box-shadow: var(--shadow-medium);
+  transform: translateY(-2px);
+}
+
+.admin-card-header {
+  background: var(--gradient-light);
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.admin-card-header h3 {
+  color: var(--text-primary);
+  font-weight: 600;
+  margin: 0;
+}
+
+.admin-card-body {
+  padding: 2rem;
+}
+
+/* Stat Cards */
+.stat-card {
+  background: var(--bg-secondary);
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: var(--shadow-light);
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--gradient-primary);
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-medium);
+}
+
+.stat-card.bg-primary-custom {
+  background: linear-gradient(135deg, var(--light-blue), #ffffff);
+}
+
+.stat-card.bg-success-custom {
+  background: linear-gradient(135deg, var(--light-green), #ffffff);
+}
+
+.stat-card.bg-warning-custom {
+  background: linear-gradient(135deg, #fff3cd, #ffffff);
+}
+
+.stat-card.bg-info-custom {
+  background: linear-gradient(135deg, #d1ecf1, #ffffff);
+}
+
+.stat-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 16px;
+  background: var(--gradient-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  box-shadow: var(--shadow-light);
+}
+
+.stat-title {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+
+.stat-value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0.5rem 0 0 0;
+  line-height: 1;
+}
+
+/* Button Styles */
+.admin-btn-primary {
+  background: var(--gradient-primary);
+  border: none;
+  border-radius: 12px;
+  padding: 0.75rem 2rem;
+  font-weight: 600;
+  color: white;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-light);
+}
+
+.admin-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-medium);
+  color: white;
+}
+
+.admin-btn-secondary {
+  background: var(--bg-secondary);
+  border: 2px solid var(--primary-blue);
+  border-radius: 12px;
+  padding: 0.75rem 2rem;
+  font-weight: 600;
+  color: var(--primary-blue);
+  transition: all 0.3s ease;
+}
+
+.admin-btn-secondary:hover {
+  background: var(--primary-blue);
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* Form Styles */
+.admin-form-control {
+  border: 2px solid var(--border-color);
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background: var(--bg-secondary);
+}
+
+.admin-form-control:focus {
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  outline: none;
+}
+
+.admin-form-label {
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+/* Table Styles */
+.admin-table {
+  background: var(--bg-secondary);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--shadow-light);
+  border: 1px solid var(--border-color);
+}
+
+.admin-table thead {
+  background: var(--gradient-light);
+}
+
+.admin-table th {
+  padding: 1.25rem 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  border: none;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+}
+
+.admin-table td {
+  padding: 1rem;
+  border-top: 1px solid var(--border-color);
+  color: var(--text-primary);
+  vertical-align: middle;
+}
+
+.admin-table tbody tr:hover {
+  background: var(--bg-primary);
+}
+
+/* Loading Spinner */
+.admin-spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid var(--border-color);
+  border-top: 4px solid var(--primary-blue);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Alert Styles */
+.admin-alert {
+  border-radius: 12px;
+  border: none;
+  padding: 1rem 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow-light);
+}
+
+.admin-alert-success {
+  background: linear-gradient(135deg, var(--light-green), #ffffff);
+  color: var(--dark-green);
+  border-left: 4px solid var(--primary-green);
+}
+
+.admin-alert-danger {
+  background: linear-gradient(135deg, #f8d7da, #ffffff);
+  color: #721c24;
+  border-left: 4px solid #dc3545;
+}
+
+.admin-alert-info {
+  background: linear-gradient(135deg, var(--light-blue), #ffffff);
+  color: var(--dark-blue);
+  border-left: 4px solid var(--primary-blue);
+}
+
+/* Modal Styles */
+.admin-modal .modal-content {
+  border-radius: 16px;
+  border: none;
+  box-shadow: var(--shadow-heavy);
+}
+
+.admin-modal .modal-header {
+  background: var(--gradient-light);
+  border-bottom: 1px solid var(--border-color);
+  border-radius: 16px 16px 0 0;
+  padding: 1.5rem 2rem;
+}
+
+.admin-modal .modal-title {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.admin-modal .modal-body {
+  padding: 2rem;
+}
+
+.admin-modal .modal-footer {
+  border-top: 1px solid var(--border-color);
+  padding: 1.5rem 2rem;
+  border-radius: 0 0 16px 16px;
+}
+
+/* Badge Styles */
+.admin-badge {
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.admin-badge-success {
+  background: var(--light-green);
+  color: var(--dark-green);
+}
+
+.admin-badge-primary {
+  background: var(--light-blue);
+  color: var(--dark-blue);
+}
+
+.admin-badge-warning {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.admin-badge-danger {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .admin-sidebar {
+    width: 100%;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+  
+  .admin-sidebar.show {
+    transform: translateX(0);
+  }
+  
+  .admin-content {
+    margin-left: 0;
+  }
+  
+  .admin-header {
+    padding: 1rem;
+  }
+  
+  .admin-card-body {
+    padding: 1.5rem;
+  }
+  
+  .stat-card {
+    padding: 1.5rem;
+  }
+  
+  .stat-value {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .admin-header h1 {
+    font-size: 1.5rem;
+  }
+  
+  .stat-card {
+    padding: 1rem;
+  }
+  
+  .stat-icon {
+    width: 50px;
+    height: 50px;
+    font-size: 1.2rem;
+  }
+  
+  .stat-value {
+    font-size: 1.8rem;
+  }
+}
+
+/* Animation Classes */
+.fade-in {
+  animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Enhanced Islamic content styling */
+.islamic-verse-card {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.islamic-verse-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-medium);
+}
+
+.islamic-verse-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--gradient-primary);
+}
+
+/* Enhanced Arabic typography */
+.arabic-text {
+  font-family: 'Amiri', 'Times New Roman', serif;
+  direction: rtl;
+  text-align: center;
+  line-height: 1.8;
+  letter-spacing: 0.5px;
+}
+
+/* Enhanced dashboard icon styling */
+.dashboard-icon {
+  background: var(--gradient-primary) !important;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.dashboard-icon:hover {
+  transform: scale(1.05);
+  box-shadow: var(--shadow-medium);
+}
+
+/* Enhanced month progress cards */
+.month-progress:hover {
+  transform: translateY(-5px) !important;
+  box-shadow: 0 8px 25px rgba(40, 167, 69, 0.2) !important;
+}
+
+/* Enhanced activity cards */
+.activity-item {
+  transition: all 0.3s ease;
+  border-left: 3px solid transparent;
+}
+
+.activity-item:hover {
+  border-left-color: var(--primary-green);
+  background: linear-gradient(135deg, rgba(40, 167, 69, 0.05), rgba(0, 123, 255, 0.05));
+  transform: translateX(5px);
+}
+
+/* Enhanced Islamic decorations */
+.islamic-decoration {
+  transition: all 0.3s ease;
+}
+
+.islamic-decoration:hover {
+  transform: rotate(10deg) scale(1.1);
+  opacity: 0.6 !important;
+}
+
+.slide-in-left {
+  animation: slideInLeft 0.5s ease-out;
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* Islamic Content Styling */
+.islamic-verse-card {
+  background: var(--gradient-light);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-light);
+}
+
+.islamic-verse-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-medium);
+}
+
+.arabic-text {
+  font-family: 'Amiri', 'Times New Roman', serif;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--primary-green);
+  line-height: 1.6;
+  direction: rtl;
+  text-align: center;
+}
+
+.translation {
+  font-size: 0.9rem;
+  font-style: italic;
+  color: var(--text-primary);
+  line-height: 1.4;
+}
+
+/* Profile Page Specific Styles */
+.islamic-content-card {
+  background: linear-gradient(135deg, #28a745, #20c997);
+  color: white;
+  border: none;
+  box-shadow: 0 8px 25px rgba(40, 167, 69, 0.3);
+}
+
+.islamic-content-card .arabic-text {
+  font-family: 'Amiri', serif;
+  font-size: 1.4rem;
+  font-weight: bold;
+  line-height: 1.8;
+  margin-bottom: 1rem;
+  color: white;
+  direction: rtl;
+}
+
+.islamic-content-card .translation {
+  font-size: 1rem;
+  font-style: italic;
+  opacity: 0.9;
+  margin-bottom: 0.5rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.islamic-content-card .reference {
+  opacity: 0.8;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.profile-avatar-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-avatar {
+  width: 120px;
+  height: 120px;
+  background: linear-gradient(135deg, #28a745, #007bff);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  color: white;
+  font-weight: bold;
+  box-shadow: 0 15px 35px rgba(40, 167, 69, 0.3);
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.profile-avatar:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(40, 167, 69, 0.4);
+}
+
+.role-badge {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  background: #dc3545;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  border: 3px solid white;
+}
+
+.activity-stat {
+  padding: 1rem;
+  border-radius: 10px;
+  background: rgba(40, 167, 69, 0.1);
+  transition: all 0.3s ease;
+}
+
+.activity-stat:hover {
+  background: rgba(40, 167, 69, 0.2);
+  transform: translateY(-2px);
+}
+
+.stat-icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.islamic-decoration {
+  color: #6c757d;
+  font-size: 0.9rem;
+  padding: 1rem;
+  background: rgba(40, 167, 69, 0.05);
+  border-radius: 10px;
+  border: 1px solid rgba(40, 167, 69, 0.1);
+}
+
+.islamic-verse-container {
+  padding: 1rem;
+}
+
+.islamic-verse-container .arabic-text {
+  font-family: 'Amiri', serif;
+  font-size: 1.4rem;
+  font-weight: bold;
+  line-height: 1.8;
+  color: white;
+  direction: rtl;
+}
+
+.islamic-verse-container .translation {
+  font-size: 1rem;
+  font-style: italic;
+  opacity: 0.9;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.islamic-verse-container .reference {
+  opacity: 0.8;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.reference {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* User Avatar Styles */
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--gradient-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  box-shadow: var(--shadow-light);
+}
+
+.user-avatar-large {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: var(--gradient-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 2rem;
+  font-weight: bold;
+  box-shadow: var(--shadow-medium);
+}
+
+/* Activity Item Styles */
+.activity-item {
+  transition: all 0.3s ease;
+  border-radius: 8px;
+  margin: 0.25rem;
+}
+
+.activity-item:hover {
+  background: var(--bg-primary);
+  transform: translateX(5px);
+}
+
+.activity-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--gradient-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-light);
+}
+
+/* Month Progress Styles */
+.month-progress {
+  background: var(--bg-secondary);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+}
+
+.month-progress:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-medium);
+}
+
+.progress-item {
+  margin-bottom: 0.5rem;
+}
+
+/* Trend Indicators */
+.trend {
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* Enhanced Table Styles */
+.admin-table tbody tr:hover {
+  background: var(--bg-primary);
+  transform: scale(1.01);
+  box-shadow: var(--shadow-light);
+}
+
+/* Custom Scrollbar */
+.admin-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.admin-content::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+.admin-content::-webkit-scrollbar-thumb {
+  background: var(--primary-blue);
+  border-radius: 4px;
+}
+
+.admin-content::-webkit-scrollbar-thumb:hover {
+  background: var(--dark-blue);
+}
+
+.activities-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.activities-list::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+.activities-list::-webkit-scrollbar-thumb {
+  background: var(--primary-green);
+  border-radius: 3px;
+}
+
+/* Additional Islamic Typography */
+@import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap');
+
+.arabic-text {
+  font-family: 'Amiri', 'Times New Roman', serif;
+}

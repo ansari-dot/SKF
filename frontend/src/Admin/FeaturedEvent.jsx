@@ -213,7 +213,7 @@ const FeaturedEvent = () => {
 
   if (loading) {
     return (
-      <div className="d-flex align-items-center justify-content-center" style={{ height: '300px' }}>
+      <div className="d-flex align-items-center justify-content-center" style={{height: '300px'}}>
         <div className="admin-spinner"></div>
       </div>
     );
@@ -221,40 +221,52 @@ const FeaturedEvent = () => {
 
   return (
     <div className="container-fluid py-4">
-      <div className="card admin-card mb-4">
-        <div className="card-body">
-          <div className="d-flex justify-content-between align-items-center mb-4">
-            <h1 className="display-6 fw-bold mb-0">Featured Event Management</h1>
+      <div className="admin-header mb-4">
+        <h1 className="display-6 fw-bold mb-2">Featured Events</h1>
+        <nav aria-label="breadcrumb">
+          <ol className="breadcrumb">
+            <li className="breadcrumb-item">Admin</li>
+            <li className="breadcrumb-item active">Featured Events</li>
+          </ol>
+        </nav>
+      </div>
+
+      <div className="admin-card">
+        <div className="admin-card-header">
+          <div className="d-flex justify-content-between align-items-center">
+            <h3>🌟 Manage Featured Events</h3>
             <button
-              className="btn btn-primary"
+              className="btn admin-btn-primary"
               onClick={() => {
                 resetForm();
                 setShowForm(true);
               }}
             >
-              <i className="fas fa-plus me-2"></i>
+              <span className="me-2">➕</span>
               Add New Event
             </button>
           </div>
+        </div>
+        <div className="admin-card-body">
 
           {showForm && (
-            <div className="card mb-4">
-              <div className="card-header">
+            <div className="admin-card mb-4">
+              <div className="admin-card-header">
                 <h5 className="mb-0">
-                  {editingEvent ? 'Edit Event' : 'Add New Event'}
+                  {editingEvent ? '✏️ Edit Event' : '➕ Add New Event'}
                 </h5>
               </div>
-              <div className="card-body">
+              <div className="admin-card-body">
                 <form onSubmit={handleSubmit}>
                   <div className="row">
                     <div className="col-md-6 mb-3">
-                      <label className="form-label">Title *</label>
+                      <label className="admin-form-label">Title *</label>
                       <input
                         type="text"
                         name="title"
                         value={formData.title}
                         onChange={handleInputChange}
-                        className="form-control"
+                        className="admin-form-control"
                         placeholder="Enter event title"
                         required
                       />

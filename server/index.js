@@ -14,6 +14,7 @@ import sponsorshipRoutes from './routes/sponsorship.routes.js'
 import volunteerRoutes from './routes/volunteer.routes.js'
 import opportunityRoutes from './routes/opportunity.routes.js'
 import featuredEventRoutes from './routes/featuredEvent.routes.js'
+import dashboardRoutes from './routes/dashboard.js'
 dotenv.config();
 
 const app = express();
@@ -21,12 +22,12 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser())
-// CORS configuration for production
+    // CORS configuration for production
 const corsOptions = {
-  origin: process.env.FRONTEND_URL,
-  methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-  credentials: true,
-  optionsSuccessStatus: 200
+    origin: process.env.FRONTEND_URL,
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    credentials: true,
+    optionsSuccessStatus: 200
 };
 
 app.use(cors(corsOptions));
@@ -36,17 +37,17 @@ app.use('/uploads', express.static('uploads'));
 
 // Security middleware for production
 if (process.env.NODE_ENV === 'production') {
-  // Trust proxy for secure cookies
-  app.set('trust proxy', 1);
-  
-  // Security headers
-  app.use((req, res, next) => {
-    res.setHeader('X-Content-Type-Options', 'nosniff');
-    res.setHeader('X-Frame-Options', 'DENY');
-    res.setHeader('X-XSS-Protection', '1; mode=block');
-    res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
-    next();
-  });
+    // Trust proxy for secure cookies
+    app.set('trust proxy', 1);
+
+    // Security headers
+    app.use((req, res, next) => {
+        res.setHeader('X-Content-Type-Options', 'nosniff');
+        res.setHeader('X-Frame-Options', 'DENY');
+        res.setHeader('X-XSS-Protection', '1; mode=block');
+        res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+        next();
+    });
 }
 
 app.get('/', (req, res) => {
@@ -66,6 +67,7 @@ app.use('/api', sponsorshipRoutes)
 app.use('/api', volunteerRoutes)
 app.use('/api', opportunityRoutes)
 app.use('/api', featuredEventRoutes)
+app.use('/api/dashboard', dashboardRoutes)
 
 
 
@@ -79,15 +81,15 @@ connectDB();
 
 // Error handling for uncaught exceptions
 process.on('uncaughtException', (err) => {
-  console.error('Uncaught Exception:', err);
-  process.exit(1);
+    console.error('Uncaught Exception:', err);
+    process.exit(1);
 });
 
 process.on('unhandledRejection', (err) => {
-  console.error('Unhandled Rejection:', err);
-  process.exit(1);
+    console.error('Unhandled Rejection:', err);
+    process.exit(1);
 });
 
 app.listen(4000, "0.0.0.0", () => {
-  console.log( `Server running on http://localhost:4000` );
+    console.log(`Server running on http://localhost:4000`);
 });

@@ -92,25 +92,46 @@ const Contact = () => {
 
   return (
     <div className="container-fluid py-4">
-      <div className="card admin-card mb-4">
-        <div className="card-body">
-          <div className="d-flex justify-content-between align-items-center mb-4">
-            <h1 className="display-6 fw-bold">Contact Messages</h1>
+      <div className="admin-header mb-4 position-relative">
+        <div className="d-flex align-items-center mb-2">
+          <span className="islamic-decoration me-3" style={{fontSize: '2rem', opacity: 0.7}}>✉️</span>
+          <div>
+            <h1 className="display-6 fw-bold mb-1" style={{fontFamily: "'Amiri', serif", background: 'var(--gradient-primary)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent'}}>
+              رسائل التواصل
+            </h1>
+            <h2 className="h4 text-muted mb-0" style={{fontWeight: 700}}>Contact Messages</h2>
+          </div>
+        </div>
+        <nav aria-label="breadcrumb">
+          <ol className="breadcrumb">
+            <li className="breadcrumb-item">🏠 الرئيسية Home</li>
+            <li className="breadcrumb-item active">✉️ Contact</li>
+          </ol>
+        </nav>
+        <div className="islamic-decoration position-absolute" style={{top: 0, right: 25, fontSize: '1.3rem', opacity: 0.2}}>🕌</div>
+      </div>
+
+      <div className="admin-card">
+        <div className="admin-card-header">
+          <div className="d-flex justify-content-between align-items-center">
+            <h3>✉️ Manage Contact Messages</h3>
             <button
               onClick={fetchContacts}
-              className="btn btn-success"
+              className="btn admin-btn-primary"
             >
-              <i className="fas fa-sync-alt me-2"></i> Refresh
+              <span className="me-2">🔄</span> Refresh
             </button>
           </div>
+        </div>
+        <div className="admin-card-body">
 
 
 
           {contacts.length === 0 ? (
-            <div className="alert alert-info">No contact messages found.</div>
+            <div className="admin-alert admin-alert-info">No contact messages found.</div>
           ) : (
             <div className="table-responsive">
-              <table className="table admin-table table-hover">
+              <table className="admin-table">
                 <thead>
                   <tr>
                     <th>Status</th>
@@ -126,7 +147,7 @@ const Contact = () => {
                   {contacts.map((contact) => (
                     <tr key={contact._id} className={!contact.read ? 'table-warning' : ''}>
                       <td>
-                        <span className={`badge ${contact.read ? 'bg-success' : 'bg-warning text-dark'}`}>
+                        <span className={`admin-badge ${contact.read ? 'admin-badge-success' : 'admin-badge-warning'}`}>
                           {contact.read ? 'Read' : 'Unread'}
                         </span>
                       </td>
@@ -139,16 +160,16 @@ const Contact = () => {
                         <div className="d-flex gap-2">
                           <button
                             onClick={() => handleViewDetails(contact)}
-                            className="btn btn-sm btn-primary"
+                            className="btn btn-sm admin-btn-primary"
                           >
-                            <i className="fas fa-eye me-1"></i> View
+                            👁️ View
                           </button>
 
                           <button
                             onClick={() => handleDelete(contact._id)}
                             className="btn btn-sm btn-danger"
                           >
-                            <i className="fas fa-trash me-1"></i> Delete
+                            🗑️ Delete
                           </button>
                         </div>
                       </td>
@@ -163,14 +184,14 @@ const Contact = () => {
 
       {/* Contact Details Modal */}
       {showModal && selectedContact && (
-        <div className="modal show d-block" tabIndex="-1" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
+        <div className="modal show d-block admin-modal" tabIndex="-1" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
           <div className="modal-dialog modal-dialog-centered modal-lg">
             <div className="modal-content">
-              <div className="modal-header bg-primary text-white">
-                <h5 className="modal-title">Contact Message Details</h5>
+              <div className="modal-header">
+                <h5 className="modal-title">📧 Contact Message Details</h5>
                 <button
                   type="button"
-                  className="btn-close btn-close-white"
+                  className="btn-close"
                   onClick={() => setShowModal(false)}
                 ></button>
               </div>
@@ -179,7 +200,7 @@ const Contact = () => {
                 <div className="list-group list-group-flush">
                   <div className="list-group-item">
                     <strong>Status:</strong> 
-                    <span className={`badge ms-2 ${selectedContact.read ? 'bg-success' : 'bg-warning text-dark'}`}>
+                    <span className={`admin-badge ms-2 ${selectedContact.read ? 'admin-badge-success' : 'admin-badge-warning'}`}>
                       {selectedContact.read ? 'Read' : 'Unread'}
                     </span>
                   </div>
@@ -210,7 +231,7 @@ const Contact = () => {
               <div className="modal-footer">
                 <button
                   type="button"
-                  className="btn btn-secondary"
+                  className="btn admin-btn-secondary"
                   onClick={() => setShowModal(false)}
                 >
                   Close
@@ -219,7 +240,7 @@ const Contact = () => {
                   onClick={() => handleDelete(selectedContact._id)}
                   className="btn btn-danger"
                 >
-                  <i className="fas fa-trash me-1"></i> Delete
+                  🗑️ Delete
                 </button>
               </div>
             </div>
