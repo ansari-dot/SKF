@@ -22,15 +22,15 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser())
-    // CORS configuration for production
-    /*const corsOptions = {
-        origin: process.env.FRONTEND_URL,
-        methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-        credentials: true,
-        optionsSuccessStatus: 200
-    };
+    //CORS configuration for production
+const corsOptions = {
+    origin: process.env.FRONTEND_URL,
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    credentials: true,
+    optionsSuccessStatus: 200
+};
 
-    app.use(cors(corsOptions)) ;*/
+app.use(cors(corsOptions));
 app.use(cors());
 
 // Serve uploaded files
@@ -92,5 +92,5 @@ process.on('unhandledRejection', (err) => {
 });
 
 app.listen(4000, "0.0.0.0", () => {
-    console.log(`Server running on http://localhost:4000`);
+    console.log(`Server running on 4000`);
 });
