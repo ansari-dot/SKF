@@ -89,15 +89,22 @@ const HomePage = () => {
                   viewport={{ once: true }}
                 >
                   <div className="card h-100 shadow-sm border-0">
-                    <img
-                      src={item.image}
-                      className="card-img-top"
-                      alt={item.heading}
-                      style={{ height: '200px', objectFit: 'cover' }}
-                      onError={(e) => {
-                        e.target.src = '/placeholder-logo.png';
-                      }}
-                    />
+                  <img
+  src={
+    item.image
+      ? item.image.startsWith('/uploads/')
+        ? `${import.meta.env.VITE_API_URL.replace('/api', '')}${item.image}`
+        : item.image
+      : '/placeholder-logo.png'
+  }
+  className="card-img-top"
+  alt={item.heading}
+  style={{ height: '200px', objectFit: 'cover' }}
+  onError={(e) => {
+    e.target.src = '/placeholder-logo.png';
+  }}
+/>
+
                     <div className="card-body">
                       <div className="d-flex justify-content-between align-items-center mb-2">
                         <span className="badge bg-primary">{item.category}</span>

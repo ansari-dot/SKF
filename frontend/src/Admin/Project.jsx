@@ -368,15 +368,23 @@ const Project = () => {
                   projects.map((project) => (
                     <tr key={project._id}>
                       <td>
-                        <img
-                          src={project.image.startsWith('/uploads/') ? `${API_URL.replace('/api', '')}${project.image}` : project.image}
-                          alt={project.title}
-                          className="rounded"
-                          style={{ width: '60px', height: '60px', objectFit: 'cover' }}
-                          onError={(e) => {
-                            e.target.src = '/placeholder-logo.png';
-                          }}
-                        />
+                      <img
+  src={
+    project.image
+      ? project.image.startsWith('/uploads/')
+        ? `${import.meta.env.VITE_API_URL.replace('/api', '')}${project.image}`
+        : project.image
+      : '/placeholder-logo.png'
+  }
+  alt={project.title}
+  className="rounded"
+  style={{ width: '60px', height: '60px', objectFit: 'cover' }}
+  onError={(e) => {
+    e.target.src = '/placeholder-logo.png';
+  }}
+/>
+
+                        
                       </td>
                       <td>
                         <strong>{project.title}</strong>

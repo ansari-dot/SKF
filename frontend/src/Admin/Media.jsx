@@ -404,15 +404,23 @@ const Media = () => {
                       </td>
                       <td>
                         <div className="d-flex align-items-center">
-                          <img
-                            src={item.image}
-                            alt={item.heading}
-                            className="me-3 rounded"
-                            style={{ width: '50px', height: '50px', objectFit: 'cover' }}
-                            onError={(e) => {
-                              e.target.src = '/placeholder-logo.png';
-                            }}
-                          />
+                        <img
+  src={
+    item.image
+      ? item.image.startsWith('/uploads/')
+        ? `${import.meta.env.VITE_API_URL.replace('/api', '')}${item.image}`
+        : item.image
+      : '/placeholder-logo.png'
+  }
+  alt={item.heading}
+  className="me-3 rounded"
+  style={{ width: '50px', height: '50px', objectFit: 'cover' }}
+  onError={(e) => {
+    e.target.src = '/placeholder-logo.png';
+  }}
+/>
+
+                          
                           <div>
                             <strong>{item.heading}</strong>
                             <br />

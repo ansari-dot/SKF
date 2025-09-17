@@ -411,15 +411,22 @@ const Program = () => {
                   programs.map((program) => (
                     <tr key={program._id}>
                       <td>
-                        <img
-                          src={program.image.startsWith('/uploads/') ? `${API_URL.replace('/api', '')}${program.image}` : program.image}
-                          alt={program.name}
-                          className="rounded"
-                          style={{ width: '60px', height: '60px', objectFit: 'cover' }}
-                          onError={(e) => {
-                            e.target.src = '/placeholder-logo.png';
-                          }}
-                        />
+                      <img
+  src={
+    program.image
+      ? program.image.startsWith('/uploads/')
+        ? `${import.meta.env.VITE_API_URL.replace('/api', '')}${program.image}`
+        : program.image
+      : '/placeholder-logo.png'
+  }
+  alt={program.name}
+  className="rounded"
+  style={{ width: '60px', height: '60px', objectFit: 'cover' }}
+  onError={(e) => {
+    e.target.src = '/placeholder-logo.png';
+  }}
+/>
+
                       </td>
                       <td>
                         <strong>{program.name}</strong>

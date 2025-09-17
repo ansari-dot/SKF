@@ -106,15 +106,22 @@ const MediaPage = () => {
                 viewport={{ once: true }}
               >
                 <div className="card h-100 border-0 shadow-sm">
-                  <img
-                    src={item.image}
-                    className="card-img-top"
-                      alt={item.heading}
-                    style={{ height: '200px', objectFit: 'cover' }}
-                      onError={(e) => {
-                        e.target.src = '/placeholder-logo.png';
-                      }}
-                  />
+                <img
+  src={
+    item.image
+      ? item.image.startsWith('/uploads/')
+        ? `${import.meta.env.VITE_API_URL.replace('/api', '')}${item.image}`
+        : item.image
+      : '/placeholder-logo.png'
+  }
+  className="card-img-top"
+  alt={item.heading}
+  style={{ height: '200px', objectFit: 'cover' }}
+  onError={(e) => {
+    e.target.src = '/placeholder-logo.png';
+  }}
+/>
+
                   <div className="card-body">
                     <div className="d-flex justify-content-between align-items-center mb-2">
                       <span className={`badge bg-primary`}>
@@ -187,15 +194,22 @@ const MediaPage = () => {
                     <div className="carousel-inner">
                       {featuredEvent.images.map((image, index) => (
                         <div key={index} className={`carousel-item ${index === 0 ? 'active' : ''}`}>
-                          <img
-                          src={image.startsWith('/uploads/') ? `${API_URL.replace('/api', '')}${image}` : image}
-                          alt={`${featuredEvent.title} - Image ${index + 1}`}
-                          className="img-fluid rounded shadow logo-hover"
-                          style={{ height: '400px', objectFit: 'cover', width: '100%' }}
-                          onError={(e) => {
-                            e.target.src = '/placeholder-logo.png';
-                          }}
-                        />
+                         <img
+  src={
+    image
+      ? image.startsWith('/uploads/')
+        ? `${import.meta.env.VITE_API_URL.replace('/api', '')}${image}`
+        : image
+      : '/placeholder-logo.png'
+  }
+  alt={`${featuredEvent.title} - Image ${index + 1}`}
+  className="img-fluid rounded shadow logo-hover"
+  style={{ height: '400px', objectFit: 'cover', width: '100%' }}
+  onError={(e) => {
+    e.target.src = '/placeholder-logo.png';
+  }}
+/>
+
                         </div>
                       ))}
                     </div>

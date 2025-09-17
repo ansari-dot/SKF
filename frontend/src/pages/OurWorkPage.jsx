@@ -81,15 +81,22 @@ const OurWorkPage = () => {
                   <div className="card-body p-5">
                     <div className="row g-4">
                       <div className="col-md-4">
-                        <img
-                          src={program.image ? (program.image.startsWith('/uploads/') ? `${API_URL.replace('/api', '')}${program.image}` : program.image) : '/placeholder-logo.png'}
-                            alt={program.name}
-                          className="img-fluid rounded mb-3"
-                          style={{ height: '200px', objectFit: 'cover' }}
-                            onError={(e) => {
-                              e.target.src = '/placeholder-logo.png';
-                            }}
-                        />
+                      <img
+  src={
+    program.image
+      ? program.image.startsWith('/uploads/')
+        ? `${import.meta.env.VITE_API_URL.replace('/api', '')}${program.image}`
+        : program.image
+      : '/placeholder-logo.png'
+  }
+  alt={program.name}
+  className="img-fluid rounded mb-3"
+  style={{ height: '200px', objectFit: 'cover' }}
+  onError={(e) => {
+    e.target.src = '/placeholder-logo.png';
+  }}
+/>
+
                           <div className="text-primary text-center mb-3">
                             <i className="fas fa-tasks fa-3x"></i>
                         </div>
@@ -219,15 +226,10 @@ const OurWorkPage = () => {
                 viewport={{ once: true }}
               >
                 <div className="card h-100 border-0 shadow-sm">
-                  <img
-                    src={project.image ? (project.image.startsWith('/uploads/') ? `${API_URL.replace('/api', '')}${project.image}` : project.image) : '/placeholder-logo.png'}
-                    className="card-img-top"
-                    alt={project.title}
-                    style={{ height: '200px', objectFit: 'cover' }}
-                    onError={(e) => {
-                      e.target.src = '/placeholder-logo.png';
-                    }}
-                  />
+                <img
+  src={project.image ? (project.image.startsWith('/uploads/') ? `${API_URL.replace('/api', '')}${project.image}` : project.image) : '/placeholder-logo.png'}
+/>
+
                   <div className="card-body">
                     <div className="d-flex justify-content-between align-items-center mb-2">
                         <span
