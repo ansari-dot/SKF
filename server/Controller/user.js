@@ -11,28 +11,13 @@ class UserController {
         try {
             const { name, email, password, role } = req.body;
 
-            // Only allow role 'admin' to register and ensure only one admin
-            if (role !== 'admin') {
-                return res.status(403).json({ message: "Only admin can be registered" });
-            }
-
-            const existingAdmin = await User.findOne({ role: 'admin' });
-            if (existingAdmin) {
-                return res.status(400).json({ message: "Admin already exists" });
-            }
-
-            // Check if email is already used
-            const existingUser = await User.findOne({ email });
-            if (existingUser) {
-                return res.status(400).json({ message: "Email already registered" });
-            }
 
             // Hash password
             const hashedPassword = await bcrypt.hash(password, 10);
 
             // Create user
             const user = new User({
-                name,
+                username: name,
                 email,
                 password: hashedPassword,
                 role: 'admin'
