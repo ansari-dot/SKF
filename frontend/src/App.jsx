@@ -136,7 +136,7 @@ function App() {
               }
             />
             <Route
-              path="/login"
+              path="/login/admin"
               element={
                 <>
                   <main>

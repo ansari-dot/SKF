@@ -181,12 +181,7 @@ const Header = ({ isHeroHeader }) => {
               </div>
             ) : (
               <>
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                  <Link to="/login" className="btn btn-outline-primary me-2 text-decoration-none" onClick={closeMobileMenu}>
-                    Login
-                  </Link>
-                </motion.div>
-
+                
 
               </>
             )}

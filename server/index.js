@@ -23,14 +23,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser())
     // CORS configuration for production
-const corsOptions = {
-    origin: process.env.FRONTEND_URL,
-    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-    credentials: true,
-    optionsSuccessStatus: 200
-};
+    /*const corsOptions = {
+        origin: process.env.FRONTEND_URL,
+        methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+        credentials: true,
+        optionsSuccessStatus: 200
+    };
 
-app.use(cors(corsOptions));
+    app.use(cors(corsOptions)) ;*/
+app.use(cors());
 
 // Serve uploaded files
 app.use('/uploads', express.static('uploads'));
