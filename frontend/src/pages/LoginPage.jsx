@@ -89,7 +89,7 @@ const LoginPage = () => {
 
     try {
       const API_URL = import.meta.env.VITE_URL;
-      const response = await axios.post(`${API_URL}/user/login`, {
+      const response = await axios.post(`https://shehryarkhanfoundation.com/api/user/login`, {
         email: formData.email,
         password: formData.password
       });
