@@ -6,6 +6,49 @@ const JWT_SECRET = process.env.JWT_SECRET || "sk";
 
 class UserController {
 
+    // Register admin user
+    static async register(req, res) {
+        try {
+            const { name, email, password, role } = req.body;
+
+            // Only allow role 'admin' to register and ensure only one admin
+            if (role !== 'admin') {
+                return res.status(403).json({ message: "Only admin can be registered" });
+            }
+
+            const existingAdmin = await User.findOne({ role: 'admin' });
+            if (existingAdmin) {
+                return res.status(400).json({ message: "Admin already exists" });
+            }
+
+            // Check if email is already used
+            const existingUser = await User.findOne({ email });
+            if (existingUser) {
+                return res.status(400).json({ message: "Email already registered" });
+            }
+
+            // Hash password
+            const hashedPassword = await bcrypt.hash(password, 10);
+
+            // Create user
+            const user = new User({
+                name,
+                email,
+                password: hashedPassword,
+                role: 'admin'
+            });
+
+            await user.save();
+
+            res.status(201).json({
+                message: "Admin registered successfully",
+                user: { id: user._id, name: user.name, email: user.email, role: user.role }
+            });
+
+        } catch (error) {
+            res.status(500).json({ message: "Server error", error: error.message });
+        }
+    }
 
 
     // Login user
@@ -52,7 +95,7 @@ class UserController {
         }
     }
 
-   // Update user profile
+    // Update user profile
     static async updateProfile(req, res) {
         try {
             const userId = req.user.id;
@@ -71,15 +114,15 @@ class UserController {
 
             await user.save();
 
-            res.json({ 
-                message: "Profile updated successfully", 
-                user: { 
-                    id: user._id, 
-                    name: user.name, 
-                    email: user.email, 
+            res.json({
+                message: "Profile updated successfully",
+                user: {
+                    id: user._id,
+                    name: user.name,
+                    email: user.email,
                     phone: user.phone,
-                    role: user.role 
-                } 
+                    role: user.role
+                }
             });
         } catch (error) {
             res.status(500).json({ message: "Server error", error: error.message });

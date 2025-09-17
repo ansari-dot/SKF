@@ -3,6 +3,8 @@ import UserController from "../Controller/user.js";
 import { auth } from "../middleware/auth.js";
 
 const router = express.Router();
+// to register 
+router.post("/user/register", UserController.register);
 //  Login user
 router.post("/user/login", UserController.login);
 
