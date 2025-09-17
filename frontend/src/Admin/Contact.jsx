@@ -16,7 +16,7 @@ const Contact = () => {
     try {
       setLoading(true);
       
-      const response = await axios.get(`${API_URL}/api/contact/get`);
+      const response = await axios.get(`${API_URL}/contact/get`);
 
       setContacts(response.data.data || []);
     } catch (error) {
@@ -32,7 +32,7 @@ const Contact = () => {
     if (!window.confirm('Are you sure you want to delete this contact message?')) return;
 
     try {
-      await axios.delete(`${API_URL}/api/contact/delete/${id}`);
+      await axios.delete(`${API_URL}/contact/delete/${id}`);
 
       toast.success('Contact message deleted successfully');
       fetchContacts();
@@ -57,7 +57,7 @@ const Contact = () => {
   // Mark as read/unread
   const handleMarkAsRead = async (id, read) => {
     try {
-      await axios.patch(`${API_URL}/api/contact/read-status/${id}`, { read });
+      await axios.patch(`${API_URL}/contact/read-status/${id}`, { read });
       toast.success(`Message marked as ${read ? 'read' : 'unread'}`);
       fetchContacts();
     } catch (error) {

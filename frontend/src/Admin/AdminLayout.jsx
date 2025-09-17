@@ -8,7 +8,7 @@ import './AdminStyles.css';
 const AdminLayout = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
-  const API_URL = `${import.meta.env.VITE_API_URL}/api`;
+  const API_URL = `${import.meta.env.VITE_API_URL}`;
 
   // Check if user is authenticated as admin
   useEffect(() => {

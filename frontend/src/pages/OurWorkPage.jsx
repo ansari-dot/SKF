@@ -15,8 +15,8 @@ const OurWorkPage = () => {
     try {
       setLoading(true);
       const [programsResponse, projectsResponse] = await Promise.all([
-        axios.get(`${API_URL}/api/program/get`),
-        axios.get(`${API_URL}/api/project/get`)
+        axios.get(`${API_URL}/program/get`),
+        axios.get(`${API_URL}/project/get`)
       ]);
       
       setPrograms(programsResponse.data.programs || []);

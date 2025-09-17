@@ -24,7 +24,7 @@ const Dashboard = () => {
     reference: "Quran 99:7"
   });
 
-  const API_URL = `${import.meta.env.VITE_API_URL}/api`;
+  const API_URL = `${import.meta.env.VITE_API_URL}`;
 
   // Islamic verses and Hadith for charity
   const islamicContent = [

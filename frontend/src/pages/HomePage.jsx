@@ -19,7 +19,7 @@ const HomePage = () => {
   const fetchLatestMedia = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`${API_URL}/api/media/get`);
+      const response = await axios.get(`${API_URL}/media/get`);
       const allMedia = response.data.data || [];
       // Get latest 3 news/blog items
       const sortedMedia = allMedia

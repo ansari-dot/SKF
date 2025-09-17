@@ -23,7 +23,7 @@ const Project = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [imagePreview, setImagePreview] = useState('/placeholder-logo.png');
   
-  const API_URL = `${import.meta.env.VITE_API_URL}/api`;
+  const API_URL = `${import.meta.env.VITE_API_URL}`;
 
   // Fetch projects
   const fetchProjects = async () => {

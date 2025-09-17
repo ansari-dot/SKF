@@ -22,7 +22,7 @@ const ContactPage = () => {
     setSubmitting(true);
 
     try {
-      const response = await axios.post(`${API_URL}/api/contact/add`, contactForm);
+      const response = await axios.post(`${API_URL}/contact/add`, contactForm);
       toast.success('Message sent successfully! We will get back to you soon.');
       
       // Reset form

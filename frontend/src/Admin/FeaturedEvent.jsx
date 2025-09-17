@@ -27,7 +27,7 @@ const FeaturedEvent = () => {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [uploadMode, setUploadMode] = useState('url'); // 'url' or 'file'
 
-  const API_URL = `${import.meta.env.VITE_API_URL}/api`;
+  const API_URL = `${import.meta.env.VITE_API_URL}`;
 
   const fetchEvents = async () => {
     try {

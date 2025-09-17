@@ -78,7 +78,7 @@ const UserProfile = () => {
     setLoading(true);
 
     try {
-      const response = await axios.put(`${API_URL}/api/user/profile`, {
+      const response = await axios.put(`${API_URL}/user/profile`, {
         username: formData.username,
         email: formData.email
       });
@@ -103,7 +103,7 @@ const UserProfile = () => {
     }
 
     try {
-      await axios.post(`${API_URL}/api/user/change-password`, {
+      await axios.post(`${API_URL}/user/change-password`, {
         currentPassword: formData.currentPassword,
         newPassword: formData.newPassword
       });

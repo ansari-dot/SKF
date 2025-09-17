@@ -50,7 +50,7 @@ const GetInvolvedPage = () => {
   useEffect(() => {
     const fetchOpportunities = async () => {
       try {
-        const response = await axios.get(`${API_URL}/api/opportunities`);
+        const response = await axios.get(`${API_URL}/opportunities`);
         setOpportunities(response.data.opportunities || response.data || []);
       } catch (error) {
         console.error('Error fetching opportunities:', error);

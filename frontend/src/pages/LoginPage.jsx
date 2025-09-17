@@ -88,8 +88,8 @@ const LoginPage = () => {
     setIsLoading(true);
 
     try {
-      const API_URL = import.meta.env.VITE_URL; // ✅ fixed with .env
-      const response = await axios.post(`http://localhost:4000/api/user/login`, {
+      const API_URL = import.meta.env.VITE_URL;
+      const response = await axios.post(`${API_URL}/user/login`, {
         email: formData.email,
         password: formData.password
       });

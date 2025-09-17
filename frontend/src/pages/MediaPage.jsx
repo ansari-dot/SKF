@@ -14,7 +14,7 @@ const MediaPage = () => {
   const fetchMedia = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`${API_URL}/api/media/get`);
+      const response = await axios.get(`${API_URL}/media/get`);
       setMediaItems(response.data.data || []);
     } catch (error) {
       console.error('Error fetching media:', error);
@@ -29,7 +29,7 @@ const MediaPage = () => {
   // Fetch featured event from backend
   const fetchFeaturedEvent = async () => {
     try {
-      const response = await axios.get(`${API_URL}/api/featured-event/latest`);
+      const response = await axios.get(`${API_URL}/featured-event/latest`);
       if (response.data.success && response.data.data) {
         setFeaturedEvent(response.data.data);
       }

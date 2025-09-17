@@ -83,7 +83,7 @@ const Profile = () => {
   const handleSave = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.put(`${API_URL}/api/user/profile`, profileData);
+      const response = await axios.put(`${API_URL}/user/profile`, profileData);
       toast.success('Profile updated successfully!');
       setIsEditing(false);
     } catch (error) {
