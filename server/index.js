@@ -3,8 +3,9 @@ import dotenv from 'dotenv';
 import connectDB from './config/db.js';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
+import path from 'path';
 
-// import routes files 
+// Import routes
 import userRoutes from './routes/user.routes.js';
 import contactRoutes from './routes/contact.routes.js';
 import mediaRoutes from './routes/media.routes.js';
@@ -18,7 +19,6 @@ import featuredEventRoutes from './routes/featuredEvent.routes.js';
 import dashboardRoutes from './routes/dashboard.js';
 
 dotenv.config();
-
 const app = express();
 
 // Middleware
@@ -32,7 +32,7 @@ const allowedOrigins = [
     "https://shehryarkhanfoundation.com"
 ];
 
-const corsOptions = {
+app.use(cors({
     origin: (origin, callback) => {
         if (!origin || allowedOrigins.includes(origin)) {
             callback(null, true);
@@ -43,12 +43,10 @@ const corsOptions = {
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     optionsSuccessStatus: 200
-};
+}));
 
-app.use(cors(corsOptions));
-
-// Serve uploaded files
-app.use('/uploads', express.static('uploads'));
+// Serve uploaded files (make sure path is absolute)
+app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 
 // Routes
 app.get('/', (req, res) => {
@@ -67,21 +65,14 @@ app.use('/api', opportunityRoutes);
 app.use('/api', featuredEventRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 
-// Connect to the database
+// Connect to DB
 connectDB();
 
-// Error handling for uncaught exceptions
-process.on('uncaughtException', (err) => {
-    console.error('Uncaught Exception:', err);
-    process.exit(1);
-});
-
-process.on('unhandledRejection', (err) => {
-    console.error('Unhandled Rejection:', err);
-    process.exit(1);
-});
+// Error handling
+process.on('uncaughtException', err => { console.error(err); process.exit(1); });
+process.on('unhandledRejection', err => { console.error(err); process.exit(1); });
 
 // Start server
 app.listen(4000, "0.0.0.0", () => {
-    console.log(`Server running on 4000`);
+    console.log("Server running on port 4000");
 });

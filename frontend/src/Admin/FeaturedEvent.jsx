@@ -250,7 +250,313 @@ const FeaturedEvent = () => {
         <div className="admin-card-body">
           {showForm && (
             <div className="admin-card mb-4">
-              {/* Form JSX remains unchanged */}
+              <div className="admin-card-header">
+                <h4>{editingEvent ? '✏️ Edit Event' : '➕ Add New Event'}</h4>
+              </div>
+              <div className="admin-card-body">
+                <form onSubmit={handleSubmit}>
+                  <div className="row">
+                    <div className="col-md-6 mb-3">
+                      <label className="form-label">Event Title *</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        name="title"
+                        value={formData.title}
+                        onChange={handleInputChange}
+                        required
+                      />
+                    </div>
+                    <div className="col-md-6 mb-3">
+                      <label className="form-label">Location *</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        name="location"
+                        value={formData.location}
+                        onChange={handleInputChange}
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div className="row">
+                    <div className="col-md-6 mb-3">
+                      <label className="form-label">Date *</label>
+                      <input
+                        type="date"
+                        className="form-control"
+                        name="date"
+                        value={formData.date}
+                        onChange={handleInputChange}
+                        required
+                      />
+                    </div>
+                    <div className="col-md-6 mb-3">
+                      <label className="form-label">Time *</label>
+                      <input
+                        type="time"
+                        className="form-control"
+                        name="time"
+                        value={formData.time}
+                        onChange={handleInputChange}
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div className="mb-3">
+                    <label className="form-label">Description *</label>
+                    <textarea
+                      className="form-control"
+                      name="description"
+                      rows="3"
+                      value={formData.description}
+                      onChange={handleInputChange}
+                      required
+                    ></textarea>
+                  </div>
+
+                  <div className="mb-3">
+                    <label className="form-label">Registration Link</label>
+                    <input
+                      type="url"
+                      className="form-control"
+                      name="registrationLink"
+                      value={formData.registrationLink}
+                      onChange={handleInputChange}
+                      placeholder="https://example.com/register"
+                    />
+                  </div>
+
+                  {/* Image Upload Section */}
+                  <div className="mb-3">
+                    <label className="form-label">Event Images</label>
+                    <div className="mb-2">
+                      <div className="btn-group" role="group">
+                        <input
+                          type="radio"
+                          className="btn-check"
+                          name="uploadMode"
+                          id="urlMode"
+                          checked={uploadMode === 'url'}
+                          onChange={() => setUploadMode('url')}
+                        />
+                        <label className="btn btn-outline-primary" htmlFor="urlMode">
+                          Image URLs
+                        </label>
+
+                        <input
+                          type="radio"
+                          className="btn-check"
+                          name="uploadMode"
+                          id="fileMode"
+                          checked={uploadMode === 'file'}
+                          onChange={() => setUploadMode('file')}
+                        />
+                        <label className="btn btn-outline-primary" htmlFor="fileMode">
+                          Upload Files
+                        </label>
+                      </div>
+                    </div>
+
+                    {uploadMode === 'url' ? (
+                      <div>
+                        {formData.images.map((image, index) => (
+                          <div key={index} className="input-group mb-2">
+                            <input
+                              type="url"
+                              className="form-control"
+                              placeholder="https://example.com/image.jpg"
+                              value={image}
+                              onChange={(e) => handleArrayChange(index, 'images', e.target.value)}
+                            />
+                            <button
+                              type="button"
+                              className="btn btn-outline-danger"
+                              onClick={() => removeArrayItem('images', index)}
+                              disabled={formData.images.length === 1}
+                            >
+                              ✕
+                            </button>
+                          </div>
+                        ))}
+                        <button
+                          type="button"
+                          className="btn btn-outline-success btn-sm"
+                          onClick={() => addArrayItem('images')}
+                        >
+                          ➕ Add Image URL
+                        </button>
+                      </div>
+                    ) : (
+                      <div>
+                        <input
+                          type="file"
+                          className="form-control"
+                          id="images"
+                          multiple
+                          accept="image/*"
+                          onChange={handleFileChange}
+                        />
+                        {selectedFiles.length > 0 && (
+                          <div className="mt-2">
+                            <small className="text-muted">
+                              Selected: {selectedFiles.map(f => f.name).join(', ')}
+                            </small>
+                            <button
+                              type="button"
+                              className="btn btn-outline-secondary btn-sm ms-2"
+                              onClick={clearFiles}
+                            >
+                              Clear
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                    {/* Image Preview */}
+                    {formData.images.length > 0 && formData.images[0] !== '/placeholder-logo.png' && (
+                      <div className="mt-3">
+                        <label className="form-label">Current Images:</label>
+                        <div className="row">
+                          {formData.images.map((image, index) => (
+                            <div key={index} className="col-md-3 mb-2">
+                              <img
+                                src={image.startsWith('/uploads/') 
+                                  ? `${import.meta.env.VITE_API_URL.replace('/api', '')}${image}`
+                                  : image
+                                }
+                                alt={`Event ${index + 1}`}
+                                className="img-thumbnail"
+                                style={{ width: '100%', height: '100px', objectFit: 'cover' }}
+                                onError={(e) => {
+                                  e.target.src = '/placeholder-logo.png';
+                                }}
+                              />
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Event Highlights */}
+                  <div className="mb-3">
+                    <label className="form-label">Event Highlights</label>
+                    {formData.highlights.map((highlight, index) => (
+                      <div key={index} className="input-group mb-2">
+                        <input
+                          type="text"
+                          className="form-control"
+                          placeholder="Enter event highlight"
+                          value={highlight}
+                          onChange={(e) => handleArrayChange(index, 'highlights', e.target.value)}
+                        />
+                        <button
+                          type="button"
+                          className="btn btn-outline-danger"
+                          onClick={() => removeArrayItem('highlights', index)}
+                          disabled={formData.highlights.length === 1}
+                        >
+                          ✕
+                        </button>
+                      </div>
+                    ))}
+                    <button
+                      type="button"
+                      className="btn btn-outline-success btn-sm"
+                      onClick={() => addArrayItem('highlights')}
+                    >
+                      ➕ Add Highlight
+                    </button>
+                  </div>
+
+                  {/* Event Statistics */}
+                  <div className="mb-3">
+                    <label className="form-label">Event Statistics</label>
+                    <div className="row">
+                      <div className="col-md-3 mb-2">
+                        <label className="form-label">Speakers</label>
+                        <input
+                          type="number"
+                          className="form-control"
+                          name="stats.speakers"
+                          value={formData.stats.speakers}
+                          onChange={handleInputChange}
+                          min="0"
+                        />
+                      </div>
+                      <div className="col-md-3 mb-2">
+                        <label className="form-label">Attendees</label>
+                        <input
+                          type="number"
+                          className="form-control"
+                          name="stats.attendees"
+                          value={formData.stats.attendees}
+                          onChange={handleInputChange}
+                          min="0"
+                        />
+                      </div>
+                      <div className="col-md-3 mb-2">
+                        <label className="form-label">Workshops</label>
+                        <input
+                          type="number"
+                          className="form-control"
+                          name="stats.workshops"
+                          value={formData.stats.workshops}
+                          onChange={handleInputChange}
+                          min="0"
+                        />
+                      </div>
+                      <div className="col-md-3 mb-2">
+                        <label className="form-label">Days</label>
+                        <input
+                          type="number"
+                          className="form-control"
+                          name="stats.days"
+                          value={formData.stats.days}
+                          onChange={handleInputChange}
+                          min="1"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="mb-3">
+                    <div className="form-check">
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        name="isActive"
+                        checked={formData.isActive}
+                        onChange={handleInputChange}
+                      />
+                      <label className="form-check-label">
+                        Active Event (visible to users)
+                      </label>
+                    </div>
+                  </div>
+
+                  <div className="d-flex gap-2">
+                    <button type="submit" className="btn admin-btn-primary">
+                      {editingEvent ? '💾 Update Event' : '➕ Add Event'}
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-secondary"
+                      onClick={() => {
+                        setShowForm(false);
+                        resetForm();
+                        clearFiles();
+                      }}
+                    >
+                      ❌ Cancel
+                    </button>
+                  </div>
+                </form>
+              </div>
             </div>
           )}
 
@@ -288,17 +594,35 @@ const FeaturedEvent = () => {
                       </td>
                       <td>{event.location}</td>
                       <td>
-                        <span className="badge bg-info">{event.images?.length || 0} images</span>
-                        {event.images && event.images.length > 0 && event.images[0] !== '/placeholder-logo.png' && (
-                          <div className="mt-1">
-                            <small className="text-muted">
-                              First:{' '}
-                              {event.images[0].startsWith('/uploads/')
-                                ? `${import.meta.env.VITE_API_URL.replace('/api', '')}${event.images[0]}`.substring(0, 30) + '...'
-                                : event.images[0].substring(0, 30) + '...'}
-                            </small>
-                          </div>
-                        )}
+                        <div className="d-flex align-items-center">
+                          {event.images && event.images.length > 0 && event.images[0] !== '/placeholder-logo.png' ? (
+                            <div>
+                              <img
+                                src={event.images[0].startsWith('/uploads/')
+                                  ? `${import.meta.env.VITE_API_URL.replace('/api', '')}${event.images[0]}`
+                                  : event.images[0]
+                                }
+                                alt="Event"
+                                className="img-thumbnail me-2"
+                                style={{ width: '50px', height: '50px', objectFit: 'cover' }}
+                                onError={(e) => {
+                                  e.target.src = '/placeholder-logo.png';
+                                }}
+                              />
+                              <span className="badge bg-info">{event.images?.length || 0} images</span>
+                            </div>
+                          ) : (
+                            <div>
+                              <img
+                                src="/placeholder-logo.png"
+                                alt="No image"
+                                className="img-thumbnail me-2"
+                                style={{ width: '50px', height: '50px', objectFit: 'cover' }}
+                              />
+                              <span className="badge bg-secondary">No images</span>
+                            </div>
+                          )}
+                        </div>
                       </td>
                       <td>
                         <span className={`badge ${event.isActive ? 'bg-success' : 'bg-secondary'}`}>

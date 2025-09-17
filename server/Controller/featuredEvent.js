@@ -22,7 +22,30 @@ class FeaturedEventController {
                 return res.status(403).json({ message: "Only admin can add featured events" });
             }
 
-            const { title, description, date, time, location, images, highlights, stats, registrationLink } = req.body;
+            const { title, description, date, time, location, imageUrls, highlights, stats, registrationLink, isActive } = req.body;
+
+            // Handle images - either from file uploads or URLs
+            let images = ['/placeholder-logo.png'];
+            
+            if (req.files && req.files.length > 0) {
+                // Use uploaded files
+                images = req.files.map(file => `/uploads/${file.filename}`);
+            } else if (imageUrls) {
+                // Use provided URLs
+                const parsedUrls = JSON.parse(imageUrls);
+                if (parsedUrls && parsedUrls.length > 0) {
+                    images = parsedUrls.filter(url => url.trim() !== '');
+                }
+            }
+
+            // Parse JSON fields
+            const parsedHighlights = highlights ? JSON.parse(highlights) : [];
+            const parsedStats = stats ? JSON.parse(stats) : {
+                speakers: 0,
+                attendees: 0,
+                workshops: 0,
+                days: 1
+            };
 
             const newFeaturedEvent = new FeaturedEvent({
                 title,
@@ -30,15 +53,11 @@ class FeaturedEventController {
                 date,
                 time,
                 location,
-                images: images || ['/placeholder-logo.png'],
-                highlights: highlights || [],
-                stats: stats || {
-                    speakers: 0,
-                    attendees: 0,
-                    workshops: 0,
-                    days: 1
-                },
-                registrationLink: registrationLink || '#'
+                images,
+                highlights: parsedHighlights,
+                stats: parsedStats,
+                registrationLink: registrationLink || '#',
+                isActive: isActive === 'true' || isActive === true
             });
 
             await newFeaturedEvent.save();
@@ -127,15 +146,50 @@ class FeaturedEventController {
                 return res.status(403).json({ message: "Only admin can update featured events" });
             }
 
-            const updatedFeaturedEvent = await FeaturedEvent.findByIdAndUpdate(
-                req.params.id,
-                req.body, 
-                { new: true }
-            );
+            const { title, description, date, time, location, imageUrls, highlights, stats, registrationLink, isActive } = req.body;
 
-            if (!updatedFeaturedEvent) {
+            // Get existing event
+            const existingEvent = await FeaturedEvent.findById(req.params.id);
+            if (!existingEvent) {
                 return res.status(404).json({ message: "Featured event not found" });
             }
+
+            // Handle images - either from file uploads or URLs
+            let images = existingEvent.images; // Keep existing images by default
+            
+            if (req.files && req.files.length > 0) {
+                // Use uploaded files
+                images = req.files.map(file => `/uploads/${file.filename}`);
+            } else if (imageUrls) {
+                // Use provided URLs
+                const parsedUrls = JSON.parse(imageUrls);
+                if (parsedUrls && parsedUrls.length > 0) {
+                    images = parsedUrls.filter(url => url.trim() !== '');
+                }
+            }
+
+            // Parse JSON fields
+            const parsedHighlights = highlights ? JSON.parse(highlights) : existingEvent.highlights;
+            const parsedStats = stats ? JSON.parse(stats) : existingEvent.stats;
+
+            const updateData = {
+                title: title || existingEvent.title,
+                description: description || existingEvent.description,
+                date: date || existingEvent.date,
+                time: time || existingEvent.time,
+                location: location || existingEvent.location,
+                images,
+                highlights: parsedHighlights,
+                stats: parsedStats,
+                registrationLink: registrationLink || existingEvent.registrationLink,
+                isActive: isActive !== undefined ? (isActive === 'true' || isActive === true) : existingEvent.isActive
+            };
+
+            const updatedFeaturedEvent = await FeaturedEvent.findByIdAndUpdate(
+                req.params.id,
+                updateData, 
+                { new: true }
+            );
 
             res.json({ 
                 success: true, 

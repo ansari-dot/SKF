@@ -1,6 +1,7 @@
 import express from "express";
 import FeaturedEventController from "../Controller/featuredEvent.js";
 import { auth } from "../middleware/auth.js";
+import upload from "../util/multer.js";
 
 const router = express.Router();
 
@@ -10,8 +11,8 @@ router.get("/featured-event/latest", FeaturedEventController.getLatestFeaturedEv
 // Admin protected
 router.get("/featured-event/all", auth, FeaturedEventController.getAllFeaturedEvents);
 router.get("/featured-event/:id", auth, FeaturedEventController.getFeaturedEventById);
-router.post("/featured-event/add", auth, FeaturedEventController.createFeaturedEvent);
-router.put("/featured-event/update/:id", auth, FeaturedEventController.updateFeaturedEvent);
+router.post("/featured-event/add", auth, upload.array('images', 10), FeaturedEventController.createFeaturedEvent);
+router.put("/featured-event/update/:id", auth, upload.array('images', 10), FeaturedEventController.updateFeaturedEvent);
 router.delete("/featured-event/delete/:id", auth, FeaturedEventController.deleteFeaturedEvent);
 
 export default router;
