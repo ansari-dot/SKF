@@ -22,7 +22,7 @@ import dashboardRoutes from './routes/dashboard.js';
 dotenv.config();
 const app = express();
 
-// ✅ Fix __dirname in ES Module
+// Fix __dirname in ES Module
 const __filename = fileURLToPath(
     import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -55,7 +55,7 @@ app.use(
 
 // ✅ Serve uploaded files correctly
 // Example: http://shehryarkhanfoundation.com/api/uploads/myimage.jpg
-app.use("/api/uploads", express.static(path.join(__dirname, "uploads")));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // Routes
 app.get("/", (req, res) => {
