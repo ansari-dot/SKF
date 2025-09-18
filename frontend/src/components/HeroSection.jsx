@@ -4,25 +4,38 @@ import logo from '../assets/logo.png';
 import BackgroundAnimation from './BackgroundAnimation';
 import h1 from '../assets/hero/h1.png';
 import h2 from '../assets/hero/h3.png';
-import h3 from '../assets/hero/h4 (1).jpg';
+import h3 from '../assets/hero/h1.png';
 const HeroSection = ({ children }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   
   const slides = [
     {
       image: h1,
-      alt: "Charity Volunteers Helping"
+      alt: "Charity Volunteers Helping",
+      verse: {
+        arabic: "وَتَعَاوَنُوا۟ عَلَى ٱلْبِرِّ وَٱلتَّقْوَىٰ ۖ وَلَا تَعَاوَنُوا۟ عَلَى ٱلْإِثْمِ وَٱلْعُدْوَٰنِ",
+        english: "And cooperate in righteousness and piety, but do not cooperate in sin and aggression.",
+        reference: "Quran 5:2 (Surah Al-Ma'idah)"
+      }
     },
     {
       image: h2, 
-      alt: "Happy Children"
+      alt: "Happy Children",
+      verse: {
+        arabic: "إِنَّمَا نُطْعِمُكُمْ لِوَجْهِ اللَّهِ لَا نُرِيدُ مِنكُمْ جَزَاءً وَلَا شُكُورًا",
+        english: "We feed you only for the countenance of Allah. We wish not from you reward or gratitude.",
+        reference: "Quran 76:9 (Surah Al-Insan)"
+      }
     },
     {
       image: h3,
-      alt: "Charity Foundation Logo"
-    },
-    
-   
+      alt: "Charity Foundation Logo",
+      verse: {
+        arabic: "مَّثَلُ ٱلَّذِينَ يُنفِقُونَ أَمْوَٰلَهُمْ فِى سَبِيلِ ٱللَّهِ كَمَثَلِ حَبَّةٍ أَنۢبَتَتْ سَبْعَ سَنَابِلَ فِى كُلِّ سُنۢبُلَةٍۢ مِّا۟ئَةُ حَبَّةٍۢ",
+        english: "The example of those who spend their wealth in the way of Allah is like a seed which grows seven spikes; in each spike is a hundred grains.",
+        reference: "Quran 2:261 (Surah Al-Baqarah)"
+      }
+    }
   ];
 
   useEffect(() => {
@@ -46,9 +59,26 @@ const HeroSection = ({ children }) => {
   };
 
   return (
-    <section className="hero-section position-relative overflow-hidden" id="home">
+    <section className="hero-section position-relative overflow-hidden d-flex flex-column" id="home" style={{
+      minHeight: '90vh !important',
+      padding: '2rem 0 4rem',
+      '@media (max-width: 768px)': {
+        minHeight: '85vh',
+        padding: '1.5rem 0 3.5rem'
+      },
+      '@media (max-width: 576px)': {
+        minHeight: '70vh !important',
+        padding: '1rem 0 3rem'
+      }
+    }}>
       <BackgroundAnimation />
-      <div className="hero-bg">
+      <div className="hero-bg" style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%'
+      }}>
         {slides.map((slide, index) => (
           <motion.img
             key={index}
@@ -60,113 +90,195 @@ const HeroSection = ({ children }) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: index === currentSlide ? 1 : 0 }}
             transition={{ duration: 1 }}
-            style={{ zIndex: index === currentSlide ? 1 : 0 }}
+            style={{ 
+              zIndex: index === currentSlide ? 1 : 0,
+              objectPosition: 'center 30%'
+            }}
           />
         ))}
-        <div className="hero-overlay"></div>
+        <div className="hero-overlay" style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          background: 'linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.7) 100%)'
+        }}></div>
       </div>
       
-      {/* Slider Navigation Dots */}
-      <div className="position-absolute bottom-0 start-50 translate-middle-x mb-4" style={{ zIndex: 10 }}>
-        <div className="d-flex gap-2">
-          {slides.map((_, index) => (
-            <button
-              key={index}
-              className={`hero-dot ${index === currentSlide ? 'active' : ''}`}
-              aria-label={`Go to slide ${index + 1}`}
-              onClick={() => goToSlide(index)}
-            />
-          ))}
-        </div>
-      </div>
+      
 
-      {/* Slider Navigation Arrows */}
-      <button
-        className="position-absolute top-50 start-0 translate-middle-y hero-nav-arrow ms-2 ms-md-3"
-        style={{ zIndex: 10 }}
-        onClick={goToPrevSlide}
-      >
-        <i className="fas fa-chevron-left"></i>
-      </button>
+    
       
-      <button
-        className="position-absolute top-50 end-0 translate-middle-y hero-nav-arrow me-2 me-md-3"
-        style={{ zIndex: 10 }}
-        onClick={goToNextSlide}
-      >
-        <i className="fas fa-chevron-right"></i>
-      </button>
-      
-      <div className="container position-relative">
+      <div className="container position-relative d-flex flex-column h-100" style={{ paddingTop: '8rem' }}>
         {children}
-        <div className="row align-items-center" style={{minHeight: "60vh"}}>
-          <style>{`
-            @media (max-width: 768px) {
-              .hero-section .row.align-items-center {
-                min-height: 45vh !important;
-              }
-            }
-            @media (max-width: 576px) {
-              .hero-section .row.align-items-center {
-                min-height: 40vh !important;
-              }
-            }
-          `}</style>
-          <div className="col-lg-10 text-center text-lg-start mx-auto">
+        <div className="row justify-content-center" style={{ marginTop: '4rem' }}>
+          <div className="col-12 text-center">
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <motion.h1
-                className="display-3 fw-bold text-white mb-4"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-              >
-                Empowering Communities<br />
-                 <span className="text-primary">Through Compassion</span>
-              </motion.h1>
+             
               
-              <motion.p
-                className="lead text-white-50 mb-5"
-                initial={{ opacity: 0, y: 30 }}
+              <motion.div 
+                className="quran-verse-container mb-4 p-2 p-md-3 rounded"
+                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.4 }}
+                transition={{ duration: 0.8, delay: 0.3 }}
+                style={{
+                  background: 'rgba(0, 0, 0, 0.6)',
+                  backdropFilter: 'blur(5px)',
+                  borderRight: '4px solid #28a745',
+                  maxWidth: '95%',
+                  margin: '0 auto 1.5rem',
+                  textAlign: 'center',
+                  padding: '1rem',
+                  width: '100%',
+                  boxSizing: 'border-box'
+                }}
+                key={currentSlide}
               >
-                Shehryar Khan Foundation (SKF) is dedicated to providing comprehensive support 
-                to underprivileged communities through trauma relief, disaster support, 
-                domestic violence recovery, Islamic education, and compassion-based development.
-              </motion.p>
-              
-              <motion.div
-                className="d-flex flex-wrap gap-3"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.6 }}
-              >
-                <motion.button
-                  className="btn btn-primary btn-lg px-4 py-3"
-                  whileHover={{ scale: 1.05, boxShadow: "0 10px 25px rgba(74,144,226,0.3)" }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => window.location.href = '/get-involved'}
-                  style={{ cursor: 'pointer' }}
-                >
-                  <i className="fas fa-heart me-2"></i>
-                  Join Volunteer
-                </motion.button>
-                
-                <motion.button
-                  className="btn btn-primary btn-lg px-4 py-3"
-                  whileHover={{ scale: 1.05, boxShadow: "0 10px 25px rgba(74,144,226,0.3)" }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => window.location.href = '/get-involved'}
-                  style={{ cursor: 'pointer' }}
-                >
-                  <i className="fas fa-users me-2"></i>
-                  Get Involved
-                </motion.button>
+                <p className="text-white mb-2 mb-md-3" style={{ 
+                  fontFamily: '"Amiri", serif', 
+                  fontSize: 'clamp(1.1rem, 4vw, 1.6rem)',
+                  lineHeight: '1.8',
+                  direction: 'rtl',
+                  marginBottom: '0.75rem',
+                  padding: '0 0.5rem'
+                }}>
+                  {slides[currentSlide].verse.arabic}
+                </p>
+                <p className="text-white-50 mb-2" style={{ 
+                  fontStyle: 'italic',
+                  fontSize: 'clamp(0.9rem, 3vw, 1.1rem)',
+                  lineHeight: '1.5',
+                  padding: '0 0.5rem'
+                }}>
+                  "{slides[currentSlide].verse.english}"
+                </p>
+                <p className="text-white-50 mt-2 mt-md-3 mb-0" style={{ 
+                  fontSize: '0.8rem',
+                  fontFamily: '"Poppins", sans-serif',
+                  letterSpacing: '0.5px',
+                  opacity: 0.9
+                }}>
+                  - {slides[currentSlide].verse.reference}
+                </p>
               </motion.div>
+              
+            
+      {/* Buttons at Bottom */}
+      <div className="mt-auto pt-4 pb-5">
+        <motion.div 
+          className="d-flex flex-wrap gap-4 justify-content-center w-100 px-3"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+        >
+          <motion.button
+            className="btn btn-primary px-4 px-md-5 py-3 position-relative overflow-hidden"
+            whileHover={{ 
+              scale: 1.05, 
+              boxShadow: "0 10px 25px rgba(40, 167, 69, 0.5)"
+            }}
+            whileTap={{ scale: 0.98 }}
+            onClick={() => window.location.href = '/volunteer'}
+            style={{
+              cursor: 'pointer',
+              minWidth: '200px',
+              fontSize: '1.05rem',
+              fontWeight: '600',
+              letterSpacing: '0.5px',
+              borderRadius: '50px',
+              whiteSpace: 'nowrap',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              background: 'linear-gradient(45deg, #28a745, #34ce57)',
+              border: 'none',
+              position: 'relative',
+              overflow: 'hidden',
+              zIndex: 1,
+              transition: 'all 0.4s ease'
+            }}
+          >
+            <span style={{ position: 'relative', zIndex: 2 }}>
+              <i className="fas fa-hands-helping me-2"></i>
+              Join Volunteer
+            </span>
+            <motion.span 
+              className="position-absolute"
+              style={{
+                position: 'absolute',
+                background: 'rgba(255,255,255,0.2)',
+                borderRadius: '50%',
+                transform: 'scale(0)',
+                zIndex: 0
+              }}
+              animate={{
+                transform: 'scale(2.5)',
+                opacity: 0
+              }}
+              transition={{
+                duration: 0.6,
+                ease: 'easeOut'
+              }}
+            />
+          </motion.button>
+          
+          <motion.button
+            className="btn btn-outline-light px-4 px-md-5 py-3 position-relative overflow-hidden"
+            whileHover={{ 
+              scale: 1.05,
+              backgroundColor: 'rgba(255, 255, 255, 0.1)'
+            }}
+            whileTap={{ scale: 0.98 }}
+            onClick={() => window.location.href = '/get-involved'}
+            style={{
+              cursor: 'pointer',
+              minWidth: '200px',
+              border: '2px solid white',
+              fontSize: '1.05rem',
+              fontWeight: '600',
+              letterSpacing: '0.5px',
+              borderRadius: '50px',
+              whiteSpace: 'nowrap',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              background: 'transparent',
+              color: 'white',
+              position: 'relative',
+              zIndex: 1,
+              transition: 'all 0.4s ease'
+            }}
+          >
+            <span style={{ position: 'relative', zIndex: 2 }}>
+              <i className="fas fa-hand-holding-people me-2"></i>
+              Get Involved
+            </span>
+            <motion.span 
+              className="position-absolute"
+              style={{
+                position: 'absolute',
+                background: 'rgba(255,255,255,0.1)',
+                borderRadius: '50%',
+                transform: 'scale(0)',
+                zIndex: 0
+              }}
+              animate={{
+                transform: 'scale(2.5)',
+                opacity: 0
+              }}
+              transition={{
+                duration: 0.6,
+                ease: 'easeOut'
+              }}
+            />
+          </motion.button>
+        </motion.div>
+      </div>
             </motion.div>
           </div>
         </div>

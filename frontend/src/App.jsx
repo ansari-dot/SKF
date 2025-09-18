@@ -14,8 +14,8 @@ import GetInvolvedPage from './pages/GetInvolvedPage';
 import MediaPage from './pages/MediaPage';
 import ContactPage from './pages/ContactPage';
 import LoginPage from './pages/LoginPage';
-
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
+import NotFoundPage from './pages/NotFoundPage';
 import ProtectedRoute from './components/ProtectedRoute';
 
 // Admin components
@@ -142,6 +142,19 @@ function App() {
                   <main>
                     <LoginPage />
                   </main>
+                </>
+              }
+            />
+            {/* 404 - Catch all route */}
+            <Route
+              path="*"
+              element={
+                <>
+                  <Header />
+                  <main>
+                    <NotFoundPage />
+                  </main>
+                  <Footer />
                 </>
               }
             />

@@ -61,22 +61,47 @@ const Header = ({ isHeroHeader }) => {
       } ${isHeroHeader ? 'hero-header' : ''}`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      style={{ top: '35px' }}
+      style={{ 
+        top: '35px',
+        minHeight: '75px',
+        display: 'flex',
+        alignItems: 'center',
+        padding: '0.5rem 0',
+        backdropFilter: 'blur(8px)',
+        backgroundColor: scrolled ? 'rgba(255, 255, 255, 0.98)' : 'rgba(0, 0, 0, 0.2)'
+      }}
       transition={{ duration: 0.5 }}
     >
-      <div className="container">
+      <div className="container" style={{
+        display: 'flex',
+        alignItems: 'center',
+        width: '100%',
+        padding: '0 1rem'
+      }}>
         <motion.div
-          className="navbar-brand d-flex align-items-center"
+          className="navbar-brand d-flex align-items-center py-0"
           whileHover={{ scale: 1.05 }}
+          style={{ 
+            marginRight: '2rem',
+            height: '50px',
+            display: 'flex',
+            alignItems: 'center'
+          }}
         >
           <Link to="/" className="d-flex align-items-center text-decoration-none">
             <img
               src={logo}
-              alt="SKF Logo"
-              className="me-2 logo-hover"
-              style={{ height: '55px', width: 'auto', maxWidth: '120px' }}
+              alt="Foundation Logo"
+              className="logo-hover"
+              style={{ 
+                height: '52px',
+                filter: scrolled 
+                  ? 'brightness(1) drop-shadow(0 2px 4px rgba(0,0,0,0.1))' 
+                  : 'brightness(1.3) drop-shadow(0 2px 4px rgba(255,255,255,0.2))',
+                transition: 'all 0.3s ease',
+                transform: scrolled ? 'scale(0.95)' : 'scale(1)'
+              }}
             />
-            {/* <span className="fw-bold text-primary d-none d-md-inline">Shehryar Khan Foundation</span>*/}
           </Link>
         </motion.div>
 
@@ -91,7 +116,7 @@ const Header = ({ isHeroHeader }) => {
         </button>
 
         <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav mx-auto flex-nowrap">
+          <ul className="navbar-nav mx-auto flex-nowrap align-items-center">
             <li className="nav-item">
               <motion.div whileHover={{ scale: 1.1 }}>
                 <Link
