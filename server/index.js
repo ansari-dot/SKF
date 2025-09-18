@@ -22,8 +22,9 @@ import dashboardRoutes from './routes/dashboard.js';
 dotenv.config();
 const app = express();
 
-//  Fix __dirname in ES Module
-const __filename = fileURLToPath(import.meta.url);
+// ✅ Fix __dirname in ES Module
+const __filename = fileURLToPath(
+    import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Middleware
@@ -31,25 +32,25 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// CORS configuration
+// ✅ CORS configuration
 const allowedOrigins = [
-  "http://localhost:3000",
-  "https://shehryarkhanfoundation.com",
+    "http://localhost:3000",
+    "https://shehryarkhanfoundation.com",
 ];
 
 app.use(
-  cors({
-    origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-    optionsSuccessStatus: 200,
-  })
+    cors({
+        origin: (origin, callback) => {
+            if (!origin || allowedOrigins.includes(origin)) {
+                callback(null, true);
+            } else {
+                callback(new Error("Not allowed by CORS"));
+            }
+        },
+        credentials: true,
+        methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+        optionsSuccessStatus: 200,
+    })
 );
 
 // ✅ Serve uploaded files correctly
@@ -58,7 +59,7 @@ app.use("/api/uploads", express.static(path.join(__dirname, "uploads")));
 
 // Routes
 app.get("/", (req, res) => {
-  res.status(200).send("Welcome to the server of SKF");
+    res.status(200).send("Welcome to the server of SKF");
 });
 
 app.use("/api", userRoutes);
@@ -78,16 +79,16 @@ connectDB();
 
 // Error handling
 process.on("uncaughtException", (err) => {
-  console.error(err);
-  process.exit(1);
+    console.error(err);
+    process.exit(1);
 });
 process.on("unhandledRejection", (err) => {
-  console.error(err);
-  process.exit(1);
+    console.error(err);
+    process.exit(1);
 });
 
 // Start server
 const PORT = process.env.PORT || 4000;
-app.listen(PORT, "0.0.0.0", () => {
-  console.log(`Server running on port ${PORT}`);
+app.listen(4000, "0.0.0.0", () => {
+    console.log(`✅ Server running on port 4000`);
 });
