@@ -27,9 +27,16 @@
 
 /* Global Admin Styles */
 .admin-layout {
-  min-height: 100vh;
+  height: 100vh;
   background: var(--bg-primary);
   font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 
 /* Sidebar Styles */
@@ -145,9 +152,14 @@
 /* Main Content Area */
 .admin-content {
   margin-left: 280px;
-  min-height: 100vh;
+  width: calc(100% - 280px);
+  height: 100vh;
   background: var(--bg-primary);
   transition: margin-left 0.3s ease;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Header Styles */

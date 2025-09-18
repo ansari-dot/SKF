@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import getAbsoluteImageUrl from '../utils/imageUtils';
 
 const OurWorkPage = () => {
   const [programs, setPrograms] = useState([]);
@@ -82,13 +83,7 @@ const OurWorkPage = () => {
                     <div className="row g-4">
                       <div className="col-md-4">
                       <img
-  src={
-    program.image
-      ? program.image.startsWith('/uploads/')
-        ? `${import.meta.env.VITE_API_URL.replace('/api', '')}${program.image}`
-        : program.image
-      : '/placeholder-logo.png'
-  }
+  src={getAbsoluteImageUrl(program.image)}
   alt={program.name}
   className="img-fluid rounded mb-3"
   style={{ height: '200px', objectFit: 'cover' }}
@@ -227,7 +222,7 @@ const OurWorkPage = () => {
               >
                 <div className="card h-100 border-0 shadow-sm">
                 <img
-  src={project.image ? (project.image.startsWith('/uploads/') ? `${API_URL.replace('/api', '')}${project.image}` : project.image) : '/placeholder-logo.png'}
+  src={getAbsoluteImageUrl(project.image)}
 />
 
                   <div className="card-body">
@@ -259,13 +254,13 @@ const OurWorkPage = () => {
                           {project.impact.otherImpact && ` - ${project.impact.otherImpact}`}
                         </strong>
                     </div>
-                    <motion.button
+                 {/*  <motion.button
                       className="btn btn-outline-primary mt-3"
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                     >
                       Learn More
-                    </motion.button>
+                    </motion.button> */}
                   </div>
                 </div>
               </motion.div>

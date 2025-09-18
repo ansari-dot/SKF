@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import getAbsoluteImageUrl from '../utils/imageUtils';
 
 const FeaturedEvent = () => {
   const [events, setEvents] = useState([]);
@@ -614,10 +615,13 @@ const FeaturedEvent = () => {
                           ) : (
                             <div>
                               <img
-                                src="/placeholder-logo.png"
-                                alt="No image"
-                                className="img-thumbnail me-2"
-                                style={{ width: '50px', height: '50px', objectFit: 'cover' }}
+                                src={getAbsoluteImageUrl(event.image)}
+                                alt={event.title}
+                                className="img-fluid rounded-start"
+                                style={{ width: '100px', height: '100px', objectFit: 'cover' }}
+                                onError={(e) => {
+                                  e.target.src = '/placeholder-logo.png';
+                                }}
                               />
                               <span className="badge bg-secondary">No images</span>
                             </div>

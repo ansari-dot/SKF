@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import getAbsoluteImageUrl from '../utils/imageUtils';
 
 const MediaPage = () => {
   const [activeFilter, setActiveFilter] = useState('all');
@@ -107,13 +108,7 @@ const MediaPage = () => {
               >
                 <div className="card h-100 border-0 shadow-sm">
                 <img
-  src={
-    item.image
-      ? item.image.startsWith('/uploads/')
-        ? `${import.meta.env.VITE_API_URL.replace('/api', '')}${item.image}`
-        : item.image
-      : '/placeholder-logo.png'
-  }
+  src={getAbsoluteImageUrl(item.image)}
   className="card-img-top"
   alt={item.heading}
   style={{ height: '200px', objectFit: 'cover' }}
@@ -195,13 +190,7 @@ const MediaPage = () => {
                       {featuredEvent.images.map((image, index) => (
                         <div key={index} className={`carousel-item ${index === 0 ? 'active' : ''}`}>
                          <img
-  src={
-    image
-      ? image.startsWith('/uploads/')
-        ? `${import.meta.env.VITE_API_URL.replace('/api', '')}${image}`
-        : image
-      : '/placeholder-logo.png'
-  }
+  src={getAbsoluteImageUrl(image)}
   alt={`${featuredEvent.title} - Image ${index + 1}`}
   className="img-fluid rounded shadow logo-hover"
   style={{ height: '400px', objectFit: 'cover', width: '100%' }}

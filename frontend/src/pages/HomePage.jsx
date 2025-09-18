@@ -8,6 +8,7 @@ import VideoSection from '../components/VideoSection';
 import StatsSection from '../components/StatsSection';
 import FundraisingSection from '../components/FundraisingSection';
 import ServicesSection from '../components/ServicesSection';
+import getAbsoluteImageUrl from '../utils/imageUtils';
 
 
 const HomePage = () => {
@@ -90,13 +91,7 @@ const HomePage = () => {
                 >
                   <div className="card h-100 shadow-sm border-0">
                   <img
-  src={
-    item.image
-      ? item.image.startsWith('/uploads/')
-        ? `${import.meta.env.VITE_API_URL.replace('/api', '')}${item.image}`
-        : item.image
-      : '/placeholder-logo.png'
-  }
+  src={getAbsoluteImageUrl(item.image)}
   className="card-img-top"
   alt={item.heading}
   style={{ height: '200px', objectFit: 'cover' }}

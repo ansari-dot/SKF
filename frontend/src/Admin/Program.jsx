@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import getAbsoluteImageUrl from '../utils/imageUtils';
 
 const Program = () => {
   const [programs, setPrograms] = useState([]);
@@ -412,21 +413,14 @@ const Program = () => {
                     <tr key={program._id}>
                       <td>
                       <img
-  src={
-    program.image
-      ? program.image.startsWith('/uploads/')
-        ? `${import.meta.env.VITE_API_URL.replace('/api', '')}${program.image}`
-        : program.image
-      : '/placeholder-logo.png'
-  }
-  alt={program.name}
-  className="rounded"
-  style={{ width: '60px', height: '60px', objectFit: 'cover' }}
-  onError={(e) => {
-    e.target.src = '/placeholder-logo.png';
-  }}
-/>
-
+                            src={getAbsoluteImageUrl(program.image)}
+                            alt={program.name}
+                            className="img-fluid rounded-start"
+                            style={{ width: '100px', height: '100px', objectFit: 'cover' }}
+                            onError={(e) => {
+                              e.target.src = '/placeholder-logo.png';
+                            }}
+                          />
                       </td>
                       <td>
                         <strong>{program.name}</strong>

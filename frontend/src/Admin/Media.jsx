@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import getAbsoluteImageUrl from '../utils/imageUtils';
 
 const Media = () => {
   const [media, setMedia] = useState([]);
@@ -405,21 +406,14 @@ const Media = () => {
                       <td>
                         <div className="d-flex align-items-center">
                         <img
-  src={
-    item.image
-      ? item.image.startsWith('/uploads/')
-        ? `${import.meta.env.VITE_API_URL.replace('/api', '')}${item.image}`
-        : item.image
-      : '/placeholder-logo.png'
-  }
-  alt={item.heading}
-  className="me-3 rounded"
-  style={{ width: '50px', height: '50px', objectFit: 'cover' }}
-  onError={(e) => {
-    e.target.src = '/placeholder-logo.png';
-  }}
-/>
-
+                            src={getAbsoluteImageUrl(item.image)}
+                            alt={item.title}
+                            className="img-fluid rounded-start"
+                            style={{ width: '100px', height: '100px', objectFit: 'cover' }}
+                            onError={(e) => {
+                              e.target.src = '/placeholder-logo.png';
+                            }}
+                          />
                           
                           <div>
                             <strong>{item.heading}</strong>
