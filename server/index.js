@@ -4,6 +4,7 @@ import connectDB from './config/db.js';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
 // Import routes
 import userRoutes from './routes/user.routes.js';
@@ -21,58 +22,72 @@ import dashboardRoutes from './routes/dashboard.js';
 dotenv.config();
 const app = express();
 
+//  Fix __dirname in ES Module
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// ✅ CORS configuration
+// CORS configuration
 const allowedOrigins = [
-    "http://localhost:3000",
-    "https://shehryarkhanfoundation.com"
+  "http://localhost:3000",
+  "https://shehryarkhanfoundation.com",
 ];
 
-app.use(cors({
+app.use(
+  cors({
     origin: (origin, callback) => {
-        if (!origin || allowedOrigins.includes(origin)) {
-            callback(null, true);
-        } else {
-            callback(new Error("Not allowed by CORS"));
-        }
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
     },
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-    optionsSuccessStatus: 200
-}));
+    optionsSuccessStatus: 200,
+  })
+);
 
-// Serve uploaded files (make sure path is absolute)
-app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
+// ✅ Serve uploaded files correctly
+// Example: http://shehryarkhanfoundation.com/api/uploads/myimage.jpg
+app.use("/api/uploads", express.static(path.join(__dirname, "uploads")));
 
 // Routes
-app.get('/', (req, res) => {
-    res.status(200).send('Welcome to the server of SKF');
+app.get("/", (req, res) => {
+  res.status(200).send("Welcome to the server of SKF");
 });
 
-app.use('/api', userRoutes);
-app.use('/api', contactRoutes);
-app.use('/api', mediaRoutes);
-app.use('/api', partnershipRoutes);
-app.use('/api', programRoutes);
-app.use('/api', projectRoutes);
-app.use('/api', sponsorshipRoutes);
-app.use('/api', volunteerRoutes);
-app.use('/api', opportunityRoutes);
-app.use('/api', featuredEventRoutes);
-app.use('/api/dashboard', dashboardRoutes);
+app.use("/api", userRoutes);
+app.use("/api", contactRoutes);
+app.use("/api", mediaRoutes);
+app.use("/api", partnershipRoutes);
+app.use("/api", programRoutes);
+app.use("/api", projectRoutes);
+app.use("/api", sponsorshipRoutes);
+app.use("/api", volunteerRoutes);
+app.use("/api", opportunityRoutes);
+app.use("/api", featuredEventRoutes);
+app.use("/api/dashboard", dashboardRoutes);
 
 // Connect to DB
 connectDB();
 
 // Error handling
-process.on('uncaughtException', err => { console.error(err); process.exit(1); });
-process.on('unhandledRejection', err => { console.error(err); process.exit(1); });
+process.on("uncaughtException", (err) => {
+  console.error(err);
+  process.exit(1);
+});
+process.on("unhandledRejection", (err) => {
+  console.error(err);
+  process.exit(1);
+});
 
 // Start server
-app.listen(4000, "0.0.0.0", () => {
-    console.log("Server running on port 4000");
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`Server running on port ${PORT}`);
 });
