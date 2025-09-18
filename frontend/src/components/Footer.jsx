@@ -61,34 +61,35 @@ const Footer = () => {
               <motion.a
                 key={index}
                 href={social.url}
-                className="btn rounded-circle p-3 d-flex align-items-center justify-content-center"
-                style={{ 
-                  width: '65px', 
-                  height: '65px', 
-                  backgroundColor: 'rgba(255, 255, 255, 0.2)', 
+                className="social-icon d-flex align-items-center justify-content-center"
+                style={{
+                  width: '60px',
+                  height: '60px',
+                  backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                  borderRadius: '50%',
                   border: '2px solid rgba(255, 255, 255, 0.6)',
                   color: '#ffffff',
-                  fontSize: '1.4rem',
+                  fontSize: '1.5rem',
                   boxShadow: '0 3px 10px rgba(0, 0, 0, 0.4)',
-                  textShadow: '0 1px 2px rgba(0,0,0,0.8)'
+                  textDecoration: 'none',
+                  position: 'relative',
+                  overflow: 'hidden',
+                  transition: 'all 0.3s ease'
                 }}
-                whileHover={{ 
-                  scale: 1.25,
+                whileHover={{
+                  scale: 1.15,
                   backgroundColor: '#ffffff',
                   borderColor: '#ffffff',
-                  color: '#0a0a0a',
-                  boxShadow: '0 8px 25px rgba(255, 255, 255, 0.4)',
-                  textShadow: 'none'
+                  color: social.color || '#0a0a0a',
+                  boxShadow: '0 0 20px rgba(255, 255, 255, 0.6)'
                 }}
-                whileTap={{ scale: 0.85 }}
-                transition={{ duration: 0.2 }}
+                whileTap={{ scale: 0.9 }}
+                transition={{ duration: 0.3 }}
               >
-                <i className={social.icon}></i>
+                <i className={social.icon} style={{ position: 'relative', zIndex: 1 }}></i>
               </motion.a>
             ))}
           </motion.div>
-
-
 
           {/* Copyright */}
           <motion.div

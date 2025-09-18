@@ -21,7 +21,7 @@ const ServicesSection = () => {
       icon: 'fas fa-handshake',
       title: 'Become a Partner',
       description: 'We are always looking for like-minded organizations and individuals to partner with us in our mission to create positive change. As a partner, you will have the opportunity to collaborate with us on various initiatives and projects that align with our values and goals.',
-      buttonText: 'Partner With Us',
+      buttonText: 'Partner Us',
       buttonColor: 'primary'
     }
   ];

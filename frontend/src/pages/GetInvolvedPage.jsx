@@ -408,7 +408,7 @@ const GetInvolvedPage = () => {
                               whileHover={{ scale: 1.05 }}
                               whileTap={{ scale: 0.95 }}
                             >
-                              {submitting ? 'Submitting...' : 'Submit Volunteer Application'}
+                              {submitting ? 'Submitting...' : 'Submit'}
                             </motion.button>
                           </div>
                         </div>
@@ -533,7 +533,7 @@ const GetInvolvedPage = () => {
                               whileHover={{ scale: 1.05 }}
                               whileTap={{ scale: 0.95 }}
                             >
-                              {submitting ? 'Submitting...' : 'Submit Sponsorship Interest'}
+                              {submitting ? 'Submitting...' : 'Submit'}
                             </motion.button>
                           </div>
                         </div>
@@ -655,7 +655,7 @@ const GetInvolvedPage = () => {
                               whileHover={{ scale: 1.05 }}
                               whileTap={{ scale: 0.95 }}
                             >
-                              {submitting ? 'Submitting...' : 'Submit Partnership Inquiry'}
+                              {submitting ? 'Submitting...' : 'Submit'}
                             </motion.button>
                           </div>
                         </div>
