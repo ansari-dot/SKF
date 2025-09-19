@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import getAbsoluteImageUrl from '../utils/imageUtils';
+import '../styles/BrandIcons.css';
 
 const MediaPage = () => {
   const [activeFilter, setActiveFilter] = useState('all');
@@ -128,7 +129,7 @@ const MediaPage = () => {
                     </div>
                       <h5 className="card-title fw-bold">{item.heading}</h5>
                     <p className="text-muted mb-2">
-                      <i className="fas fa-user me-1"></i>
+                      <i className="fas fa-user me-1 media-icon"></i>
                       {item.author}
                     </p>
                       <p className="card-text text-muted">
@@ -235,15 +236,15 @@ const MediaPage = () => {
                 <h3 className="fw-bold mb-4">{featuredEvent.title}</h3>
                 <div className="mb-4">
                   <p className="text-muted mb-2">
-                    <i className="fas fa-calendar-alt me-2"></i>
+                    <i className="fas fa-calendar-alt me-2 media-icon"></i>
                     <strong>Date:</strong> {new Date(featuredEvent.date).toLocaleDateString()}
                   </p>
                   <p className="text-muted mb-2">
-                    <i className="fas fa-clock me-2"></i>
+                    <i className="fas fa-link me-2 media-icon"></i>
                     <strong>Time:</strong> {featuredEvent.time}
                   </p>
                   <p className="text-muted mb-2">
-                    <i className="fas fa-map-marker-alt me-2"></i>
+                    <i className="fas fa-map-marker-alt me-2 media-icon"></i>
                     <strong>Location:</strong> {featuredEvent.location}
                   </p>
                 </div>

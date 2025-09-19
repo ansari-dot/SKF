@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import axios from '../utils/axiosConfig';
 import { toast } from 'react-toastify';
+import '../styles/BrandIcons.css';
 
 const ContactPage = () => {
   const [contactForm, setContactForm] = useState({
@@ -154,8 +155,8 @@ const ContactPage = () => {
                   <h3 className="fw-bold mb-4">Contact Information</h3>
                   
                   <div className="mb-4">
-                    <h6 className="fw-bold text-primary mb-3">
-                      <i className="fas fa-map-marker-alt me-2"></i>
+                    <h6 className="fw-bold mb-3">
+                      <i className="fas fa-map-marker-alt me-2 contact-icon"></i>
                       Main Office
                     </h6>
                     <p className="text-muted mb-0">
@@ -165,8 +166,8 @@ const ContactPage = () => {
                   </div>
 
                   <div className="mb-4">
-                    <h6 className="fw-bold text-primary mb-3">
-                      <i className="fas fa-phone me-2"></i>
+                    <h6 className="fw-bold mb-3">
+                      <i className="fas fa-phone me-2 contact-icon"></i>
                       Phone Number
                     </h6>
                     <p className="text-muted mb-0">
@@ -175,8 +176,8 @@ const ContactPage = () => {
                   </div>
 
                   <div className="mb-4">
-                    <h6 className="fw-bold text-primary mb-3">
-                      <i className="fas fa-envelope me-2"></i>
+                    <h6 className="fw-bold mb-3">
+                      <i className="fas fa-envelope me-2 contact-icon"></i>
                       Email Address
                     </h6>
                     <p className="text-muted mb-0">
@@ -185,8 +186,8 @@ const ContactPage = () => {
                   </div>
 
                   <div className="mb-4">
-                    <h6 className="fw-bold text-primary mb-3">
-                      <i className="fas fa-map-marked-alt me-2"></i>
+                    <h6 className="fw-bold mb-3">
+                      <i className="fas fa-map-marked-alt me-2 contact-icon"></i>
                       Our Location
                     </h6>
                     <div className="map-responsive">

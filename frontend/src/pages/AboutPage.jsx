@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import '../styles/BrandIcons.css';
 
 const AboutPage = () => {
   return (
@@ -19,8 +20,8 @@ const AboutPage = () => {
             >
               <div className="card h-100 border-0 shadow-sm">
                 <div className="card-body p-5">
-                  <div className="text-primary mb-4">
-                    <i className="fas fa-bullseye fa-3x"></i>
+                  <div className="mb-4">
+                    <i className="fas fa-bullseye fa-3x about-icon"></i>
                   </div>
                   <h3 className="fw-bold mb-4">Our Mission</h3>
                   <p className="lead text-muted">
@@ -44,8 +45,8 @@ const AboutPage = () => {
             >
               <div className="card h-100 border-0 shadow-sm">
                 <div className="card-body p-5">
-                  <div className="text-success mb-4">
-                    <i className="fas fa-eye fa-3x"></i>
+                  <div className="mb-4">
+                    <i className="fas fa-eye fa-3x about-icon"></i>
                   </div>
                   <h3 className="fw-bold mb-4">Our Vision</h3>
                   <p className="lead text-muted">
@@ -171,11 +172,77 @@ const AboutPage = () => {
                   opportunities for personal growth. Through our programs, we strive to create 
                   sustainable change that benefits not just individuals, but entire communities."
                 </p>
-                <footer className="blockquote-footer bg-success bg-opacity-25 p-3 rounded">
-                  <strong>Shehryar Khan</strong>
-                  <br />
-                  <small className="text-muted">Founder & Executive Director</small>
-                </footer>
+                <motion.footer 
+                  className="p-4 rounded-3 mt-4"
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(127, 176, 105, 0.1), rgba(74, 144, 226, 0.1))',
+                    border: '1px solid rgba(127, 176, 105, 0.2)'
+                  }}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.4 }}
+                  viewport={{ once: true }}
+                >
+                  <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.6, delay: 0.6 }}
+                    viewport={{ once: true }}
+                  >
+                    <div className="d-flex align-items-center">
+                      <div className="me-3">
+                        <div className="rounded-circle overflow-hidden" style={{ width: '60px', height: '60px', border: '2px solid rgba(127, 176, 105, 0.3)' }}>
+                          <img 
+                            src="/placeholder-user.jpg" 
+                            alt="Founder" 
+                            className="img-fluid"
+                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                          />
+                        </div>
+                      </div>
+                      <div>
+                        <motion.div
+                          className="fw-bold mb-1"
+                          style={{
+                            fontSize: '1.4rem',
+                            background: 'linear-gradient(135deg, #7FB069, #4A90E2)',
+                            WebkitBackgroundClip: 'text',
+                            WebkitTextFillColor: 'transparent',
+                            display: 'inline-block'
+                          }}
+                          initial={{ opacity: 0, y: 10 }}
+                          whileInView={{ 
+                            opacity: 1, 
+                            y: 0,
+                            transition: { duration: 0.5, delay: 0.2 }
+                          }}
+                          viewport={{ once: true }}
+                        >
+                          Shehryar Khan
+                        </motion.div>
+                        <motion.div
+                          className="text-uppercase fw-medium tracking-wider"
+                          style={{
+                            fontSize: '0.85rem',
+                            letterSpacing: '1px',
+                            color: '#4A90E2'
+                          }}
+                          initial={{ opacity: 0, y: 10 }}
+                          whileInView={{ 
+                            opacity: 1, 
+                            y: 0,
+                            transition: { duration: 0.5, delay: 0.4 }
+                          }}
+                          viewport={{ once: true }}
+                        >
+                          Founder & Executive Director
+                        </motion.div>
+                      </div>
+                    </div>
+                    
+                   
+                  </motion.div>
+                </motion.footer>
               </blockquote>
             </motion.div>
           </div>

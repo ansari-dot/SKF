@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import axios from '../utils/axiosConfig';
 import { toast } from 'react-toastify';
+import '../styles/BrandIcons.css';
 
 const GetInvolvedPage = () => {
   const [activeTab, setActiveTab] = useState('volunteer');
@@ -234,7 +235,7 @@ const GetInvolvedPage = () => {
                 <div className="card h-100 border-0 shadow-sm text-center">
                   <div className="card-body p-4">
                     <div className={`text-${option.color} mb-3`}>
-                      <i className={`${option.icon} fa-3x`}></i>
+                      <i className={`${option.icon} fa-3x get-involved-icon`}></i>
                     </div>
                     <h4 className="fw-bold mb-3">{option.title}</h4>
                     <p className="text-muted mb-4">{option.description}</p>
@@ -242,7 +243,7 @@ const GetInvolvedPage = () => {
                     <ul className="list-unstyled">
                       {option.benefits.map((benefit, idx) => (
                         <li key={idx} className="mb-2">
-                           <i className="fas fa-check text-primary me-2"></i>
+                           <i className="fas fa-check me-2 get-involved-icon"></i>
                           {benefit}
                         </li>
                       ))}
@@ -264,7 +265,7 @@ const GetInvolvedPage = () => {
                         className={`nav-link ${activeTab === 'volunteer' ? 'active' : ''}`}
                         onClick={() => setActiveTab('volunteer')}
                       >
-                        <i className="fas fa-hands-helping me-2"></i>
+                        <i className="fas fa-hands-helping me-2 get-involved-icon"></i>
                         Volunteer Registration
                       </button>
                     </li>
@@ -273,7 +274,7 @@ const GetInvolvedPage = () => {
                         className={`nav-link ${activeTab === 'sponsor' ? 'active' : ''}`}
                         onClick={() => setActiveTab('sponsor')}
                       >
-                        <i className="fas fa-heart me-2"></i>
+                        <i className="fas fa-heart me-2 get-involved-icon"></i>
                         Sponsorship Interest
                       </button>
                     </li>
@@ -282,7 +283,7 @@ const GetInvolvedPage = () => {
                         className={`nav-link ${activeTab === 'partner' ? 'active' : ''}`}
                         onClick={() => setActiveTab('partner')}
                       >
-                        <i className="fas fa-handshake me-2"></i>
+                        <i className="fas fa-handshake me-2 get-involved-icon"></i>
                         Partnership Inquiry
                       </button>
                     </li>
@@ -734,7 +735,7 @@ const GetInvolvedPage = () => {
                           <ul className="list-unstyled">
                             {opportunity.requirements.map((req, idx) => (
                               <li key={idx} className="mb-1">
-                                <i className="fas fa-check text-primary me-2"></i>
+                                <i className="fas fa-check me-2 get-involved-icon"></i>
                                 {req}
                               </li>
                             ))}
