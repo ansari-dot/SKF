@@ -68,12 +68,21 @@ const FeaturesSection = () => {
                 <div className="card border-0 shadow-sm h-100 text-center p-4">
                   <div className="card-body">
                     <motion.div
-                      className={`feature-icon mb-4 mx-auto d-flex align-items-center justify-content-center rounded-circle bg-${feature.color}`}
-                      style={{ width: '80px', height: '80px' }}
-                      whileHover={{ rotate: 360 }}
+                      className="mb-4 mx-auto d-flex align-items-center justify-content-center rounded-circle"
+                      style={{
+                        width: '80px',
+                        height: '80px',
+                        border: '2px solid #7FB069',
+                        transition: 'all 0.3s ease'
+                      }}
+                      whileHover={{ 
+                        rotate: 360,
+                        borderColor: '#4A90E2',
+                        boxShadow: '0 0 15px rgba(127, 176, 105, 0.5)'
+                      }}
                       transition={{ duration: 0.6 }}
                     >
-                      <i className={`${feature.icon} text-white fs-2`}></i>
+                      <i className={`${feature.icon} fs-2`} style={{ color: '#7FB069' }}></i>
                     </motion.div>
                     
                     <h4 className="card-title fw-bold mb-3">{feature.title}</h4>

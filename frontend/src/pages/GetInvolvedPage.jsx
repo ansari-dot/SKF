@@ -43,7 +43,17 @@ const GetInvolvedPage = () => {
 
   const [opportunities, setOpportunities] = useState([]);
   const [loadingOpportunities, setLoadingOpportunities] = useState(true);
-  const [submitting, setSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState({
+    volunteer: null,
+    sponsor: null,
+    partner: null
+  });
+  
+  const [submitting, setSubmitting] = useState({
+    volunteer: false,
+    sponsor: false,
+    partner: false
+  });
 
   const API_URL = import.meta.env.VITE_API_URL;
 
@@ -94,76 +104,133 @@ const GetInvolvedPage = () => {
   // Handle form submissions
   const handleVolunteerSubmit = async (e) => {
     e.preventDefault();
-    setSubmitting(true);
+    setSubmitting(prev => ({...prev, volunteer: true}));
+    setSubmitStatus(prev => ({...prev, volunteer: null}));
 
     try {
       const response = await axios.post(`${API_URL}/volunteer/add`, volunteerForm);
-      toast.success('Volunteer application submitted successfully!');
-      setVolunteerForm({
-        firstName: '',
-        lastName: '',
-        email: '',
-        phone: '',
-        areasOfInterest: [],
-        availability: '',
-        timeCommitment: '',
-        whyJoin: ''
-      });
+      
+      // Show success state
+      setSubmitStatus(prev => ({...prev, volunteer: 'success'}));
+      
+      // Reset form after a delay
+      setTimeout(() => {
+        setVolunteerForm({
+          firstName: '',
+          lastName: '',
+          email: '',
+          phone: '',
+          areasOfInterest: [],
+          availability: '',
+          timeCommitment: '',
+          whyJoin: ''
+        });
+        
+        // Reset button state after showing success
+        setTimeout(() => {
+          setSubmitStatus(prev => ({...prev, volunteer: null}));
+          setSubmitting(prev => ({...prev, volunteer: false}));
+        }, 2000);
+        
+      }, 1000);
+      
     } catch (error) {
       console.error('Error submitting volunteer form:', error);
-      toast.error('Failed to submit volunteer application. Please try again.');
-    } finally {
-      setSubmitting(false);
+      setSubmitStatus(prev => ({...prev, volunteer: 'error'}));
+      
+      // Reset error state after a delay
+      setTimeout(() => {
+        setSubmitStatus(prev => ({...prev, volunteer: null}));
+        setSubmitting(prev => ({...prev, volunteer: false}));
+      }, 3000);
     }
   };
 
   const handleSponsorSubmit = async (e) => {
     e.preventDefault();
-    setSubmitting(true);
+    setSubmitting(prev => ({...prev, sponsor: true}));
+    setSubmitStatus(prev => ({...prev, sponsor: null}));
 
     try {
       const response = await axios.post(`${API_URL}/sponsorship/add`, sponsorForm);
-      toast.success('Sponsorship interest submitted successfully!');
-      setSponsorForm({
-        organizationName: '',
-        contactPerson: '',
-        email: '',
-        phone: '',
-        programsOfInterest: [],
-        sponsorshipLevel: '',
-        duration: '',
-        additionalInfo: ''
-      });
+      
+      // Show success state
+      setSubmitStatus(prev => ({...prev, sponsor: 'success'}));
+      
+      // Reset form after a delay
+      setTimeout(() => {
+        setSponsorForm({
+          organizationName: '',
+          contactPerson: '',
+          email: '',
+          phone: '',
+          programsOfInterest: [],
+          sponsorshipLevel: '',
+          duration: '',
+          additionalInfo: ''
+        });
+        
+        // Reset button state after showing success
+        setTimeout(() => {
+          setSubmitStatus(prev => ({...prev, sponsor: null}));
+          setSubmitting(prev => ({...prev, sponsor: false}));
+        }, 2000);
+        
+      }, 1000);
+      
     } catch (error) {
       console.error('Error submitting sponsor form:', error);
-      toast.error('Failed to submit sponsorship interest. Please try again.');
-    } finally {
-      setSubmitting(false);
+      setSubmitStatus(prev => ({...prev, sponsor: 'error'}));
+      
+      // Reset error state after a delay
+      setTimeout(() => {
+        setSubmitStatus(prev => ({...prev, sponsor: null}));
+        setSubmitting(prev => ({...prev, sponsor: false}));
+      }, 3000);
     }
   };
 
   const handlePartnerSubmit = async (e) => {
     e.preventDefault();
-    setSubmitting(true);
+    setSubmitting(prev => ({...prev, partner: true}));
+    setSubmitStatus(prev => ({...prev, partner: null}));
 
     try {
       const response = await axios.post(`${API_URL}/partnership/add`, partnerForm);
-      toast.success('Partnership inquiry submitted successfully!');
-      setPartnerForm({
-        organizationName: '',
-        organizationType: '',
-        contactPerson: '',
-        position: '',
-        email: '',
-        phone: '',
-        partnershipTypes: [],
-        description: ''
-      });
+      
+      // Show success state
+      setSubmitStatus(prev => ({...prev, partner: 'success'}));
+      
+      // Reset form after a delay
+      setTimeout(() => {
+        setPartnerForm({
+          organizationName: '',
+          organizationType: '',
+          contactPerson: '',
+          position: '',
+          email: '',
+          phone: '',
+          partnershipTypes: [],
+          description: ''
+        });
+        
+        // Reset button state after showing success
+        setTimeout(() => {
+          setSubmitStatus(prev => ({...prev, partner: null}));
+          setSubmitting(prev => ({...prev, partner: false}));
+        }, 2000);
+        
+      }, 1000);
+      
     } catch (error) {
       console.error('Error submitting partner form:', error);
-      toast.error('Failed to submit partnership inquiry. Please try again.');
-    } finally {
-      setSubmitting(false);
+      setSubmitStatus(prev => ({...prev, partner: 'error'}));
+      
+      // Reset error state after a delay
+      setTimeout(() => {
+        setSubmitStatus(prev => ({...prev, partner: null}));
+        setSubmitting(prev => ({...prev, partner: false}));
+      }, 3000);
     }
   };
 
@@ -401,15 +468,111 @@ const GetInvolvedPage = () => {
                               onChange={(e) => setVolunteerForm(prev => ({ ...prev, whyJoin: e.target.value }))}
                             ></textarea>
                           </div>
-                          <div className="col-12">
+                          <div className="col-12 position-relative">
                             <motion.button
                               type="submit"
-                              className="btn btn-primary btn-lg"
-                              disabled={submitting}
-                              whileHover={{ scale: 1.05 }}
-                              whileTap={{ scale: 0.95 }}
+                              className="btn btn-primary btn-lg position-relative overflow-hidden"
+                              disabled={submitting.sponsor}
+                              style={{
+                                background: '#7FB069',
+                                border: 'none',
+                                padding: '0.75rem 2rem',
+                                minWidth: '220px',
+                                borderRadius: '50px',
+                                color: 'white',
+                                fontWeight: '600',
+                                position: 'relative',
+                                zIndex: 1,
+                                transition: 'all 0.3s ease',
+                                boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
+                              }}
+                              whileHover={{ 
+                                scale: 1.03,
+                                boxShadow: '0 5px 15px rgba(127, 176, 105, 0.4)'
+                              }}
+                              whileTap={{ scale: 0.98 }}
                             >
-                              {submitting ? 'Submitting...' : 'Submit'}
+                              {/* Default state - Submit */}
+                              <motion.span 
+                                animate={{ 
+                                  y: (submitting.sponsor || submitStatus.sponsor) ? 30 : 0,
+                                  opacity: (submitting.sponsor || submitStatus.sponsor) ? 0 : 1,
+                                  display: (submitStatus.sponsor === null && !submitting.sponsor) ? 'inline-block' : 'none'
+                                }}
+                                style={{
+                                  position: 'relative',
+                                  zIndex: 2
+                                }}
+                              >
+                                Submit
+                              </motion.span>
+                              
+                              {/* Loading state */}
+                              <motion.span
+                                className="position-absolute d-flex align-items-center justify-content-center"
+                                initial={{ y: -30, opacity: 0 }}
+                                animate={{ 
+                                  y: submitting.sponsor && !submitStatus.sponsor ? 0 : -30,
+                                  opacity: submitting.sponsor && !submitStatus.sponsor ? 1 : 0,
+                                  display: (submitting.sponsor && !submitStatus.sponsor) ? 'flex' : 'none'
+                                }}
+                                style={{
+                                  left: 0,
+                                  right: 0,
+                                  top: 0,
+                                  bottom: 0,
+                                  zIndex: 2
+                                }}
+                              >
+                                <div className="spinner-border spinner-border-sm me-2" role="status">
+                                  <span className="visually-hidden">Loading...</span>
+                                </div>
+                                Submitting...
+                              </motion.span>
+                              
+                              {/* Success state */}
+                              <motion.span
+                                className="position-absolute d-flex align-items-center justify-content-center w-100 h-100"
+                                initial={{ y: 30, opacity: 0 }}
+                                animate={{ 
+                                  y: submitStatus.sponsor === 'success' ? 0 : 30,
+                                  opacity: submitStatus.sponsor === 'success' ? 1 : 0,
+                                  display: submitStatus.sponsor === 'success' ? 'flex' : 'none',
+                                  background: '#7FB069'
+                                }}
+                                style={{
+                                  left: 0,
+                                  top: 0,
+                                  zIndex: 3,
+                                  color: 'white',
+                                  borderRadius: '50px'
+                                }}
+                              >
+                                <i className="fas fa-check-circle me-2"></i>
+                                Submitted!
+                              </motion.span>
+                              
+                              {/* Error state */}
+                              <motion.span
+                                className="position-absolute d-flex align-items-center justify-content-center w-100 h-100"
+                                initial={{ y: 30, opacity: 0 }}
+                                animate={{ 
+                                  y: submitStatus.sponsor === 'error' ? 0 : 30,
+                                  opacity: submitStatus.sponsor === 'error' ? 1 : 0,
+                                  display: submitStatus.sponsor === 'error' ? 'flex' : 'none',
+                                  background: '#dc3545'
+                                }}
+                                style={{
+                                  left: 0,
+                                  top: 0,
+                                  zIndex: 3,
+                                  color: 'white',
+                                  borderRadius: '50px'
+                                }}
+                              >
+                                <i className="fas fa-times-circle me-2"></i>
+                                Failed to Submit
+                              </motion.span>
                             </motion.button>
                           </div>
                         </div>
@@ -526,15 +689,111 @@ const GetInvolvedPage = () => {
                               onChange={(e) => setSponsorForm(prev => ({ ...prev, additionalInfo: e.target.value }))}
                             ></textarea>
                           </div>
-                          <div className="col-12">
+                          <div className="col-12 position-relative">
                             <motion.button
                               type="submit"
-                              className="btn btn-primary btn-lg"
-                              disabled={submitting}
-                              whileHover={{ scale: 1.05 }}
-                              whileTap={{ scale: 0.95 }}
+                              className="btn btn-primary btn-lg position-relative overflow-hidden"
+                              disabled={submitting.sponsor}
+                              style={{
+                                background: '#7FB069',
+                                border: 'none',
+                                padding: '0.75rem 2rem',
+                                minWidth: '220px',
+                                borderRadius: '50px',
+                                color: 'white',
+                                fontWeight: '600',
+                                position: 'relative',
+                                zIndex: 1,
+                                transition: 'all 0.3s ease',
+                                boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
+                              }}
+                              whileHover={{ 
+                                scale: 1.03,
+                                boxShadow: '0 5px 15px rgba(127, 176, 105, 0.4)'
+                              }}
+                              whileTap={{ scale: 0.98 }}
                             >
-                              {submitting ? 'Submitting...' : 'Submit'}
+                              {/* Default state - Submit */}
+                              <motion.span 
+                                animate={{ 
+                                  y: (submitting.sponsor || submitStatus.sponsor) ? 30 : 0,
+                                  opacity: (submitting.sponsor || submitStatus.sponsor) ? 0 : 1,
+                                  display: (submitStatus.sponsor === null && !submitting.sponsor) ? 'inline-block' : 'none'
+                                }}
+                                style={{
+                                  position: 'relative',
+                                  zIndex: 2
+                                }}
+                              >
+                                Submit
+                              </motion.span>
+                              
+                              {/* Loading state */}
+                              <motion.span
+                                className="position-absolute d-flex align-items-center justify-content-center"
+                                initial={{ y: -30, opacity: 0 }}
+                                animate={{ 
+                                  y: submitting.sponsor && !submitStatus.sponsor ? 0 : -30,
+                                  opacity: submitting.sponsor && !submitStatus.sponsor ? 1 : 0,
+                                  display: (submitting.sponsor && !submitStatus.sponsor) ? 'flex' : 'none'
+                                }}
+                                style={{
+                                  left: 0,
+                                  right: 0,
+                                  top: 0,
+                                  bottom: 0,
+                                  zIndex: 2
+                                }}
+                              >
+                                <div className="spinner-border spinner-border-sm me-2" role="status">
+                                  <span className="visually-hidden">Loading...</span>
+                                </div>
+                                Submitting...
+                              </motion.span>
+                              
+                              {/* Success state */}
+                              <motion.span
+                                className="position-absolute d-flex align-items-center justify-content-center w-100 h-100"
+                                initial={{ y: 30, opacity: 0 }}
+                                animate={{ 
+                                  y: submitStatus.sponsor === 'success' ? 0 : 30,
+                                  opacity: submitStatus.sponsor === 'success' ? 1 : 0,
+                                  display: submitStatus.sponsor === 'success' ? 'flex' : 'none',
+                                  background: '#7FB069'
+                                }}
+                                style={{
+                                  left: 0,
+                                  top: 0,
+                                  zIndex: 3,
+                                  color: 'white',
+                                  borderRadius: '50px'
+                                }}
+                              >
+                                <i className="fas fa-check-circle me-2"></i>
+                                Submitted!
+                              </motion.span>
+                              
+                              {/* Error state */}
+                              <motion.span
+                                className="position-absolute d-flex align-items-center justify-content-center w-100 h-100"
+                                initial={{ y: 30, opacity: 0 }}
+                                animate={{ 
+                                  y: submitStatus.sponsor === 'error' ? 0 : 30,
+                                  opacity: submitStatus.sponsor === 'error' ? 1 : 0,
+                                  display: submitStatus.sponsor === 'error' ? 'flex' : 'none',
+                                  background: '#dc3545'
+                                }}
+                                style={{
+                                  left: 0,
+                                  top: 0,
+                                  zIndex: 3,
+                                  color: 'white',
+                                  borderRadius: '50px'
+                                }}
+                              >
+                                <i className="fas fa-times-circle me-2"></i>
+                                Failed to Submit
+                              </motion.span>
                             </motion.button>
                           </div>
                         </div>
@@ -648,15 +907,111 @@ const GetInvolvedPage = () => {
                               onChange={(e) => setPartnerForm(prev => ({ ...prev, description: e.target.value }))}
                             ></textarea>
                           </div>
-                          <div className="col-12">
+                          <div className="col-12 position-relative">
                             <motion.button
                               type="submit"
-                              className="btn btn-primary btn-lg"
-                              disabled={submitting}
-                              whileHover={{ scale: 1.05 }}
-                              whileTap={{ scale: 0.95 }}
+                              className="btn btn-primary btn-lg position-relative overflow-hidden"
+                              disabled={submitting.sponsor}
+                              style={{
+                                background: '#7FB069',
+                                border: 'none',
+                                padding: '0.75rem 2rem',
+                                minWidth: '220px',
+                                borderRadius: '50px',
+                                color: 'white',
+                                fontWeight: '600',
+                                position: 'relative',
+                                zIndex: 1,
+                                transition: 'all 0.3s ease',
+                                boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
+                              }}
+                              whileHover={{ 
+                                scale: 1.03,
+                                boxShadow: '0 5px 15px rgba(127, 176, 105, 0.4)'
+                              }}
+                              whileTap={{ scale: 0.98 }}
                             >
-                              {submitting ? 'Submitting...' : 'Submit'}
+                              {/* Default state - Submit */}
+                              <motion.span 
+                                animate={{ 
+                                  y: (submitting.sponsor || submitStatus.sponsor) ? 30 : 0,
+                                  opacity: (submitting.sponsor || submitStatus.sponsor) ? 0 : 1,
+                                  display: (submitStatus.sponsor === null && !submitting.sponsor) ? 'inline-block' : 'none'
+                                }}
+                                style={{
+                                  position: 'relative',
+                                  zIndex: 2
+                                }}
+                              >
+                                Submit
+                              </motion.span>
+                              
+                              {/* Loading state */}
+                              <motion.span
+                                className="position-absolute d-flex align-items-center justify-content-center"
+                                initial={{ y: -30, opacity: 0 }}
+                                animate={{ 
+                                  y: submitting.sponsor && !submitStatus.sponsor ? 0 : -30,
+                                  opacity: submitting.sponsor && !submitStatus.sponsor ? 1 : 0,
+                                  display: (submitting.sponsor && !submitStatus.sponsor) ? 'flex' : 'none'
+                                }}
+                                style={{
+                                  left: 0,
+                                  right: 0,
+                                  top: 0,
+                                  bottom: 0,
+                                  zIndex: 2
+                                }}
+                              >
+                                <div className="spinner-border spinner-border-sm me-2" role="status">
+                                  <span className="visually-hidden">Loading...</span>
+                                </div>
+                                Submitting...
+                              </motion.span>
+                              
+                              {/* Success state */}
+                              <motion.span
+                                className="position-absolute d-flex align-items-center justify-content-center w-100 h-100"
+                                initial={{ y: 30, opacity: 0 }}
+                                animate={{ 
+                                  y: submitStatus.sponsor === 'success' ? 0 : 30,
+                                  opacity: submitStatus.sponsor === 'success' ? 1 : 0,
+                                  display: submitStatus.sponsor === 'success' ? 'flex' : 'none',
+                                  background: '#7FB069'
+                                }}
+                                style={{
+                                  left: 0,
+                                  top: 0,
+                                  zIndex: 3,
+                                  color: 'white',
+                                  borderRadius: '50px'
+                                }}
+                              >
+                                <i className="fas fa-check-circle me-2"></i>
+                                Submitted!
+                              </motion.span>
+                              
+                              {/* Error state */}
+                              <motion.span
+                                className="position-absolute d-flex align-items-center justify-content-center w-100 h-100"
+                                initial={{ y: 30, opacity: 0 }}
+                                animate={{ 
+                                  y: submitStatus.sponsor === 'error' ? 0 : 30,
+                                  opacity: submitStatus.sponsor === 'error' ? 1 : 0,
+                                  display: submitStatus.sponsor === 'error' ? 'flex' : 'none',
+                                  background: '#dc3545'
+                                }}
+                                style={{
+                                  left: 0,
+                                  top: 0,
+                                  zIndex: 3,
+                                  color: 'white',
+                                  borderRadius: '50px'
+                                }}
+                              >
+                                <i className="fas fa-times-circle me-2"></i>
+                                Failed to Submit
+                              </motion.span>
                             </motion.button>
                           </div>
                         </div>
