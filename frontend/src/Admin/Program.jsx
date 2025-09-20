@@ -215,7 +215,7 @@ const Program = () => {
           <div className="d-flex justify-content-between align-items-center mb-4">
             <h1 className="display-6 fw-bold mb-0">Programs Management</h1>
             <button
-              className="btn btn-primary"
+              className="btn btn-primary admin-btn"
               onClick={() => {
                 resetForm();
                 setShowForm(true);
@@ -321,7 +321,7 @@ const Program = () => {
                         />
                         <button
                           type="button"
-                          className="btn btn-outline-danger"
+                          className="btn btn-danger admin-btn"
                           onClick={() => removeArrayItem('keyFeatures', index)}
                         >
                           <i className="fas fa-trash"></i>
@@ -330,7 +330,7 @@ const Program = () => {
                     ))}
                     <button
                       type="button"
-                      className="btn btn-outline-secondary btn-sm"
+                      className="btn btn-secondary btn-sm admin-btn"
                       onClick={() => addArrayItem('keyFeatures')}
                     >
                       <i className="fas fa-plus me-1"></i>
@@ -351,7 +351,7 @@ const Program = () => {
                         />
                         <button
                           type="button"
-                          className="btn btn-outline-danger"
+                          className="btn btn-danger admin-btn"
                           onClick={() => removeArrayItem('sustainability', index)}
                         >
                           <i className="fas fa-trash"></i>
@@ -360,7 +360,7 @@ const Program = () => {
                     ))}
                     <button
                       type="button"
-                      className="btn btn-outline-secondary btn-sm"
+                      className="btn btn-secondary btn-sm admin-btn"
                       onClick={() => addArrayItem('sustainability')}
                     >
                       <i className="fas fa-plus me-1"></i>
@@ -369,12 +369,12 @@ const Program = () => {
         </div>
 
                   <div className="d-flex gap-2">
-                    <button type="submit" className="btn btn-primary">
+                    <button type="submit" className="btn btn-primary admin-btn">
                       {editingProgram ? 'Update Program' : 'Add Program'}
                     </button>
                     <button
                       type="button"
-                      className="btn btn-secondary"
+                      className="btn btn-secondary admin-btn"
                       onClick={() => {
                         setShowForm(false);
                         resetForm();
@@ -447,18 +447,18 @@ const Program = () => {
                       <td>
                         <div className="btn-group btn-group-sm">
                           <button
-                            className="btn btn-outline-primary"
+                            className="btn btn-primary admin-btn"
                             onClick={() => handleEdit(program)}
                             title="Edit"
                           >
-                            <i className="fas fa-edit"></i>
+                            update
                           </button>
           <button
-                            className="btn btn-outline-danger"
+                            className="btn btn-danger admin-btn"
                             onClick={() => handleDelete(program._id)}
                             title="Delete"
           >
-                            <i className="fas fa-trash"></i>
+                            delete
           </button>
                         </div>
                       </td>

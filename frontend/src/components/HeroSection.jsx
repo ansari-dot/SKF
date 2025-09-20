@@ -183,7 +183,7 @@ const HeroSection = ({ children }) => {
               boxShadow: "0 10px 25px rgba(40, 167, 69, 0.5)"
             }}
             whileTap={{ scale: 0.98 }}
-            onClick={() => window.location.href = '/volunteer'}
+            onClick={() => window.location.href = '/get-involved'}
             style={{
               cursor: 'pointer',
               minWidth: '200px',

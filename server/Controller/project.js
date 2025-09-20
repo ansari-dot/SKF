@@ -1,189 +1,504 @@
 import Project from "../model/Project.js";
 import User from "../model/User.js";
-import fs from 'fs';
-import path from 'path';
+import fs from "fs";
+import path from "path";
 
 class ProjectController {
-    // Get all projects (Admin & User)
-    static async getProjects(req, res) {
-        try {
-            const projects = await Project.find();
-            return res.status(200).json({ success: true, projects });
-        } catch (error) {
-            return res.status(500).json({
-                success: false,
-                message: "Error fetching projects",
-                error: error.message
-            });
-        }
+  // Get single project by ID (Public)
+  static async getProjectById(req, res) {
+    try {
+      const project = await Project.findById(req.params.id);
+
+      if (!project) {
+        return res.status(404).json({
+          success: false,
+          message: "Project not found",
+        });
+      }
+
+      return res.status(200).json({
+        success: true,
+        project,
+      });
+    } catch (error) {
+      return res.status(500).json({
+        success: false,
+        message: "Error fetching project",
+        error: error.message,
+      });
+    }
+  }
+
+  // Get all projects (Admin & User)
+  static async getProjects(req, res) {
+    try {
+      const projects = await Project.find();
+      return res.status(200).json({ success: true, projects });
+    } catch (error) {
+      return res.status(500).json({
+        success: false,
+        message: "Error fetching projects",
+        error: error.message,
+      });
+    }
+  }
+
+  // Helper function to process uploaded files (static)
+  static processUploadedFiles(files) {
+    const result = { images: [], videos: [], documents: [] };
+    if (!files) return result;
+
+    // Process images
+    if (files.images) {
+      const imageFiles = Array.isArray(files.images)
+        ? files.images
+        : [files.images];
+      result.images = imageFiles.map((file) => ({
+        filename: file.filename,
+        originalname: file.originalname,
+        path: file.path,
+        size: file.size,
+        mimetype: file.mimetype,
+        url: `/uploads/images/${file.filename}`,
+      }));
     }
 
-    //  Add a new project (Admin only)
-    static async addProject(req, res) {
-        try {
-            const userId = req.user.id; // from auth middleware
-            const user = await User.findById(userId);
-
-            if (!user || user.role !== "admin") {
-                return res.status(403).json({
-                    success: false,
-                    message: "Only admin can add projects"
-                });
-            }
-
-            let { title, description, location, status, startDate, endDate, impact } = req.body;
-
-            // Handle image upload
-            let imagePath = '/placeholder-logo.png';
-            if (req.file) {
-                imagePath = `/uploads/${req.file.filename}`;
-            }
-
-            // Parse impact if it's a string
-            if (typeof impact === 'string') {
-                impact = JSON.parse(impact);
-            }
-
-            const newProject = new Project({
-                title,
-                description,
-                location,
-                status,
-                startDate,
-                endDate,
-                impact, // { familiesAssisted, otherImpact }
-                image: imagePath
-            });
-
-            await newProject.save();
-
-            return res.status(201).json({ success: true, project: newProject });
-        } catch (error) {
-            return res.status(500).json({
-                success: false,
-                message: "Error adding project",
-                error: error.message
-            });
-        }
+    // Process videos
+    if (files.videos) {
+      const videoFiles = Array.isArray(files.videos)
+        ? files.videos
+        : [files.videos];
+      result.videos = videoFiles.map((file) => ({
+        filename: file.filename,
+        originalname: file.originalname,
+        path: file.path,
+        size: file.size,
+        mimetype: file.mimetype,
+        url: `/uploads/videos/${file.filename}`,
+      }));
     }
 
-    // Update project (Admin only)
-    static async updateProject(req, res) {
-        try {
-            const userId = req.user.id;
-            const user = await User.findById(userId);
-
-            if (!user || user.role !== "admin") {
-                return res.status(403).json({
-                    success: false,
-                    message: "Only admin can update projects"
-                });
-            }
-
-            let { title, description, location, status, startDate, endDate, impact } = req.body;
-
-            // Handle image upload
-            let imagePath = req.body.image || '/placeholder-logo.png';
-            if (req.file) {
-                imagePath = `/uploads/${req.file.filename}`;
-                
-                // Delete old image if it exists and is not the default
-                const oldProject = await Project.findById(req.params.id);
-                if (oldProject && oldProject.image && oldProject.image !== '/placeholder-logo.png' && oldProject.image.startsWith('/uploads/')) {
-                    const oldImagePath = path.join(process.cwd(), 'uploads', path.basename(oldProject.image));
-                    if (fs.existsSync(oldImagePath)) {
-                        fs.unlinkSync(oldImagePath);
-                    }
-                }
-            }
-
-            // Parse impact if it's a string
-            if (typeof impact === 'string') {
-                impact = JSON.parse(impact);
-            }
-
-            const updateData = {
-                title,
-                description,
-                location,
-                status,
-                startDate,
-                endDate,
-                impact,
-                image: imagePath
-            };
-
-            const updatedProject = await Project.findByIdAndUpdate(
-                req.params.id,
-                updateData,
-                { new: true }
-            );
-
-            if (!updatedProject) {
-                return res.status(404).json({
-                    success: false,
-                    message: "Project not found"
-                });
-            }
-
-            return res.status(200).json({
-                success: true,
-                message: "Project updated successfully",
-                project: updatedProject
-            });
-        } catch (error) {
-            return res.status(500).json({
-                success: false,
-                message: "Error updating project",
-                error: error.message
-            });
-        }
+    // Process documents
+    if (files.documents) {
+      const docFiles = Array.isArray(files.documents)
+        ? files.documents
+        : [files.documents];
+      result.documents = docFiles.map((file) => ({
+        filename: file.filename,
+        originalname: file.originalname,
+        path: file.path,
+        size: file.size,
+        mimetype: file.mimetype,
+        url: `/uploads/documents/${file.filename}`,
+      }));
     }
 
-    //  Delete project (Admin only)
-    static async deleteProject(req, res) {
+    return result;
+  }
+
+  // Add a new project (Admin only)
+  static async addProject(req, res) {
+    console.log('Request body:', req.body);
+    console.log('Files received:', req.files);
+    
+    try {
+      const userId = req.user?.id; // from auth middleware
+      if (!userId) {
+        return res.status(401).json({
+          success: false,
+          message: "Authentication required",
+        });
+      }
+
+      const user = await User.findById(userId);
+      if (!user || user.role !== "admin") {
+        return res.status(403).json({
+          success: false,
+          message: "Only admin can add projects",
+        });
+      }
+
+      // Parse project data from form data
+      let projectData = {};
+      if (req.body.projectData) {
         try {
-            const userId = req.user.id;
-            const user = await User.findById(userId);
-
-            if (!user || user.role !== "admin") {
-                return res.status(403).json({
-                    success: false,
-                    message: "Only admin can delete projects"
-                });
-            }
-
-            // Get project before deleting to remove associated image
-            const projectToDelete = await Project.findById(req.params.id);
-            if (!projectToDelete) {
-                return res.status(404).json({
-                    success: false,
-                    message: "Project not found"
-                });
-            }
-
-            // Delete associated image file if it exists and is not the default
-            if (projectToDelete.image && projectToDelete.image !== '/placeholder-logo.png' && projectToDelete.image.startsWith('/uploads/')) {
-                const imagePath = path.join(process.cwd(), 'uploads', path.basename(projectToDelete.image));
-                if (fs.existsSync(imagePath)) {
-                    fs.unlinkSync(imagePath);
-                }
-            }
-
-            await Project.findByIdAndDelete(req.params.id);
-
-            return res.status(200).json({
-                success: true,
-                message: "Project deleted successfully"
-            });
-        } catch (error) {
-            return res.status(500).json({
-                success: false,
-                message: "Error deleting project",
-                error: error.message
-            });
+          projectData = typeof req.body.projectData === 'string' 
+            ? JSON.parse(req.body.projectData) 
+            : req.body.projectData;
+          console.log('Parsed project data:', projectData);
+        } catch (e) {
+          console.error('Error parsing project data:', e);
+          return res.status(400).json({
+            success: false,
+            message: "Invalid project data format: " + e.message,
+          });
         }
+      } else {
+        projectData = req.body;
+      }
+
+      // Process uploaded files using the static method
+      const uploadedFiles = ProjectController.processUploadedFiles(req.files);
+
+      // Map status to match the Project model's enum values
+      const statusMap = {
+        'Planned': 'Planning',
+        'InProgress': 'In Progress',
+        // Add other mappings if needed
+      };
+      
+      // Transform the incoming data to match the Project model
+      const projectPayload = {
+        title: projectData.title,
+        shortDescription: projectData.shortDescription,
+        detailedDescription: projectData.detailedDescription,
+        category: projectData.category,
+        location: {
+          address: projectData.location || 'Not specified',
+          country: 'Pakistan' // Default country
+        },
+        status: statusMap[projectData.status] || projectData.status || 'Planning',
+        startDate: projectData.startDate ? new Date(projectData.startDate) : null,
+        expectedEndDate: projectData.endDate ? new Date(projectData.endDate) : null,
+        impact: {
+          familiesAssisted: projectData.impact?.familiesAssisted || 0,
+          individualsBenefited: projectData.impact?.childrenBenefited || 0,
+          keyAchievements: projectData.keyFeatures || []
+        },
+        images: uploadedFiles.images.map(img => ({
+          url: img.url,
+          caption: '',
+          isPrimary: false
+        })),
+        isFeatured: projectData.isFeatured || false,
+        createdBy: userId,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      };
+
+      console.log('Creating project with payload:', JSON.stringify(projectPayload, null, 2));
+      
+      // Create new project with transformed data
+      const newProject = new Project(projectPayload);
+
+      // Validate the project before saving
+      const validationError = newProject.validateSync();
+      if (validationError) {
+        console.error('Validation error details:', validationError.errors);
+        throw new Error(`Validation failed: ${validationError.message}`);
+      }
+
+      // Save the project
+      console.log('Attempting to save project...');
+      const savedProject = await newProject.save();
+      console.log('Project saved successfully with ID:', savedProject._id);
+      
+      return res.status(201).json({
+        success: true,
+        message: "Project created successfully",
+        project: savedProject,
+      });
+    } catch (error) {
+      console.error('Error in addProject:', error);
+      
+      // Log detailed error information
+      if (error.name === 'ValidationError') {
+        console.error('Validation errors:', Object.values(error.errors).map(e => e.message));
+      }
+      if (error.code) {
+        console.error('Error code:', error.code);
+      }
+      if (error.keyPattern) {
+        console.error('Key pattern:', error.keyPattern);
+      }
+      if (error.keyValue) {
+        console.error('Key value:', error.keyValue);
+      }
+
+      // Clean up uploaded files if there was an error
+      if (req.files) {
+        console.log('Cleaning up uploaded files due to error');
+        Object.values(req.files)
+          .flat()
+          .forEach((file) => {
+            try {
+              if (file && file.path && fs.existsSync(file.path)) {
+                console.log('Deleting file:', file.path);
+                fs.unlinkSync(file.path);
+              }
+            } catch (cleanupError) {
+              console.error("Error cleaning up file:", cleanupError);
+            }
+          });
+      }
+
+      // Return detailed error information
+      const errorResponse = {
+        success: false,
+        message: "Error creating project",
+        error: error.message,
+      };
+
+      if (error.name === 'ValidationError') {
+        errorResponse.errors = {};
+        Object.keys(error.errors).forEach(key => {
+          errorResponse.errors[key] = error.errors[key].message;
+        });
+      }
+
+      if (process.env.NODE_ENV === 'development') {
+        errorResponse.stack = error.stack;
+      }
+
+      return res.status(500).json(errorResponse);
     }
+  }
+
+  // Get projects by category
+  static async getProjectsByCategory(req, res) {
+    try {
+      const { category } = req.params;
+      const projects = await Project.find({ category: { $regex: category, $options: 'i' } });
+      return res.status(200).json({ success: true, projects });
+    } catch (error) {
+      return res.status(500).json({
+        success: false,
+        message: 'Error fetching projects by category',
+        error: error.message
+      });
+    }
+  }
+
+  // Get featured projects
+  static async getFeaturedProjects(req, res) {
+    try {
+      const projects = await Project.find({ isFeatured: true });
+      return res.status(200).json({ success: true, projects });
+    } catch (error) {
+      return res.status(500).json({
+        success: false,
+        message: 'Error fetching featured projects',
+        error: error.message
+      });
+    }
+  }
+
+  // Update project
+  static async updateProject(req, res) {
+    try {
+      const { id } = req.params;
+      const updates = req.body;
+      
+      const project = await Project.findByIdAndUpdate(
+        id,
+        { ...updates, updatedAt: new Date() },
+        { new: true, runValidators: true }
+      );
+
+      if (!project) {
+        return res.status(404).json({
+          success: false,
+          message: 'Project not found'
+        });
+      }
+
+      return res.status(200).json({
+        success: true,
+        message: 'Project updated successfully',
+        project
+      });
+    } catch (error) {
+      return res.status(500).json({
+        success: false,
+        message: 'Error updating project',
+        error: error.message
+      });
+    }
+  }
+
+  // Delete project
+  static async deleteProject(req, res) {
+    try {
+      const { id } = req.params;
+      const project = await Project.findByIdAndDelete(id);
+
+      if (!project) {
+        return res.status(404).json({
+          success: false,
+          message: 'Project not found'
+        });
+      }
+
+      return res.status(200).json({
+        success: true,
+        message: 'Project deleted successfully'
+      });
+    } catch (error) {
+      return res.status(500).json({
+        success: false,
+        message: 'Error deleting project',
+        error: error.message
+      });
+    }
+  }
+
+  // Toggle project status
+  static async toggleProjectStatus(req, res) {
+    try {
+      const { id } = req.params;
+      const project = await Project.findById(id);
+
+      if (!project) {
+        return res.status(404).json({
+          success: false,
+          message: 'Project not found'
+        });
+      }
+
+      project.isActive = !project.isActive;
+      await project.save();
+
+      return res.status(200).json({
+        success: true,
+        message: `Project ${project.isActive ? 'activated' : 'deactivated'} successfully`,
+        project
+      });
+    } catch (error) {
+      return res.status(500).json({
+        success: false,
+        message: 'Error toggling project status',
+        error: error.message
+      });
+    }
+  }
+
+  // Toggle featured status
+  static async toggleFeaturedStatus(req, res) {
+    try {
+      const { id } = req.params;
+      const project = await Project.findById(id);
+
+      if (!project) {
+        return res.status(404).json({
+          success: false,
+          message: 'Project not found'
+        });
+      }
+
+      project.isFeatured = !project.isFeatured;
+      await project.save();
+
+      return res.status(200).json({
+        success: true,
+        message: `Project ${project.isFeatured ? 'marked as featured' : 'removed from featured'} successfully`,
+        project
+      });
+    } catch (error) {
+      return res.status(500).json({
+        success: false,
+        message: 'Error toggling featured status',
+        error: error.message
+      });
+    }
+  }
+
+  // Update project impact
+  static async updateProjectImpact(req, res) {
+    try {
+      const { id } = req.params;
+      const impactData = req.body;
+
+      const project = await Project.findByIdAndUpdate(
+        id,
+        { impact: impactData, updatedAt: new Date() },
+        { new: true, runValidators: true }
+      );
+
+      if (!project) {
+        return res.status(404).json({
+          success: false,
+          message: 'Project not found'
+        });
+      }
+
+      return res.status(200).json({
+        success: true,
+        message: 'Project impact updated successfully',
+        project
+      });
+    } catch (error) {
+      return res.status(500).json({
+        success: false,
+        message: 'Error updating project impact',
+        error: error.message
+      });
+    }
+  }
+
+  // Add project partner
+  static async addProjectPartner(req, res) {
+    try {
+      const { id } = req.params;
+      const partnerData = req.body;
+
+      const project = await Project.findByIdAndUpdate(
+        id,
+        { $push: { partners: partnerData }, updatedAt: new Date() },
+        { new: true, runValidators: true }
+      );
+
+      if (!project) {
+        return res.status(404).json({
+          success: false,
+          message: 'Project not found'
+        });
+      }
+
+      return res.status(200).json({
+        success: true,
+        message: 'Partner added to project successfully',
+        project
+      });
+    } catch (error) {
+      return res.status(500).json({
+        success: false,
+        message: 'Error adding project partner',
+        error: error.message
+      });
+    }
+  }
+
+  // Remove project partner
+  static async removeProjectPartner(req, res) {
+    try {
+      const { id, partnerId } = req.params;
+
+      const project = await Project.findByIdAndUpdate(
+        id,
+        { $pull: { partners: { _id: partnerId } }, updatedAt: new Date() },
+        { new: true }
+      );
+
+      if (!project) {
+        return res.status(404).json({
+          success: false,
+          message: 'Project not found'
+        });
+      }
+
+      return res.status(200).json({
+        success: true,
+        message: 'Partner removed from project successfully',
+        project
+      });
+    } catch (error) {
+      return res.status(500).json({
+        success: false,
+        message: 'Error removing project partner',
+        error: error.message
+      });
+    }
+  }
 }
 
 export default ProjectController;

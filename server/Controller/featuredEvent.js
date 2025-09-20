@@ -87,7 +87,30 @@ class FeaturedEventController {
                 });
             }
 
-            res.json({ success: true, data: featuredEvent });
+            // Convert to a plain JavaScript object to modify it
+            const featuredEventObj = featuredEvent.toObject();
+            
+            // Format the images array to ensure proper URLs
+            if (featuredEventObj.images && Array.isArray(featuredEventObj.images)) {
+                featuredEventObj.images = featuredEventObj.images.map(image => {
+                    if (!image) return '/placeholder-logo.png';
+                    // If it's already a full URL, return as is
+                    if (image.startsWith('http') || image.startsWith('blob:')) {
+                        return image;
+                    }
+                    // If it starts with /uploads, ensure it has the correct path
+                    if (image.startsWith('/uploads/')) {
+                        return image; // The frontend will prepend the base URL
+                    }
+                    // If it's just a filename, prepend /uploads/
+                    if (!image.startsWith('/')) {
+                        return `/uploads/${image}`;
+                    }
+                    return image;
+                });
+            }
+
+            res.json({ success: true, data: featuredEventObj });
         } catch (err) {
             res.status(500).json({ message: "Server error", error: err.message });
         }

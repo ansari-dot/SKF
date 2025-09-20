@@ -1,7 +1,7 @@
 import express from "express";
 import ProgramController from "../Controller/program.js";
 import { auth } from "../middleware/auth.js";
-import upload from '../util/multer.js'
+import { upload } from '../util/multer.js'
 const router = express.Router();
 
 //Get all programs (accessible by  users & admins)

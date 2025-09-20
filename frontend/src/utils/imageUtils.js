@@ -1,21 +1,23 @@
 const getAbsoluteImageUrl = (imagePath) => {
   if (!imagePath) {
-    return '/placeholder-logo.png';
+    return '/placeholder-logo.png'; // fallback image
   }
 
-  if (imagePath.startsWith('/uploads/')) {
+  // If path starts with /uploads (covers subfolders too: /uploads/images, /uploads/profile etc.)
+  if (imagePath.startsWith('/uploads')) {
     const apiUrl = import.meta.env.VITE_API_URL;
     const apiBaseUrl = apiUrl.replace('/api', '');
 
-    // If VITE_API_URL points to localhost, but the current host is not localhost,
-    // assume /uploads is relative to the current host.
-    if (apiBaseUrl.includes('localhost') && window.location.hostname !== 'localhost') {
-      return imagePath;
-    } else {
-      // Otherwise, use the full API base URL.
+    // Development: use backend API base URL (localhost)
+    if (window.location.hostname === 'localhost') {
       return `${apiBaseUrl}${imagePath}`;
     }
+
+    // Production: assume files are served by same domain (Hostinger/VPS)
+    return `${window.location.origin}${imagePath}`;
   }
+
+  // For already full URLs or public assets
   return imagePath;
 };
 

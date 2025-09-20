@@ -10,12 +10,14 @@ import Preloader from './components/Preloader';
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
 import OurWorkPage from './pages/OurWorkPage';
+import ProjectDetailPage from './pages/ProjectDetailPage';
 import GetInvolvedPage from './pages/GetInvolvedPage';
 import MediaPage from './pages/MediaPage';
+import MediaDetailPage from './pages/MediaDetailPage';
 import ContactPage from './pages/ContactPage';
 import LoginPage from './pages/LoginPage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
-import NotFoundPage from './pages/NotFoundPage';
+//import NotFoundPage from './pages/NotFoundPage';
 import ProtectedRoute from './components/ProtectedRoute';
 
 // Admin components
@@ -56,6 +58,7 @@ function App() {
                 <Route path="programs" element={<Program />} />
                 <Route path="opportunities" element={<Opportunity />} />
                 <Route path="media" element={<Media />} />
+                <Route path="media/:id" element={<MediaDetailPage />} />
                 <Route path="contact" element={<Contact />} />
                 <Route path="profile" element={<UserProfile />} />
                 <Route path="featured-events" element={<FeaturedEvent />} />
@@ -100,6 +103,19 @@ function App() {
               }
             />
             <Route
+              path="/projects/:id"
+              element={
+                <>
+                  <Header />
+                  <main>
+                    <ProjectDetailPage />
+                  </main>
+                  <Footer />
+                </>
+              }
+            />
+          
+            <Route
               path="/get-involved"
               element={
                 <>
@@ -118,6 +134,18 @@ function App() {
                   <Header />
                   <main>
                     <MediaPage />
+                  </main>
+                  <Footer />
+                </>
+              }
+            />
+            <Route
+              path="/media/:id"
+              element={
+                <>
+                  <Header />
+                  <main>
+                    <MediaDetailPage />
                   </main>
                   <Footer />
                 </>
@@ -145,7 +173,7 @@ function App() {
                 </>
               }
             />
-            {/* 404 - Catch all route */}
+            {/* 404 - Catch all route 
             <Route
               path="*"
               element={
@@ -157,7 +185,7 @@ function App() {
                   <Footer />
                 </>
               }
-            />
+            /> */}
           </Routes>
         </div>
       </Router>

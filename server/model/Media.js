@@ -21,11 +21,11 @@ const mediaSchema = new mongoose.Schema({
     },
     highlight: {
         type: [String],
-        required: true
+        default: []
     },
     link: {
         type: String,
-        required: true
+        default: ''
     },
     image: {
         type: String,
@@ -37,16 +37,24 @@ const mediaSchema = new mongoose.Schema({
     },
     author: {
         type: String,
-        required: true
+        default: 'Admin'
     },
     category: {
         type: String,
-        required: true
+        default: 'General'
     },
     tags: {
         type: [String],
         default: []
-    }
+    },
+    relatedMedia: [{
+        _id: String,
+        heading: String,
+        description: String,
+        image: String,
+        date: Date,
+        mediaType: String
+    }]
 }, {
     timestamps: true
 });

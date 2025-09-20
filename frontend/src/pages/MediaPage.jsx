@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
 import getAbsoluteImageUrl from '../utils/imageUtils';
 import '../styles/BrandIcons.css';
 
@@ -32,8 +33,12 @@ const MediaPage = () => {
   const fetchFeaturedEvent = async () => {
     try {
       const response = await axios.get(`${API_URL}/featured-event/latest`);
+      console.log('Featured Event API Response:', response.data);
       if (response.data.success && response.data.data) {
+        console.log('Featured Event Images:', response.data.data.images);
         setFeaturedEvent(response.data.data);
+      } else {
+        console.log('No featured event data found');
       }
     } catch (error) {
       console.error('Error fetching featured event:', error);
@@ -145,14 +150,25 @@ const MediaPage = () => {
                         </span>
                       ))}
                     </div>
-                    <motion.button
-                      className="btn btn-outline-primary"
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                        onClick={() => window.open(item.link, '_blank')}
-                    >
-                      Read More
-                    </motion.button>
+                    <div className="row g-3">
+                      <div className="col-md-7">
+                        <p className="text-muted mb-2">
+                          <i className="fas fa-calendar-alt me-2 media-icon"></i>
+                          {new Date(item.createdAt).toLocaleDateString()}
+                        </p>
+                      </div>
+                      <div className="col-md-5">
+                        <Link to={`/media/${item._id}`} className="text-decoration-none">
+                        <motion.button
+                          className="btn btn-outline-primary w-100"
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
+                        >
+                          Read More
+                        </motion.button>
+                      </Link>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </motion.div>
@@ -188,20 +204,121 @@ const MediaPage = () => {
                 {featuredEvent.images && featuredEvent.images.length > 0 ? (
                   <div id="featuredEventCarousel" className="carousel slide" data-bs-ride="carousel">
                     <div className="carousel-inner">
-                      {featuredEvent.images.map((image, index) => (
-                        <div key={index} className={`carousel-item ${index === 0 ? 'active' : ''}`}>
-                         <img
-  src={getAbsoluteImageUrl(image)}
-  alt={`${featuredEvent.title} - Image ${index + 1}`}
-  className="img-fluid rounded shadow logo-hover"
-  style={{ height: '400px', objectFit: 'cover', width: '100%' }}
-  onError={(e) => {
-    e.target.src = '/placeholder-logo.png';
-  }}
-/>
-
-                        </div>
-                      ))}
+                      {featuredEvent.images.map((image, index) => {
+                        // Handle both string and object image formats
+                        let imagePath = typeof image === 'string' ? image : (image.url || image.path || image.imageUrl || '');
+                        
+                        // Ensure the path is properly formatted
+                        if (imagePath) {
+                          // Remove any leading slashes or backslashes
+                          imagePath = imagePath.replace(/^[\\/]+/, '');
+                          
+                          // For development, use the full URL
+                          if (window.location.hostname === 'localhost') {
+                            const baseUrl = API_URL.replace('/api', '');
+                            imagePath = `${baseUrl}/uploads/${imagePath}`;
+                          } else {
+                            // For production, use relative path
+                            imagePath = `/uploads/${imagePath}`;
+                          }
+                          
+                          // Add cache-busting parameter
+                          imagePath += `?t=${Date.now()}`;
+                        }
+                        
+                        return (
+                          <div key={index} className={`carousel-item ${index === 0 ? 'active' : ''}`}>
+                            <div style={{
+                              height: '400px',
+                              overflow: 'hidden',
+                              borderRadius: '8px',
+                              boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+                              position: 'relative'
+                            }}>
+                              <img
+                                src={imagePath || '/placeholder-logo.png'}
+                                alt={`${featuredEvent.title} - Image ${index + 1}`}
+                                style={{
+                                  width: '100%',
+                                  height: '100%',
+                                  objectFit: 'cover',
+                                  opacity: 0,
+                                  transition: 'opacity 0.5s ease-in-out, transform 0.3s ease-in-out'
+                                }}
+                                onLoad={(e) => {
+                                  console.log('Image loaded successfully:', {
+                                    url: e.target.src,
+                                    originalPath: imagePath,
+                                    timestamp: new Date().toISOString()
+                                  });
+                                  e.target.style.opacity = 1;
+                                }}
+                                onError={(e) => {
+                                  const currentSrc = e.target.src;
+                                  const errorInfo = {
+                                    timestamp: new Date().toISOString(),
+                                    attemptedUrl: currentSrc,
+                                    originalPath: imagePath,
+                                    error: e.target.error ? e.target.error.toString() : 'Unknown error',
+                                    navigator: {
+                                      online: navigator.onLine,
+                                      userAgent: navigator.userAgent
+                                    }
+                                  };
+                                  
+                                  console.error('Failed to load image:', errorInfo);
+                                  
+                                  // If this is not the first attempt and we're already trying a fallback, use placeholder
+                                  if (currentSrc.includes('fallback=')) {
+                                    e.target.src = '/placeholder-logo.png';
+                                    e.target.style.opacity = 1;
+                                    return;
+                                  }
+                                  
+                                  // Try to load the image directly from the server root as fallback
+                                  if (imagePath) {
+                                    // Remove any protocol and domain to try with the current domain
+                                    const cleanPath = imagePath.replace(/^https?:\/\/[^\/]+\//, '/');
+                                    const fallbackUrl = `${window.location.protocol}//${window.location.host}${cleanPath}?fallback=true&t=${Date.now()}`;
+                                    console.log('Trying fallback URL:', fallbackUrl);
+                                    e.target.src = fallbackUrl;
+                                    return;
+                                  }
+                                  
+                                  // If all else fails, use placeholder
+                                  e.target.src = '/placeholder-logo.png';
+                                  e.target.style.opacity = 1;
+                                }}
+                                onMouseOver={(e) => {
+                                  e.target.style.transform = 'scale(1.03)';
+                                }}
+                                onMouseOut={(e) => {
+                                  e.target.style.transform = 'scale(1)';
+                                }}
+                              />
+                              <div style={{
+                                position: 'absolute',
+                                bottom: '10px',
+                                left: '10px',
+                                backgroundColor: 'rgba(0,0,0,0.7)',
+                                color: 'white',
+                                padding: '4px 8px',
+                                borderRadius: '4px',
+                                fontSize: '11px',
+                                maxWidth: '90%',
+                                overflow: 'hidden',
+                                textOverflow: 'ellipsis',
+                                whiteSpace: 'nowrap',
+                                fontFamily: 'monospace',
+                                pointerEvents: 'none',
+                                backdropFilter: 'blur(2px)'
+                              }}>
+                                {imagePath ? imagePath.split('/').pop() : 'image'}
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      })}
                     </div>
                     {featuredEvent.images.length > 1 && (
                       <>
@@ -303,18 +420,6 @@ const MediaPage = () => {
                   </div>
                 )}
                 
-                {featuredEvent.registrationLink && (
-                  <motion.a
-                    href={featuredEvent.registrationLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn btn-primary btn-lg"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    Register Now
-                  </motion.a>
-                )}
               </motion.div>
             </div>
           ) : (

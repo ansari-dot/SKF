@@ -54,8 +54,35 @@ app.use(
 );
 
 // ✅ Serve uploaded files correctly
-// Example: http://shehryarkhanfoundation.com/api/uploads/myimage.jpg
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+import fs from 'fs';
+
+// Ensure uploads directory exists
+const uploadsDir = path.join(process.cwd(), 'uploads');
+if (!fs.existsSync(uploadsDir)) {
+    fs.mkdirSync(uploadsDir, { recursive: true });
+    console.log(`Created uploads directory at: ${uploadsDir}`);
+}
+
+// Serve static files from the uploads directory
+app.use('/uploads', express.static(uploadsDir, {
+    setHeaders: (res, path) => {
+        // Set proper cache control for images
+        if (path.endsWith('.jpg') || path.endsWith('.jpeg') || path.endsWith('.png') || path.endsWith('.gif')) {
+            res.setHeader('Cache-Control', 'public, max-age=31536000');
+        }
+    },
+    // Enable dotfiles (files starting with .) to be served
+    dotfiles: 'allow'
+}));
+
+// Log file access errors only
+app.use('/uploads', (req, res, next) => {
+    const filePath = path.join(uploadsDir, req.path);
+    if (!fs.existsSync(filePath)) {
+        console.error(`File not found: ${filePath}`);
+    }
+    next();
+});
 
 // Routes
 app.get("/", (req, res) => {

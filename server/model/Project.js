@@ -1,45 +1,145 @@
 import mongoose from "mongoose";
 
 const ProjectSchema = new mongoose.Schema({
+    // Basic Information
     title: {
         type: String,
-        required: true, // Example: "Flood Relief Initiative"
+        required: true,
+        trim: true
     },
-    description: {
+    shortDescription: {
         type: String,
-        required: true, // Example: "Emergency response providing food, shelter..."
+        required: true,
+        trim: true
+    },
+    detailedDescription: {
+        type: String,
+        trim: true
+    },
+    
+    // Project Details
+    category: {
+        type: String,
+        enum: ["Relief", "Education", "Healthcare", "Infrastructure", "Other"],
+        default: "Other"
     },
     location: {
-        type: String, // Example: "Sindh Province"
-    },
-    status: {
-        type: String,
-        enum: ["Planned", "Ongoing", "Completed"],
-        default: "Planned" // Example: "Completed"
-    },
-    startDate: {
-        type: Date, // Example: "2025-08-01"
-    },
-    endDate: {
-        type: Date, // Example: "2025-08-31"
-    },
-    impact: {
-        familiesAssisted: {
-            type: Number, // Example: 10000
-            default: 0
+        address: String,
+        city: String,
+        province: String,
+        country: {
+            type: String,
+            default: "Pakistan"
         },
-        otherImpact: {
-            type: String // Optional field for more impact details
+        coordinates: {
+            lat: Number,
+            lng: Number
         }
     },
-    image: {
+    
+    // Timeline
+    status: {
         type: String,
-        required: true
+        enum: ["Planning", "Fundraising", "In Progress", "Completed", "On Hold"],
+        default: "Planning"
     },
-    createdAt: {
-        type: Date,
-        default: Date.now
+    startDate: {
+        type: Date
+    },
+    expectedEndDate: {
+        type: Date
+    },
+    actualEndDate: {
+        type: Date
+    },
+    
+    // Financial Information
+    budget: {
+        type: Number,
+        min: 0
+    },
+    fundsRaised: {
+        type: Number,
+        default: 0
+    },
+    
+    // Impact Metrics
+    impact: {
+        familiesAssisted: {
+            type: Number,
+            default: 0
+        },
+        individualsBenefited: {
+            type: Number,
+            default: 0
+        },
+        volunteersInvolved: {
+            type: Number,
+            default: 0
+        },
+        keyAchievements: [{
+            type: String
+        }],
+        successStories: [{
+            title: String,
+            description: String,
+            image: String
+        }]
+    },
+    
+    // Media
+    images: [{
+        url: String,
+        caption: String,
+        isPrimary: {
+            type: Boolean,
+            default: false
+        }
+    }],
+    documents: [{
+        title: String,
+        url: String,
+        type: {
+            type: String,
+            enum: ["report", "proposal", "certificate", "other"]
+        }
+    }],
+    
+    // Team & Partners
+    projectManager: {
+        name: String,
+        contact: String
+    },
+    partners: [{
+        name: String,
+        logo: String,
+        website: String
+    }],
+    
+    // Additional Information
+    challengesFaced: [String],
+    lessonsLearned: [String],
+    futurePlans: String,
+    
+    // System Fields
+    isFeatured: {
+        type: Boolean,
+        default: false
+    },
+    isActive: {
+        type: Boolean,
+        default: true
+    },
+    createdBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
+    updatedBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
     }
+}, {
+    timestamps: true
 });
 
 const Project = mongoose.model("Project", ProjectSchema);

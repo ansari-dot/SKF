@@ -418,29 +418,34 @@ const FeaturedEvent = () => {
                     )}
 
                     {/* Image Preview */}
-                    {formData.images.length > 0 && formData.images[0] !== '/placeholder-logo.png' && (
-                      <div className="mt-3">
-                        <label className="form-label">Current Images:</label>
-                        <div className="row">
-                          {formData.images.map((image, index) => (
-                            <div key={index} className="col-md-3 mb-2">
-                              <img
-                                src={image.startsWith('/uploads/') 
-                                  ? `${import.meta.env.VITE_API_URL.replace('/api', '')}${image}`
-                                  : image
-                                }
-                                alt={`Event ${index + 1}`}
-                                className="img-thumbnail"
-                                style={{ width: '100%', height: '100px', objectFit: 'cover' }}
-                                onError={(e) => {
-                                  e.target.src = '/placeholder-logo.png';
-                                }}
-                              />
+                    <div className="mt-3">
+                      <label className="form-label">Image Preview:</label>
+                      <div className="row">
+                        {formData.images.map((image, index) => (
+                          <div key={index} className="col-md-3 mb-2">
+                            <img
+                              src={image.startsWith('/uploads/') 
+                                ? `${window.location.origin}${image}`
+                                : (image.startsWith('http') ? image : 
+                                   (image.startsWith('/') ? 
+                                     `${window.location.origin}${image}` : 
+                                     `/placeholder-logo.png`))
+                              }
+                              alt={`Event Preview ${index + 1}`}
+                              className="img-thumbnail"
+                              style={{ width: '100%', height: '100px', objectFit: 'cover' }}
+                              onError={(e) => {
+                                console.error('Error loading image:', image);
+                                e.target.src = '/placeholder-logo.png';
+                              }}
+                            />
+                            <div className="text-truncate small mt-1" title={image}>
+                              {image.split('/').pop().substring(0, 15)}...
                             </div>
-                          ))}
-                        </div>
+                          </div>
+                        ))}
                       </div>
-                    )}
+                    </div>
                   </div>
 
                   {/* Event Highlights */}

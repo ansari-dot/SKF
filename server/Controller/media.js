@@ -22,26 +22,48 @@ class MediaController {
                 return res.status(403).json({ message: "Only admin can add media" });
             }
 
-            const { mediaType, heading, team, description, highlight, link, image, author, category, tags } = req.body;
+            const { 
+                mediaType = 'news', 
+                heading = '', 
+                team = '', 
+                description = '', 
+                highlight = [], 
+                link = '', 
+                image = '/placeholder-logo.png', 
+                author = 'Admin', 
+                category = 'General', 
+                tags = [],
+                relatedMedia = []
+            } = req.body;
 
             const newMedia = new Media({
                 mediaType,
                 heading,
                 team,
                 description,
-                highlight,
+                highlight: Array.isArray(highlight) ? highlight : [highlight].filter(Boolean),
                 link,
-                image: image || '/placeholder-logo.png',
+                image,
                 author,
                 category,
-                tags: tags || []
+                tags: Array.isArray(tags) ? tags : [tags].filter(Boolean),
+                relatedMedia: Array.isArray(relatedMedia) ? relatedMedia : []
             });
 
             await newMedia.save();
 
-            res.status(201).json({ success: true, message: "Media created successfully", data: newMedia });
+            res.status(201).json({ 
+                success: true, 
+                message: "Media created successfully", 
+                data: newMedia 
+            });
         } catch (err) {
-            res.status(500).json({ message: "Server error", error: err.message });
+            console.error('Error creating media:', err);
+            res.status(500).json({ 
+                success: false,
+                message: "Server error", 
+                error: err.message 
+            });
         }
     }
 
@@ -80,18 +102,49 @@ class MediaController {
                 return res.status(403).json({ message: "Only admin can update media" });
             }
 
+            const { id } = req.params;
+            const updateData = { ...req.body };
+
+            // Convert single values to arrays if needed
+            if (updateData.highlight && !Array.isArray(updateData.highlight)) {
+                updateData.highlight = [updateData.highlight].filter(Boolean);
+            }
+            if (updateData.tags && !Array.isArray(updateData.tags)) {
+                updateData.tags = [updateData.tags].filter(Boolean);
+            }
+            if (updateData.relatedMedia && !Array.isArray(updateData.relatedMedia)) {
+                updateData.relatedMedia = [updateData.relatedMedia].filter(Boolean);
+            }
+
+            // Remove _id from update data to prevent changing the document ID
+            delete updateData._id;
+            delete updateData.__v;
+
             const updatedMedia = await Media.findByIdAndUpdate(
-                req.params.id,
-                req.body, { new: true }
+                id, 
+                { $set: updateData },
+                { new: true, runValidators: true }
             );
 
             if (!updatedMedia) {
-                return res.status(404).json({ message: "Media not found" });
+                return res.status(404).json({ 
+                    success: false,
+                    message: "Media not found" 
+                });
             }
 
-            res.json({ success: true, message: "Media updated successfully", data: updatedMedia });
+            res.json({ 
+                success: true, 
+                message: "Media updated successfully", 
+                data: updatedMedia 
+            });
         } catch (err) {
-            res.status(500).json({ message: "Server error", error: err.message });
+            console.error('Error updating media:', err);
+            res.status(500).json({ 
+                success: false,
+                message: "Server error", 
+                error: err.message 
+            });
         }
     }
 

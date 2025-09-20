@@ -1,28 +1,32 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-
+import { useNavigate } from 'react-router-dom';
 const ServicesSection = () => {
+  const navigate = useNavigate();
   const services = [
     {
       icon: 'fas fa-users',
       title: 'Become a Volunteer',
       description: 'Our organization is actively seeking passionate individuals who want to join our team and make a meaningful impact. As a volunteer, you will have the opportunity to contribute your skills, time, and energy towards our mission. We believe that together we can create positive change and make a difference in the lives of those we serve.',
       buttonText: 'Join Now',
-      buttonColor: 'primary'
+      buttonColor: 'primary',
+      onClick: () => navigate('/get-involved')
     },
     {
       icon: 'fas fa-hands-helping',
       title: 'Community Support',
       description: 'We provide essential support and resources to help communities thrive and overcome challenges together. Our community support programs focus on building strong, resilient communities through various initiatives and partnerships.',
       buttonText: 'Get Support',
-      buttonColor: 'primary'
+      buttonColor: 'primary',
+      onClick: () => navigate('/our-work')
     },
     {
       icon: 'fas fa-handshake',
       title: 'Become a Partner',
       description: 'We are always looking for like-minded organizations and individuals to partner with us in our mission to create positive change. As a partner, you will have the opportunity to collaborate with us on various initiatives and projects that align with our values and goals.',
       buttonText: 'Partner Us',
-      buttonColor: 'primary'
+      buttonColor: 'primary',
+      onClick: () => navigate('/get-involved')
     }
   ];
 
@@ -91,15 +95,7 @@ const ServicesSection = () => {
                       className={`btn btn-${service.buttonColor} mt-auto`}
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
-                      onClick={() => {
-                        if (service.buttonText === 'Join Now') {
-                          window.location.href = '/get-involved';
-                        } else if (service.buttonText === 'Get Support') {
-                          window.location.href = '/contact';
-                        } else if (service.buttonText === 'Partner With Us') {
-                          window.location.href = '/get-involved';
-                        }
-                      }}
+                      onClick={service.onClick}
                       style={{ cursor: 'pointer' }}
                     >
                       {service.buttonText}

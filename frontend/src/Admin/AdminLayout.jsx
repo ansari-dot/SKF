@@ -4,6 +4,7 @@ import Sidebar from './Sidebar';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import './AdminStyles.css';
+import './AdminButtonStyles.css';
 
 const AdminLayout = () => {
   const navigate = useNavigate();

@@ -1,13 +1,49 @@
 /* Modern Admin Dashboard Styles with Green & Blue Brand Colors */
 
+/* Make all icons and buttons white in admin panel */
+.admin-sidebar .icon,
+.admin-sidebar i,
+.admin-sidebar .stat-icon,
+.admin-sidebar [class*="fa-"],
+.admin-sidebar svg,
+button,
+button .icon,
+button i,
+button [class*="fa-"],
+button svg,
+.btn,
+.btn .icon,
+.btn i,
+.btn [class*="fa-"],
+.btn svg,
+/* Programs section */
+#programs-section .btn i,
+#programs-section .btn [class*="fa-"],
+#programs-section .btn svg,
+/* Opportunities section */
+#opportunities-section .btn i,
+#opportunities-section .btn [class*="fa-"],
+#opportunities-section .btn svg,
+/* Featured Events section */
+#featured-events-section .btn i,
+#featured-events-section .btn [class*="fa-"],
+#featured-events-section .btn svg,
+/* Media section */
+#media-section .btn i,
+#media-section .btn [class*="fa-"],
+#media-section .btn svg {
+  color: white !important;
+  fill: white !important;
+}
+
 :root {
-  /* Brand Colors */
+  /* Brand Colors - Enhanced for better contrast */
   --primary-green: #28a745;
-  --primary-blue: #007bff;
+  --primary-blue: #1a73e8;
   --light-green: #d4edda;
-  --light-blue: #cce7ff;
+  --light-blue: #e8f0fe;
   --dark-green: #1e7e34;
-  --dark-blue: #0056b3;
+  --dark-blue: #1557b0;
   
   /* Modern Color Palette */
   --bg-primary: #f8f9fa;
@@ -307,23 +343,22 @@
 
 .admin-btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: var(--shadow-medium);
-  color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .admin-btn-secondary {
-  background: var(--bg-secondary);
+  background-color: var(--bg-secondary);
   border: 2px solid var(--primary-blue);
   border-radius: 12px;
   padding: 0.75rem 2rem;
   font-weight: 600;
-  color: var(--primary-blue);
+  color: var(--primary-blue) !important;
   transition: all 0.3s ease;
 }
 
 .admin-btn-secondary:hover {
   background: var(--primary-blue);
-  color: white;
+  color: white !important;
   transform: translateY(-2px);
 }
 
@@ -462,21 +497,6 @@
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-}
-
-.admin-badge-success {
-  background: var(--light-green);
-  color: var(--dark-green);
-}
-
-.admin-badge-primary {
-  background: var(--light-blue);
-  color: var(--dark-blue);
-}
-
-.admin-badge-warning {
-  background: #fff3cd;
-  color: #856404;
 }
 
 .admin-badge-danger {

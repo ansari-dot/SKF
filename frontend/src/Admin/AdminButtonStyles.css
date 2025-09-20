@@ -1,0 +1,96 @@
+/* Admin Button Styles */
+
+/* Base button styles */
+.admin-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
+  color: white !important;
+}
+
+/* Button text remains white */
+.admin-btn {
+  color: white !important;
+}
+
+/* Primary button */
+.btn-primary,
+.admin-btn-primary {
+  background-color: var(--primary-blue, #1a73e8);
+  border: 1px solid var(--dark-blue, #1557b0);
+}
+
+.btn-primary:hover,
+.admin-btn-primary:hover {
+  background-color: var(--dark-blue, #0d47a1);
+  transform: translateY(-1px);
+}
+
+/* Success button */
+.btn-success {
+  background-color: var(--primary-green, #28a745);
+  border: 1px solid var(--dark-green, #1e7e34);
+}
+
+.btn-success:hover {
+  background-color: var(--dark-green, #1e7e34);
+  transform: translateY(-1px);
+}
+
+/* Danger button */
+.btn-danger {
+  background-color: #dc3545;
+  border: 1px solid #a71d2a;
+}
+
+.btn-danger:hover {
+  background-color: #a71d2a;
+  transform: translateY(-1px);
+}
+
+/* Secondary button */
+.btn-secondary {
+  background-color: #6c757d;
+  border: 1px solid #545b62;
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268;
+  transform: translateY(-1px);
+}
+
+/* Icon buttons */
+.btn-icon {
+  padding: 0.5rem;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Ensure all buttons in admin sections have white text and icons */
+#programs-section .btn,
+#media-section .btn,
+#opportunities-section .btn,
+.admin-btn,
+.btn {
+  color: white !important;
+}
+
+/* Maintain original icon colors */
+#programs-section .btn,
+#media-section .btn,
+#opportunities-section .btn,
+.admin-btn,
+.btn {
+  color: white !important;
+}

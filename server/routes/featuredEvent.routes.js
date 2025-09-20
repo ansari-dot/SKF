@@ -1,7 +1,7 @@
 import express from "express";
 import FeaturedEventController from "../Controller/featuredEvent.js";
 import { auth } from "../middleware/auth.js";
-import upload from "../util/multer.js";
+import { upload } from "../util/multer.js";
 
 const router = express.Router();
 

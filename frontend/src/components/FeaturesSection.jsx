@@ -1,25 +1,29 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-
+import { useNavigate } from 'react-router-dom';
 const FeaturesSection = () => {
+  const navigate = useNavigate();
   const features = [
     {
       icon: 'fas fa-utensils',
       title: 'A Healthy Food',
       description: 'Providing nutritious meals to those in need, ensuring no one goes hungry in our community.',
-      color: 'primary'
+      color: 'primary',
+      onClick: () => navigate('/our-work')
     },
     {
       icon: 'fas fa-graduation-cap',
       title: 'A Tomorrow',
       description: 'Investing in education and skills development to create brighter futures for underprivileged children.',
-      color: 'primary'
+      color: 'primary',
+      onClick: () => navigate('/our-work')
     },
     {
       icon: 'fas fa-hands-helping',
       title: 'Community Support',
       description: 'We provide essential support and resources to help communities thrive and overcome challenges together.',
-      color: 'primary'
+      color: 'primary',
+      onClick: () => navigate('/our-work')
     }
   ];
 
@@ -92,6 +96,7 @@ const FeaturesSection = () => {
                       className={`btn btn-outline-${feature.color} mt-3`}
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
+                      onClick={feature.onClick}
                     >
                       Learn More
                     </motion.button>

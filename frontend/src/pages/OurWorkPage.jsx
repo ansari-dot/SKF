@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import getAbsoluteImageUrl from '../utils/imageUtils';
@@ -41,7 +42,94 @@ const OurWorkPage = () => {
 
 
       {/* Main Programs */}
+      {/* Projects Section 
       <section className="py-5">
+        <div className="container">
+          <motion.div
+            className="text-center mb-5"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="display-5 fw-bold mb-3">Our Projects</h2>
+            <p className="lead text-muted">Making a difference through our initiatives</p>
+          </motion.div>
+          
+          <div className="row g-4">
+            {loading ? (
+              <div className="col-12 text-center py-5">
+                <div className="spinner-border text-primary" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </div>
+                <p className="mt-3 text-muted">Loading projects...</p>
+              </div>
+            ) : projects.length === 0 ? (
+              <div className="col-12 text-center py-5">
+                <i className="fas fa-project-diagram fa-3x text-muted mb-3"></i>
+                <h4 className="text-muted">No projects available</h4>
+                <p className="text-muted">Check back later for updates.</p>
+              </div>
+            ) : (
+              projects.map((project, index) => (
+                <motion.div
+                  key={project._id || index}
+                  className="col-md-6 col-lg-4"
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                >
+                  <div className="card h-100 border-0 shadow-sm hover-shadow transition-all">
+                    <div className="position-relative" style={{ height: '200px', overflow: 'hidden' }}>
+                      <img
+                        src={getAbsoluteImageUrl(project.images?.[0]?.url || project.image || '/placeholder-logo.png')}
+                        alt={project.title}
+                        className="w-100 h-100 object-cover"
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = '/placeholder-logo.png';
+                        }}
+                      />
+                      {project.status && (
+                        <span className="position-absolute top-2 end-2 badge bg-primary">
+                          {project.status}
+                        </span>
+                      )}
+                    </div>
+                    <div className="card-body">
+                      <h5 className="card-title">{project.title}</h5>
+                      <p className="card-text text-muted">
+                        {project.shortDescription?.substring(0, 100)}...
+                      </p>
+                      <div className="d-flex justify-content-between align-items-center">
+                        <span className="badge bg-light text-dark">
+                          <i className="fas fa-map-marker-alt me-1"></i>
+                          {typeof project.location === 'string' 
+                            ? project.location 
+                            : project.location?.address || 
+                              project.location?.city || 
+                              project.location?.country || 
+                              'Location not specified'}
+                        </span>
+                        <Link 
+                          to={`/projects/${project._id}`}
+                          className="btn btn-outline-primary btn-sm"
+                        >
+                          View Details
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              ))
+            )}
+          </div>
+        </div>
+      </section>*/}
+      
+      {/* Programs Section */}
+      <section className="py-5 bg-light">
         <div className="container">
           <motion.div
             className="text-center mb-5"
@@ -222,8 +310,14 @@ const OurWorkPage = () => {
               >
                 <div className="card h-100 border-0 shadow-sm">
                 <img
-  src={getAbsoluteImageUrl(project.image)}
-/>
+                    src={getAbsoluteImageUrl(project.images[0].url)}
+                    alt={project.title}
+                    className="img-fluid rounded shadow"
+                    style={{ maxHeight: '300px', objectFit: 'cover' }}
+                    onError={(e) => {
+                      e.target.src = '/placeholder-logo.png';
+                    }}
+                  />
 
                   <div className="card-body">
                     <div className="d-flex justify-content-between align-items-center mb-2">
@@ -245,22 +339,26 @@ const OurWorkPage = () => {
                     <h5 className="card-title fw-bold">{project.title}</h5>
                     <p className="text-muted mb-2">
                       <i className="fas fa-map-marker-alt me-1"></i>
-                      {project.location}
+                      {typeof project.location === 'string' 
+                        ? project.location 
+                        : project.location?.address || 
+                          project.location?.city || 
+                          project.location?.country || 
+                          'Location not specified'}
                     </p>
-                    <p className="card-text text-muted">{project.description}</p>
-                    <div className="mt-3">
+                    <p className="card-text text-muted">{project.shortDescription}</p>
+                    <div className="mt-3 d-flex justify-content-between align-items-center">
                         <strong className="text-primary">
-                          {project.impact.familiesAssisted} families assisted
-                          {project.impact.otherImpact && ` - ${project.impact.otherImpact}`}
+                          {project.impact?.familiesAssisted || 0} families assisted
+                          {project.impact?.otherImpact && ` - ${project.impact.otherImpact}`}
                         </strong>
+                        <Link 
+                          to={`/projects/${project._id}`}
+                          className="btn btn-outline-primary"
+                        >
+                          Learn More
+                        </Link>
                     </div>
-                 {/*  <motion.button
-                      className="btn btn-outline-primary mt-3"
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      Learn More
-                    </motion.button> */}
                   </div>
                 </div>
               </motion.div>

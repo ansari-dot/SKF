@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
 import getAbsoluteImageUrl from '../utils/imageUtils';
 
 const Media = () => {
@@ -8,6 +9,8 @@ const Media = () => {
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [editingMedia, setEditingMedia] = useState(null);
+  const [relatedMediaSearch, setRelatedMediaSearch] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
   const [formData, setFormData] = useState({
     mediaType: 'news',
     heading: '',
@@ -16,9 +19,10 @@ const Media = () => {
     highlight: [''],
     link: '',
     image: '/placeholder-logo.png',
-    author: '',
-    category: '',
-    tags: ['']
+    author: 'Admin',
+    category: 'General',
+    tags: [''],
+    relatedMedia: []
   });
   
   const API_URL = `${import.meta.env.VITE_API_URL}`;
@@ -70,6 +74,48 @@ const Media = () => {
     }));
   };
 
+  const searchMedia = async (query) => {
+    if (!query.trim()) {
+      setSearchResults([]);
+      return;
+    }
+    try {
+      const response = await axios.get(`${API_URL}/media/search?q=${encodeURIComponent(query)}`);
+      setSearchResults(response.data.data || []);
+    } catch (error) {
+      console.error('Error searching media:', error);
+      toast.error('Failed to search media');
+    }
+  };
+
+  const addRelatedMedia = (item) => {
+    if (!formData.relatedMedia.some(rm => rm._id === item._id)) {
+      setFormData(prev => ({
+        ...prev,
+        relatedMedia: [
+          ...prev.relatedMedia,
+          {
+            _id: item._id,
+            heading: item.heading,
+            description: item.description,
+            image: item.image,
+            date: item.date,
+            mediaType: item.mediaType
+          }
+        ]
+      }));
+    }
+    setRelatedMediaSearch('');
+    setSearchResults([]);
+  };
+
+  const removeRelatedMedia = (id) => {
+    setFormData(prev => ({
+      ...prev,
+      relatedMedia: prev.relatedMedia.filter(rm => rm._id !== id)
+    }));
+  };
+
   const resetForm = () => {
     setFormData({
       mediaType: 'news',
@@ -79,10 +125,13 @@ const Media = () => {
       highlight: [''],
       link: '',
       image: '/placeholder-logo.png',
-      author: '',
-      category: '',
-      tags: ['']
+      author: 'Admin',
+      category: 'General',
+      tags: [''],
+      relatedMedia: []
     });
+    setRelatedMediaSearch('');
+    setSearchResults([]);
     setEditingMedia(null);
   };
 
@@ -92,26 +141,43 @@ const Media = () => {
     try {
       const token = localStorage.getItem('token');
       const config = {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
       };
 
-      // Filter out empty strings from arrays
-      const submitData = {
+      // Prepare form data
+      const dataToSend = {
         ...formData,
-        highlight: formData.highlight.filter(item => item.trim() !== ''),
-        tags: formData.tags.filter(item => item.trim() !== '')
+        // Ensure arrays are properly formatted
+        highlight: formData.highlight.filter(h => h.trim() !== ''),
+        tags: formData.tags.filter(t => t.trim() !== '')
       };
 
       if (editingMedia) {
-        await axios.put(`${API_URL}/media/update/${editingMedia._id}`, submitData, config);
+        await axios.put(`${API_URL}/media/update/${editingMedia._id}`, dataToSend, config);
         toast.success('Media updated successfully');
       } else {
-        await axios.post(`${API_URL}/media/add`, submitData, config);
-        toast.success('Media added successfully');
+        await axios.post(`${API_URL}/media/add`, dataToSend, config);
+        toast.success('Media created successfully');
       }
 
       setShowForm(false);
-      resetForm();
+      setEditingMedia(null);
+      setFormData({
+        mediaType: 'news',
+        heading: '',
+        team: '',
+        description: '',
+        highlight: [''],
+        link: '',
+        image: '/placeholder-logo.png',
+        author: 'Admin',
+        category: 'General',
+        tags: [''],
+        relatedMedia: []
+      });
       fetchMedia();
     } catch (error) {
       console.error('Error saving media:', error);
@@ -126,12 +192,13 @@ const Media = () => {
       heading: mediaItem.heading,
       team: mediaItem.team,
       description: mediaItem.description,
-      highlight: mediaItem.highlight.length > 0 ? mediaItem.highlight : [''],
-      link: mediaItem.link,
-      image: mediaItem.image,
-      author: mediaItem.author,
-      category: mediaItem.category,
-      tags: mediaItem.tags.length > 0 ? mediaItem.tags : ['']
+      highlight: mediaItem.highlight || [''],
+      link: mediaItem.link || '',
+      image: mediaItem.image || '/placeholder-logo.png',
+      author: mediaItem.author || 'Admin',
+      category: mediaItem.category || 'General',
+      tags: mediaItem.tags || [''],
+      relatedMedia: mediaItem.relatedMedia || []
     });
     setShowForm(true);
   };
@@ -167,7 +234,7 @@ const Media = () => {
           <div className="d-flex justify-content-between align-items-center mb-4">
             <h1 className="display-6 fw-bold mb-0">Media Management</h1>
             <button
-              className="btn btn-primary"
+              className="btn btn-primary admin-btn"
               onClick={() => {
                 resetForm();
                 setShowForm(true);
@@ -308,7 +375,7 @@ const Media = () => {
                         />
                         <button
                           type="button"
-                          className="btn btn-outline-danger"
+                          className="btn btn-danger admin-btn"
                           onClick={() => removeArrayItem('highlight', index)}
                         >
                           <i className="fas fa-trash"></i>
@@ -317,7 +384,7 @@ const Media = () => {
                     ))}
                     <button
                       type="button"
-                      className="btn btn-outline-secondary btn-sm"
+                      className="btn btn-secondary btn-sm admin-btn"
                       onClick={() => addArrayItem('highlight')}
                     >
                       <i className="fas fa-plus me-1"></i>
@@ -338,7 +405,7 @@ const Media = () => {
                         />
                         <button
                           type="button"
-                          className="btn btn-outline-danger"
+                          className="btn btn-danger admin-btn"
                           onClick={() => removeArrayItem('tags', index)}
                         >
                           <i className="fas fa-trash"></i>
@@ -347,7 +414,7 @@ const Media = () => {
                     ))}
                     <button
                       type="button"
-                      className="btn btn-outline-secondary btn-sm"
+                      className="btn btn-secondary btn-sm admin-btn"
                       onClick={() => addArrayItem('tags')}
                     >
                       <i className="fas fa-plus me-1"></i>
@@ -355,13 +422,73 @@ const Media = () => {
                     </button>
                   </div>
 
+                  {/* Related Media */}
+                  <div className="mb-4">
+                    <label className="form-label">Related Media</label>
+                    <div className="mb-2">
+                      <div className="input-group">
+                        <input
+                          type="text"
+                          className="form-control"
+                          placeholder="Search for related media..."
+                          value={relatedMediaSearch}
+                          onChange={(e) => {
+                            setRelatedMediaSearch(e.target.value);
+                            searchMedia(e.target.value);
+                          }}
+                        />
+                      </div>
+                      {searchResults.length > 0 && (
+                        <div className="list-group mt-2" style={{ maxHeight: '200px', overflowY: 'auto' }}>
+                          {searchResults.map((item) => (
+                            <button
+                              key={item._id}
+                              type="button"
+                              className="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                              onClick={() => addRelatedMedia(item)}
+                            >
+                              <span>{item.heading}</span>
+                              <span className="badge bg-primary rounded-pill">
+                                {item.mediaType}
+                              </span>
+                            </button>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Selected Related Media */}
+                    {formData.relatedMedia && formData.relatedMedia.length > 0 && (
+                      <div className="mt-3">
+                        <h6>Selected Related Media:</h6>
+                        <div className="list-group">
+                          {formData.relatedMedia.map((item) => (
+                            <div key={item._id} className="list-group-item d-flex justify-content-between align-items-center">
+                              <div>
+                                <strong>{item.heading}</strong>
+                                <div className="text-muted small">{item.mediaType}</div>
+                              </div>
+                              <button
+                                type="button"
+                                className="btn btn-sm btn-danger admin-btn"
+                                onClick={() => removeRelatedMedia(item._id)}
+                              >
+                                <i className="fas fa-times"></i>
+                              </button>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
                   <div className="d-flex gap-2">
-                    <button type="submit" className="btn btn-primary">
+                    <button type="submit" className="btn btn-primary admin-btn">
                       {editingMedia ? 'Update Media' : 'Add Media'}
                     </button>
                     <button
                       type="button"
-                      className="btn btn-secondary"
+                      className="btn btn-secondary admin-btn"
                       onClick={() => {
                         setShowForm(false);
                         resetForm();
@@ -376,16 +503,16 @@ const Media = () => {
           )}
 
           {/* Media List */}
-          <div className="table-responsive">
-            <table className="table table-hover">
+          <div className="table-responsive" style={{ overflowX: 'auto' }}>
+            <table className="table table-hover" style={{ minWidth: '800px' }}>
               <thead className="table-dark">
                 <tr>
-                  <th>Type</th>
-                  <th>Title</th>
-                  <th>Author</th>
-                  <th>Category</th>
-                  <th>Date</th>
-                  <th>Actions</th>
+                  <th style={{ minWidth: '100px' }}>Type</th>
+                  <th style={{ minWidth: '300px' }}>Title</th>
+                  <th style={{ minWidth: '120px' }}>Author</th>
+                  <th style={{ minWidth: '120px' }}>Category</th>
+                  <th style={{ minWidth: '100px' }}>Date</th>
+                  <th style={{ minWidth: '150px' }}>Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -427,21 +554,29 @@ const Media = () => {
                       <td>
                         {new Date(item.createdAt).toLocaleDateString()}
                       </td>
-                      <td>
-                        <div className="btn-group btn-group-sm">
-                          <button
-                            className="btn btn-outline-primary"
+                      <td className="text-nowrap">
+                        <div className="d-flex gap-2 flex-nowrap">
+                          <Link 
+                            to={`/media/${item._id}`}
+                            target="_blank"
+                            className="btn btn-sm btn-info text-white flex-shrink-0"
+                            title="View"
+                          >
+                            view
+                          </Link>
+                          <button 
+                            className="btn btn-sm btn-primary admin-btn flex-shrink-0"
                             onClick={() => handleEdit(item)}
                             title="Edit"
                           >
-                            <i className="fas fa-edit"></i>
+                            update
                           </button>
-                          <button
-                            className="btn btn-outline-danger"
+                          <button 
+                            className="btn btn-sm btn-danger admin-btn flex-shrink-0"
                             onClick={() => handleDelete(item._id)}
                             title="Delete"
                           >
-                            <i className="fas fa-trash"></i>
+                            delete
                           </button>
                         </div>
                       </td>

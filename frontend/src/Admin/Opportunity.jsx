@@ -187,7 +187,7 @@ const Opportunity = () => {
           <div className="d-flex justify-content-between align-items-center mb-4">
             <h1 className="display-6 fw-bold mb-0">Opportunities Management</h1>
             <button
-              className="btn btn-primary"
+              className="btn btn-primary admin-btn"
               onClick={() => {
                 resetForm();
                 setShowForm(true);
@@ -290,7 +290,7 @@ const Opportunity = () => {
                         {formData.requirements.length > 1 && (
                           <button
                             type="button"
-                            className="btn btn-outline-danger"
+                            className="btn btn-danger admin-btn"
                             onClick={() => removeRequirement(index)}
                           >
                             <i className="fas fa-trash"></i>
@@ -300,7 +300,7 @@ const Opportunity = () => {
                     ))}
                     <button
                       type="button"
-                      className="btn btn-outline-primary btn-sm"
+                      className="btn btn-primary btn-sm admin-btn"
                       onClick={addRequirement}
                     >
                       <i className="fas fa-plus me-1"></i>
@@ -349,12 +349,12 @@ const Opportunity = () => {
 
 
                   <div className="d-flex gap-2">
-                    <button type="submit" className="btn btn-primary">
+                    <button type="submit" className="btn btn-primary admin-btn">
                       {editingOpportunity ? 'Update' : 'Add'} Opportunity
                     </button>
                     <button
                       type="button"
-                      className="btn btn-secondary"
+                      className="btn btn-secondary admin-btn"
                       onClick={() => {
                         setShowForm(false);
                         resetForm();
@@ -426,16 +426,16 @@ const Opportunity = () => {
                     </td>
                     <td>
                       <button
-                        className="btn btn-sm btn-outline-primary me-2"
+                        className="btn btn-sm btn-primary admin-btn me-2"
                         onClick={() => handleEdit(opportunity)}
                       >
-                        <i className="fas fa-edit"></i>
+                        update
                       </button>
                       <button
-                        className="btn btn-sm btn-outline-danger"
+                        className="btn btn-sm btn-danger admin-btn"
                         onClick={() => handleDelete(opportunity._id)}
                       >
-                        <i className="fas fa-trash"></i>
+                        delete
                       </button>
                     </td>
                   </tr>

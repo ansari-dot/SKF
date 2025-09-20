@@ -83,7 +83,7 @@ const Dashboard = () => {
           return;
         }
       } catch (dashboardError) {
-        console.log('Dashboard API not available, falling back to individual endpoints');
+        // Fallback to individual endpoints
       }
 
       // Fallback to individual endpoints
