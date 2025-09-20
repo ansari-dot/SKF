@@ -38,8 +38,6 @@ const storage = multer.diskStorage({
 const fileFilter = (req, file, cb) => {
     // Accept images
     const imageTypes = /jpeg|jpg|png|webp|gif/;
-    // Accept documents
-    const documentTypes = /pdf|doc|docx|xls|xlsx|ppt|pptx|txt/;
     // Accept videos
     const videoTypes = /mp4|webm|ogg|mov/;
     
@@ -49,11 +47,10 @@ const fileFilter = (req, file, cb) => {
         return cb(null, true);
     } else if (file.mimetype.startsWith('video/') && videoTypes.test(extname)) {
         return cb(null, true);
-    } else if (file.mimetype.startsWith('application/') && documentTypes.test(extname)) {
-        return cb(null, true);
     }
     
-    cb(new Error(`Unsupported file type: ${file.mimetype}. Only images, videos, and documents are allowed.`), false);
+    // Reject the file
+    cb(new Error('Unsupported file type. Only images and videos are allowed.'), false);
 };
 
 // Single file upload

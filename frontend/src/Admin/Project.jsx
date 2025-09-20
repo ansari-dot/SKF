@@ -25,19 +25,14 @@ const Project = () => {
       childrenBenefited: 0,
       otherImpact: ''
     },
-    images: [],
-    documents: [],
-    partners: []
+    images: []
   });
   const [selectedFiles, setSelectedFiles] = useState({
-    images: [],
-    documents: []
+    images: []
   });
   const [filePreviews, setFilePreviews] = useState({
-    images: [],
-    documents: []
+    images: []
   });
-  const [newPartner, setNewPartner] = useState({ name: '', logo: null, website: '' });
 
   const API_URL = `${import.meta.env.VITE_API_URL}`;
 
@@ -101,48 +96,41 @@ const Project = () => {
     }));
   };
 
-  const handleFileChange = async (e, type) => {
+  const handleFileChange = (e) => {
     const files = Array.from(e.target.files);
-    if (files.length === 0) return;
-
-    const newFiles = [...selectedFiles[type], ...files];
+    
+    // Update selected files
     setSelectedFiles(prev => ({
       ...prev,
-      [type]: newFiles
+      images: [...prev.images, ...files]
     }));
 
-    // Create previews
-    const previews = await Promise.all(files.map(file => {
-      return new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.onload = (e) => resolve({
-          url: e.target.result,
-          name: file.name,
-          type: file.type
-        });
-        reader.readAsDataURL(file);
-      });
-    }));
-
-    setFilePreviews(prev => ({
-      ...prev,
-      [type]: [...prev[type], ...previews]
-    }));
+    // Create previews for images
+    files.forEach(file => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setFilePreviews(prev => ({
+          ...prev,
+          images: [...prev.images, { url: e.target.result, name: file.name }]
+        }));
+      };
+      reader.readAsDataURL(file);
+    });
   };
 
-  const removeFile = (type, index) => {
-    const newFiles = [...selectedFiles[type]];
+  const removeFile = (index) => {
+    const newFiles = [...selectedFiles.images];
     newFiles.splice(index, 1);
     setSelectedFiles(prev => ({
       ...prev,
-      [type]: newFiles
+      images: newFiles
     }));
 
-    const newPreviews = [...filePreviews[type]];
+    const newPreviews = [...filePreviews.images];
     newPreviews.splice(index, 1);
     setFilePreviews(prev => ({
       ...prev,
-      [type]: newPreviews
+      images: newPreviews
     }));
   };
 
@@ -163,19 +151,14 @@ const Project = () => {
         childrenBenefited: 0,
         otherImpact: ''
       },
-      images: [],
-      documents: [],
-      partners: []
+      images: []
     });
     setSelectedFiles({
-      images: [],
-      documents: []
+      images: []
     });
     setFilePreviews({
-      images: [],
-      documents: []
+      images: []
     });
-    setNewPartner({ name: '', logo: null, website: '' });
     setEditingProject(null);
   };
 
@@ -186,11 +169,9 @@ const Project = () => {
       const token = localStorage.getItem('token');
       const formDataToSend = new FormData();
 
-      // Add files to FormData
-      Object.entries(selectedFiles).forEach(([type, files]) => {
-        files.forEach((file, index) => {
-          formDataToSend.append(type, file);
-        });
+      // Add image files to FormData
+      selectedFiles.images.forEach((file) => {
+        formDataToSend.append('images', file);
       });
 
       // Add form data
@@ -198,7 +179,6 @@ const Project = () => {
         ...formData,
         // Don't include file arrays in the JSON data
         images: undefined,
-        documents: undefined,
         // Convert keyFeatures to remove empty strings
         keyFeatures: formData.keyFeatures.filter(feature => feature.trim() !== '')
       };
@@ -322,47 +302,6 @@ const Project = () => {
     } catch (error) {
       console.error('Error toggling project status:', error);
       toast.error(error.response?.data?.message || 'Failed to update project status');
-    }
-  };
-
-  const handleAddPartner = () => {
-    if (!newPartner.name || !newPartner.website) {
-      toast.error('Please provide partner name and website');
-      return;
-    }
-
-    setFormData(prev => ({
-      ...prev,
-      partners: [...prev.partners, { 
-        name: newPartner.name, 
-        logo: newPartner.logo,
-        website: newPartner.website 
-      }]
-    }));
-
-    setNewPartner({ name: '', logo: null, website: '' });
-  };
-
-  const handleRemovePartner = (index) => {
-    const updatedPartners = [...formData.partners];
-    updatedPartners.splice(index, 1);
-    setFormData(prev => ({
-      ...prev,
-      partners: updatedPartners
-    }));
-  };
-
-  const handlePartnerLogoChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setNewPartner(prev => ({
-          ...prev,
-          logo: e.target.result
-        }));
-      };
-      reader.readAsDataURL(file);
     }
   };
 
@@ -640,169 +579,13 @@ const Project = () => {
                             type="button"
                             className="btn btn-sm btn-danger position-absolute top-0 end-0 m-1 p-1 rounded-circle"
                             style={{ width: '20px', height: '20px', lineHeight: '8px' }}
-                            onClick={() => removeFile('images', index)}
+                            onClick={() => removeFile(index)}
                             title="Remove image"
                           >
                             &times;
                           </button>
                         </div>
                       ))}
-                    </div>
-
-                    {/* Show existing images in edit mode */}
-                    {editingProject && formData.images?.length > 0 && (
-                      <div className="mt-3">
-                        <h6>Existing Images:</h6>
-                        <div className="d-flex flex-wrap gap-2">
-                          {formData.images.map((img, index) => (
-                            <div key={index} className="position-relative" style={{ width: '100px' }}>
-                              <img 
-                                src={getAbsoluteImageUrl(img.url)} 
-                                alt={`Existing ${index}`} 
-                                className="img-thumbnail"
-                                style={{ width: '100%', height: '80px', objectFit: 'cover' }}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = '/placeholder-logo.png';
-                                }}
-                              />
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-
-
-                  {/* Document Upload */}
-                  <div className="mb-3">
-                    <label className="form-label">Project Documents</label>
-                    <input
-                      type="file"
-                      multiple
-                      accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt"
-                      onChange={(e) => handleFileChange(e, 'documents')}
-                      className="form-control"
-                    />
-                    <small className="text-muted">Upload documents (PDF, Word, Excel, PowerPoint, Text)</small>
-
-                    <ul className="list-group mt-2">
-                      {filePreviews.documents.map((file, index) => (
-                        <li key={index} className="list-group-item d-flex justify-content-between align-items-center">
-                          <span className="text-truncate" style={{ maxWidth: '70%' }}>{file.name}</span>
-                          <button
-                            type="button"
-                            className="btn btn-sm btn-outline-danger"
-                            onClick={() => removeFile('documents', index)}
-                          >
-                            <FaTrash />
-                          </button>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* Partners Section */}
-                  <div className="card mb-3">
-                    <div className="card-header">
-                      <h6 className="mb-0">Project Partners</h6>
-                    </div>
-                    <div className="card-body">
-                      <div className="row g-3 mb-3">
-                        <div className="col-md-4">
-                          <input
-                            type="text"
-                            className="form-control"
-                            placeholder="Partner name"
-                            value={newPartner.name}
-                            onChange={(e) => setNewPartner({...newPartner, name: e.target.value})}
-                          />
-                        </div>
-                        <div className="col-md-4">
-                          <input
-                            type="url"
-                            className="form-control"
-                            placeholder="Website URL"
-                            value={newPartner.website}
-                            onChange={(e) => setNewPartner({...newPartner, website: e.target.value})}
-                          />
-                        </div>
-                        <div className="col-md-3">
-                          <input
-                            type="file"
-                            className="form-control form-control-sm"
-                            accept="image/*"
-                            onChange={handlePartnerLogoChange}
-                          />
-                          <small className="text-muted">Logo (optional)</small>
-                        </div>
-                        <div className="col-md-1">
-                          <button
-                            type="button"
-                            className="btn btn-primary w-100"
-                            onClick={handleAddPartner}
-                            disabled={!newPartner.name || !newPartner.website}
-                          >
-                            <FaPlus />
-                          </button>
-                        </div>
-                      </div>
-
-                      {formData.partners.length > 0 && (
-                        <div className="table-responsive">
-                          <table className="table table-sm">
-                            <thead>
-                              <tr>
-                                <th>Logo</th>
-                                <th>Name</th>
-                                <th>Website</th>
-                                <th>Action</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {formData.partners.map((partner, index) => (
-                                <tr key={index}>
-                                  <td>
-                                    {partner.logo ? (
-                                      <img 
-                                        src={partner.logo} 
-                                        alt={partner.name}
-                                        style={{ width: '40px', height: '40px', objectFit: 'contain' }}
-                                        className="img-thumbnail"
-                                      />
-                                    ) : (
-                                      <div className="bg-light d-flex align-items-center justify-content-center" 
-                                        style={{ width: '40px', height: '40px' }}>
-                                        <i className="fas fa-building text-muted"></i>
-                                      </div>
-                                    )}
-                                  </td>
-                                  <td className="align-middle">{partner.name}</td>
-                                  <td className="align-middle">
-                                    <a 
-                                      href={partner.website.startsWith('http') ? partner.website : `https://${partner.website}`} 
-                                      target="_blank" 
-                                      rel="noopener noreferrer"
-                                      className="text-decoration-none"
-                                    >
-                                      {partner.website.replace(/^https?:\/\//, '')}
-                                    </a>
-                                  </td>
-                                  <td className="align-middle">
-                                    <button
-                                      type="button"
-                                      className="btn btn-sm btn-outline-danger"
-                                      onClick={() => handleRemovePartner(index)}
-                                    >
-                                      <FaTrash />
-                                    </button>
-                                  </td>
-                                </tr>
-                              ))}
-                            </tbody>
-                          </table>
-                        </div>
-                      )}
                     </div>
                   </div>
 

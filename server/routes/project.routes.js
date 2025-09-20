@@ -55,8 +55,7 @@ router.post(
   auth,
   (req, res, next) => {
     const upload = uploadMultiple([
-      { name: "images", maxCount: 10 },
-      { name: "documents", maxCount: 5 },
+      { name: "images", maxCount: 10 }
     ]);
 
     upload(req, res, (err) => {
@@ -73,8 +72,7 @@ router.put(
   auth,
   (req, res, next) => {
     const upload = uploadMultiple([
-      { name: "images", maxCount: 10 },
-      { name: "documents", maxCount: 5 },
+      { name: "images", maxCount: 10 }
     ]);
 
     upload(req, res, (err) => {
@@ -96,15 +94,5 @@ router.patch("/project/toggle-featured/:id", auth, ProjectController.toggleFeatu
 
 // Update project impact
 router.post("/project/impact/:id", auth, ProjectController.updateProjectImpact);
-
-// Add project partner
-router.post("/project/partner/:id", auth, ProjectController.addProjectPartner);
-
-// Remove project partner
-router.delete(
-  "/project/partner/:id/:partnerId",
-  auth,
-  ProjectController.removeProjectPartner
-);
 
 export default router;

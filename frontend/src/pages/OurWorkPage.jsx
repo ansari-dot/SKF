@@ -170,15 +170,23 @@ const OurWorkPage = () => {
                   <div className="card-body p-5">
                     <div className="row g-4">
                       <div className="col-md-4">
-                      <img
-  src={getAbsoluteImageUrl(program.image)}
-  alt={program.name}
-  className="img-fluid rounded mb-3"
-  style={{ height: '200px', objectFit: 'cover' }}
-  onError={(e) => {
-    e.target.src = '/placeholder-logo.png';
-  }}
-/>
+                      <div className="position-relative" style={{ height: '200px', backgroundColor: '#f8f9fa', borderRadius: '8px', overflow: 'hidden' }}>
+                        {program.image ? (
+                          <img
+                            src={getAbsoluteImageUrl(program.image)}
+                            alt={program.name || 'Program Image'}
+                            className="img-fluid h-100 w-100"
+                            style={{ objectFit: 'cover' }}
+                            onError={(e) => {
+                              e.target.src = '/placeholder-logo.png';
+                            }}
+                          />
+                        ) : (
+                          <div className="d-flex align-items-center justify-content-center h-100">
+                            <i className="fas fa-image fa-3x text-muted"></i>
+                          </div>
+                        )}
+                      </div>
 
                           <div className="text-primary text-center mb-3">
                             <i className="fas fa-tasks fa-3x"></i>

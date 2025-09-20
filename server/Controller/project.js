@@ -45,7 +45,7 @@ class ProjectController {
 
   // Helper function to process uploaded files (static)
   static processUploadedFiles(files) {
-    const result = { images: [], videos: [], documents: [] };
+    const result = { images: [] };
     if (!files) return result;
 
     // Process images
@@ -60,36 +60,6 @@ class ProjectController {
         size: file.size,
         mimetype: file.mimetype,
         url: `/uploads/images/${file.filename}`,
-      }));
-    }
-
-    // Process videos
-    if (files.videos) {
-      const videoFiles = Array.isArray(files.videos)
-        ? files.videos
-        : [files.videos];
-      result.videos = videoFiles.map((file) => ({
-        filename: file.filename,
-        originalname: file.originalname,
-        path: file.path,
-        size: file.size,
-        mimetype: file.mimetype,
-        url: `/uploads/videos/${file.filename}`,
-      }));
-    }
-
-    // Process documents
-    if (files.documents) {
-      const docFiles = Array.isArray(files.documents)
-        ? files.documents
-        : [files.documents];
-      result.documents = docFiles.map((file) => ({
-        filename: file.filename,
-        originalname: file.originalname,
-        path: file.path,
-        size: file.size,
-        mimetype: file.mimetype,
-        url: `/uploads/documents/${file.filename}`,
       }));
     }
 
@@ -176,7 +146,6 @@ class ProjectController {
         updatedAt: new Date()
       };
 
-      console.log('Creating project with payload:', JSON.stringify(projectPayload, null, 2));
       
       // Create new project with transformed data
       const newProject = new Project(projectPayload);
@@ -189,9 +158,7 @@ class ProjectController {
       }
 
       // Save the project
-      console.log('Attempting to save project...');
       const savedProject = await newProject.save();
-      console.log('Project saved successfully with ID:', savedProject._id);
       
       return res.status(201).json({
         success: true,
@@ -435,70 +402,6 @@ class ProjectController {
     }
   }
 
-  // Add project partner
-  static async addProjectPartner(req, res) {
-    try {
-      const { id } = req.params;
-      const partnerData = req.body;
-
-      const project = await Project.findByIdAndUpdate(
-        id,
-        { $push: { partners: partnerData }, updatedAt: new Date() },
-        { new: true, runValidators: true }
-      );
-
-      if (!project) {
-        return res.status(404).json({
-          success: false,
-          message: 'Project not found'
-        });
-      }
-
-      return res.status(200).json({
-        success: true,
-        message: 'Partner added to project successfully',
-        project
-      });
-    } catch (error) {
-      return res.status(500).json({
-        success: false,
-        message: 'Error adding project partner',
-        error: error.message
-      });
-    }
-  }
-
-  // Remove project partner
-  static async removeProjectPartner(req, res) {
-    try {
-      const { id, partnerId } = req.params;
-
-      const project = await Project.findByIdAndUpdate(
-        id,
-        { $pull: { partners: { _id: partnerId } }, updatedAt: new Date() },
-        { new: true }
-      );
-
-      if (!project) {
-        return res.status(404).json({
-          success: false,
-          message: 'Project not found'
-        });
-      }
-
-      return res.status(200).json({
-        success: true,
-        message: 'Partner removed from project successfully',
-        project
-      });
-    } catch (error) {
-      return res.status(500).json({
-        success: false,
-        message: 'Error removing project partner',
-        error: error.message
-      });
-    }
-  }
 }
 
 export default ProjectController;

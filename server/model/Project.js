@@ -96,25 +96,12 @@ const ProjectSchema = new mongoose.Schema({
             default: false
         }
     }],
-    documents: [{
-        title: String,
-        url: String,
-        type: {
-            type: String,
-            enum: ["report", "proposal", "certificate", "other"]
-        }
-    }],
     
-    // Team & Partners
+    // Team
     projectManager: {
         name: String,
         contact: String
     },
-    partners: [{
-        name: String,
-        logo: String,
-        website: String
-    }],
     
     // Additional Information
     challengesFaced: [String],
