@@ -163,14 +163,18 @@ const AboutPage = () => {
               <h2 className="display-6 fw-bold mb-4">Founder's Message</h2>
               <blockquote className="blockquote">
                 <p className="lead text-muted mb-4">
-                  "The Shehryar Khan Foundation was born from a deep commitment to serve humanity 
-                  and make a meaningful difference in the lives of those who need it most. Our work 
-                  is guided by Islamic principles of compassion, justice, and community service."
+                 "The Shehryar Khan Foundation was born from a deep commitment to serve humanity and make 
+                 a meaningful difference in the lives of those who need it most. Our work is guided by Islamic
+                  principles of compassion, justice, and community service."
+
                 </p>
                 <p className="text-muted mb-4">
-                  "We believe that every individual deserves access to education, healthcare, and 
-                  opportunities for personal growth. Through our programs, we strive to create 
-                  sustainable change that benefits not just individuals, but entire communities."
+                 
+"We believe that every individual deserves access to education, 
+healthcare, and opportunities for personal growth. Through our 
+programs, we strive to create sustainable change that benefits not
+ just individuals,
+ but entire communities.
                 </p>
                 <motion.footer 
                   className="p-4 rounded-3 mt-4"
