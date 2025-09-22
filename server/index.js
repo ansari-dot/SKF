@@ -113,9 +113,12 @@ process.on("unhandledRejection", (err) => {
     console.error(err);
     process.exit(1);
 });
+app.get("/api", (req, res) => {
+    res.send("Backend API is running ✅");
+});
 
 // Start server
 const PORT = process.env.PORT || 4000;
-app.listen(4000,  () => {
+app.listen(4000, () => {
     console.log(`✅ Server running on port 4000`);
 });
