@@ -1,6 +1,0 @@
-# Allow all robots to crawl the website
-User-agent: *
-Allow: /
-
-# Sitemap location
-Sitemap: https://yoursite.com/sitemap.xml
