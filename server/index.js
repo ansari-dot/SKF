@@ -34,9 +34,11 @@ app.use(cookieParser());
 
 // ✅ CORS configuration
 const allowedOrigins = [
-    "http://localhost:3000",
-    "https://shehryarkhanfoundation.com",
-];
+    "http://localhost:3000", // local dev
+    "https://shehryarkhanfoundation.com", // non-www
+    "https://www.shehryarkhanfoundation.com", // www
+  ];
+  
 
 app.use(
     cors({
