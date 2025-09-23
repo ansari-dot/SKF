@@ -22,7 +22,7 @@ const ForgotPasswordPage = lazy(() => import('./pages/ForgotPasswordPage'));
 const ProtectedRoute = lazy(() => import('./components/ProtectedRoute'));
 
 // Create a loading component for Suspense fallback
-const Loader = () => <LoadingSpinner size={50} text="Loading page..." />;
+const Loader = () => <LoadingSpinner size={24} color="#28a745" />;
 
 // Admin components
 import AdminLayout from './Admin/AdminLayout';
