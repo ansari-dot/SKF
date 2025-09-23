@@ -1,0 +1,11 @@
+.hamburger-icon {
+    font-size: 1.5rem;
+}
+
+.scrolled .hamburger-icon {
+    color: black !important;
+}
+
+.not-scrolled .hamburger-icon {
+    color: #228B22 !important;
+}

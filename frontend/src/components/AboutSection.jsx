@@ -15,35 +15,42 @@ const AboutSection = () => {
               transition={{ duration: 0.8 }}>
               <div className="main-image-wrapper position-relative">
                 <motion.img
-                  src="/charity-volunteers-helping.png"
+                  src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80"
                   alt="About Us"
-                  className="img-fluid rounded-circle shadow-lg"
-                  whileHover={{ scale: 1.05 }}
+                  className="img-fluid rounded-4 shadow-lg"
+                  whileHover={{ scale: 1.02 }}
                   transition={{ duration: 0.3 }}
+                  style={{
+                    width: '100%',
+                    height: 'auto',
+                    maxHeight: '500px',
+                    objectFit: 'cover'
+                  }}
                 />
-
-                <motion.div
-                  className="play-button position-absolute top-50 start-50 translate-middle"
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}>
-                  <button className="btn btn-primary rounded-circle p-3 shadow-lg">
-                    <i className="fas fa-play text-white fs-3"></i>
-                  </button>
-                </motion.div>
               </div>
 
               <motion.div
-                className="small-image position-absolute"
-                style={{ bottom: "20px", left: "20px" }}
-                initial={{ opacity: 0, scale: 0 }}
+                className="position-absolute"
+                style={{ 
+                  bottom: "-20px",
+                  right: "-20px",
+                  width: '200px',
+                  height: '200px',
+                  zIndex: 2
+                }}
+                initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.4 }}>
                 <img
-                  src="/happy-children.png"
-                  alt="Happy Children"
-                  className="img-fluid rounded-circle border border-white border-4 shadow"
-                  style={{ width: "120px", height: "120px" }}
+                  src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
+                  alt="Our Team"
+                  className="img-fluid rounded-4 border border-4 border-white shadow"
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover'
+                  }}
                 />
               </motion.div>
             </motion.div>

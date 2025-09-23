@@ -86,7 +86,7 @@ const ServicesSection = () => {
                       ></motion.i>
                     </motion.div>
                     
-                    <h4 className="card-title fw-bold mb-3 text-primary">{service.title}</h4>
+                    <h4 className="card-title fw-bold mb-3" style={{ color: 'var(--brand-primary)' }}>{service.title}</h4>
                     <p className="card-text text-muted mb-4" style={{ fontSize: '0.9rem', lineHeight: '1.6' }}>
                       {service.description}
                     </p>

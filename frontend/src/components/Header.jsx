@@ -3,7 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { logout } from '../store/slices/authSlice';
-import  logo from '../assets/logo.png';
+import logo from '../assets/logo.png';
+import './Header.css'; // Import the new CSS file
 
 const Header = ({ isHeroHeader }) => {
   const [scrolled, setScrolled] = useState(false);
@@ -112,7 +113,7 @@ const Header = ({ isHeroHeader }) => {
           data-bs-target="#navbarNav"
           aria-label="Toggle navigation"
         >
-          <i className="fa-solid fa-bars toggler-icon"></i>
+          <i className={`fa-solid fa-bars hamburger-icon ${scrolled ? 'scrolled' : 'not-scrolled'}`} id=' hamburger-icon' style={{ fontSize: '2rem' }}></i>
         </button>
 
         <div className="collapse navbar-collapse" id="navbarNav">

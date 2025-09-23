@@ -140,8 +140,8 @@ const MediaDetailPage = () => {
 
   return (
     <div className="media-detail-page" style={{ padding: 0, margin: 0, position: 'relative' }}>
-      {/* Hero Section with Background Image */}
-      <div
+      {/* Hero Section Background - Behind Navbar */}
+      <div 
         style={{
           position: 'fixed',
           top: 0,
@@ -152,47 +152,89 @@ const MediaDetailPage = () => {
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundAttachment: 'fixed',
-          zIndex: 0,
+          zIndex: -1,  // Behind navbar
           '@media (max-width: 767px)': {
-            height: '80vh',
+            height: '100vh',
           }
         }}
-        className="media-hero-bg"
       ></div>
-
-      {/* Hero Content */}
+      
+      {/* Hero Content - Positioned below navbar */}
       <section 
-        className="position-relative text-white media-hero-content" 
-        style={{ 
-          padding: '120px 0 60px', 
-          zIndex: 1 
+        className="position-relative text-white project-hero-content"
+        style={{
+          paddingTop: '120px',  // Space for navbar
+          paddingBottom: '80px',
+          minHeight: '100vh',
+          display: 'flex',
+          alignItems: 'center',
+          backgroundColor: 'transparent',
+          position: 'relative',
+          zIndex: 1,
+          textShadow: '0 2px 4px rgba(0,0,0,0.5)'
         }}
       >
         <div className="container">
-          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
             <div className="row justify-content-center">
               <div className="col-lg-10 col-xl-8 text-center">
                 <span className="badge bg-success mb-3 px-3 py-2 rounded-pill">
                   <i className={`fas fa-${getMediaTypeIcon(media.mediaType)} me-2`}></i>
                   {media.mediaType.charAt(0).toUpperCase() + media.mediaType.slice(1)}
                 </span>
+                
                 <h1 className="display-4 fw-bold mb-4">{media.heading}</h1>
-
-                <div className="d-flex flex-wrap justify-content-center gap-4 mb-4">
-                  <div><i className="far fa-calendar-alt me-2"></i>{formatDate(media.date)}</div>
-                  <div><i className="fas fa-user me-2"></i>{media.author || 'SKF Team'}</div>
-                  {media.team && <div><i className="fas fa-users me-2"></i>{media.team}</div>}
-                </div>
-
                 <p className="lead mb-5">{media.description.substring(0, 200)}...</p>
 
-                <div className="d-flex flex-wrap justify-content-center gap-3 py-2">
-                  <button className="btn btn-light btn-sm rounded-pill px-4 py-2 text-center" onClick={() => navigate(-1)}>
-                    <i className="fas fa-arrow-left me-1"></i> Back
+                <div className="d-flex flex-wrap justify-content-center gap-3 mb-4">
+                  <div className="d-flex align-items-center">
+                    <i className="far fa-calendar-alt text-white-50 me-2"></i>
+                    <span>{formatDate(media.date)}</span>
+                  </div>
+                  <div className="d-flex align-items-center">
+                    <i className="fas fa-user text-white-50 me-2"></i>
+                    <span>{media.author || 'SKF Team'}</span>
+                  </div>
+                  {media.team && (
+                    <div className="d-flex align-items-center">
+                      <i className="fas fa-users text-white-50 me-2"></i>
+                      <span>{media.team}</span>
+                    </div>
+                  )}
+                </div>
+
+                <div className="d-flex flex-wrap justify-content-center gap-4 py-3">
+                  <button 
+                    className="btn btn-light btn-lg rounded-pill px-5 py-2 text-dark"
+                    onClick={() => navigate(-1)}
+                    style={{
+                      minWidth: '140px',
+                      whiteSpace: 'nowrap',
+                      fontWeight: '500'
+                    }}
+                  >
+                    <i className="fas fa-arrow-left me-2"></i>
+                    Back
                   </button>
                   {media.link && (
-                    <a href={media.link} target="_blank" rel="noopener noreferrer" className="btn btn-outline-light btn-sm rounded-pill px-4 py-2 text-center">
-                      <i className="fas fa-external-link-alt me-1"></i> Visit Source
+                    <a 
+                      href={media.link} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="btn btn-outline-light btn-lg rounded-pill px-4 py-2"
+                      style={{
+                        minWidth: '160px',
+                        whiteSpace: 'nowrap',
+                        borderWidth: '2px',
+                        fontWeight: '500'
+                      }}
+                    >
+                      <i className="fas fa-external-link-alt me-2"></i>
+                      Visit Source
                     </a>
                   )}
                 </div>

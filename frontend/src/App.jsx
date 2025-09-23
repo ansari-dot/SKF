@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
@@ -6,7 +6,6 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import Preloader from './components/Preloader';
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
 import OurWorkPage from './pages/OurWorkPage';
@@ -34,18 +33,11 @@ import FeaturedEvent from './Admin/FeaturedEvent';
 import './styles/global.css';
 
 function App() {
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 1200);
-    return () => clearTimeout(timer);
-  }, []);
 
   return (
     <Provider store={store}>
       <Router>
-        {isLoading && <Preloader />}
-        <div className="App" style={{ visibility: isLoading ? 'hidden' : 'visible' }}>
+        <div className="App">
           <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} />
 
           <Routes>

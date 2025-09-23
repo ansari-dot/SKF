@@ -602,23 +602,13 @@ body::after {
     padding: 6px 8px;
 }
 
-.toggler-icon {
-    font-size: 1.5rem;
-    color: var(--brand-accent);
-}
 
-.navbar-toggler {
-    border: none;
-    font-size: 1.5rem;
-}
 
 .navbar-toggler:focus {
     box-shadow: none;
 }
 
-.navbar-toggler .toggler-icon {
-    color: var(--brand-color);
-}
+
 
 .navbar-collapse {
     justify-content: flex-end;

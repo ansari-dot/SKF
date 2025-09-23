@@ -107,14 +107,12 @@ class ProjectController {
         projectData = req.body;
       }
 
-      // Process uploaded files using the static method
       const uploadedFiles = ProjectController.processUploadedFiles(req.files);
 
       // Map status to match the Project model's enum values
       const statusMap = {
         'Planned': 'Planning',
         'InProgress': 'In Progress',
-        // Add other mappings if needed
       };
       
       // Transform the incoming data to match the Project model
@@ -184,7 +182,6 @@ class ProjectController {
 
       // Clean up uploaded files if there was an error
       if (req.files) {
-        console.log('Cleaning up uploaded files due to error');
         Object.values(req.files)
           .flat()
           .forEach((file) => {

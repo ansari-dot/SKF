@@ -17,7 +17,6 @@ class OpportunityController {
         }
     }
 
-    // Get all opportunities for admin (including drafts)
     static async getAllOpportunities(req, res) {
         try {
             const opportunities = await Opportunity.find()
