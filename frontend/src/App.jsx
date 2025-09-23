@@ -16,7 +16,7 @@ import MediaDetailPage from './pages/MediaDetailPage';
 import ContactPage from './pages/ContactPage';
 import LoginPage from './pages/LoginPage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
-//import NotFoundPage from './pages/NotFoundPage';
+import NotFoundPage from './pages/NotFoundPage';
 import ProtectedRoute from './components/ProtectedRoute';
 
 // Admin components
@@ -165,7 +165,6 @@ function App() {
                 </>
               }
             />
-            {/* 404 - Catch all route 
             <Route
               path="*"
               element={
@@ -177,7 +176,7 @@ function App() {
                   <Footer />
                 </>
               }
-            /> */}
+            /> 
           </Routes>
         </div>
       </Router>
