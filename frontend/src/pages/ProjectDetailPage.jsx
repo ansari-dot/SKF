@@ -109,6 +109,7 @@ const ProjectDetailPage = () => {
     <div className="project-detail-page" style={{ padding: 0, margin: 0, position: 'relative' }}>
       {/* Hero Section with Background Image - Behind Navbar */}
       <div 
+        className="project-hero-background"
         style={{
           position: 'fixed',
           top: 0,
@@ -118,11 +119,10 @@ const ProjectDetailPage = () => {
           backgroundImage: heroImage ? `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(${heroImage})` : 'none',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          backgroundAttachment: 'fixed',
+          backgroundRepeat: 'no-repeat',
           zIndex: 0,
-          '@media (max-width: 767px)': {
-            height: '80vh',
-          }
+          // Remove fixed attachment on mobile for better performance
+          backgroundAttachment: window.innerWidth > 768 ? 'fixed' : 'scroll'
         }}
       ></div>
       
@@ -130,14 +130,14 @@ const ProjectDetailPage = () => {
       <section 
         className="position-relative text-white project-hero-content"
         style={{
-          padding: '100px 0 60px',
-          minHeight: 'auto',
+          padding: '120px 0 80px',
+          minHeight: '100vh',
           display: 'flex',
           alignItems: 'center',
           backgroundColor: 'transparent',
           position: 'relative',
           zIndex: 1,
-          textShadow: '0 1px 3px rgba(0,0,0,0.5)'
+          textShadow: '0 2px 4px rgba(0,0,0,0.5)'
         }}
       >
         <div className="container">

@@ -493,11 +493,52 @@ video {
 
 /* Responsive Design */
 /* Mobile Styles */
+/* Hero Background for both Project and Media Detail Pages */
+.project-hero-background,
+.media-hero-background {
+  -webkit-background-size: cover !important;
+  -moz-background-size: cover !important;
+  -o-background-size: cover !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+  width: 100% !important;
+  height: 100% !important;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  -webkit-perspective: 1000;
+  -webkit-transform: translate3d(0,0,0);
+  transform: translate3d(0,0,0);
+}
+
+/* Fix for mobile viewport units */
+@supports (-webkit-touch-callout: none) {
+  .project-hero-background,
+  .media-hero-background {
+    height: -webkit-fill-available !important;
+    height: 100vh !important;
+  }
+}
+
+/* Fix for mobile browsers with bottom address bar */
 @media (max-width: 767px) {
+  .project-hero-background,
+  .media-hero-background {
+    position: fixed !important;
+    height: 100% !important;
+    min-height: -webkit-fill-available !important;
+  }
+  
   /* Project Hero Section */
   .project-hero-content {
-    padding: 80px 0 40px !important;
-    min-height: 80vh !important;
+    padding: 100px 0 40px !important;
+    min-height: 100vh !important;
+    min-height: -webkit-fill-available !important;
   }
   
   /* Media Hero Section */

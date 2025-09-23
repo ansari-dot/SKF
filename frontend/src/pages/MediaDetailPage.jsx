@@ -142,6 +142,7 @@ const MediaDetailPage = () => {
     <div className="media-detail-page" style={{ padding: 0, margin: 0, position: 'relative' }}>
       {/* Hero Section Background - Behind Navbar */}
       <div 
+        className="media-hero-background"
         style={{
           position: 'fixed',
           top: 0,
@@ -151,11 +152,10 @@ const MediaDetailPage = () => {
           backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(${getAbsoluteImageUrl(media.image) || '/images/placeholder-hero.jpg'})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          backgroundAttachment: 'fixed',
-          zIndex: -1,  // Behind navbar
-          '@media (max-width: 767px)': {
-            height: '100vh',
-          }
+          backgroundRepeat: 'no-repeat',
+          zIndex: -1,
+          // Remove fixed attachment on mobile for better performance
+          backgroundAttachment: window.innerWidth > 768 ? 'fixed' : 'scroll'
         }}
       ></div>
       
@@ -163,8 +163,7 @@ const MediaDetailPage = () => {
       <section 
         className="position-relative text-white project-hero-content"
         style={{
-          paddingTop: '120px',  // Space for navbar
-          paddingBottom: '80px',
+          padding: '120px 0 80px',
           minHeight: '100vh',
           display: 'flex',
           alignItems: 'center',

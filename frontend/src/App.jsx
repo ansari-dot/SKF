@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
@@ -6,18 +6,23 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import HomePage from './pages/HomePage';
-import AboutPage from './pages/AboutPage';
-import OurWorkPage from './pages/OurWorkPage';
-import ProjectDetailPage from './pages/ProjectDetailPage';
-import GetInvolvedPage from './pages/GetInvolvedPage';
-import MediaPage from './pages/MediaPage';
-import MediaDetailPage from './pages/MediaDetailPage';
-import ContactPage from './pages/ContactPage';
-import LoginPage from './pages/LoginPage';
-import ForgotPasswordPage from './pages/ForgotPasswordPage';
-//import NotFoundPage from './pages/NotFoundPage';
-import ProtectedRoute from './components/ProtectedRoute';
+import LoadingSpinner from './components/LoadingSpinner';
+
+// Lazy load pages
+const HomePage = lazy(() => import('./pages/HomePage'));
+const AboutPage = lazy(() => import('./pages/AboutPage'));
+const OurWorkPage = lazy(() => import('./pages/OurWorkPage'));
+const ProjectDetailPage = lazy(() => import('./pages/ProjectDetailPage'));
+const GetInvolvedPage = lazy(() => import('./pages/GetInvolvedPage'));
+const MediaPage = lazy(() => import('./pages/MediaPage'));
+const MediaDetailPage = lazy(() => import('./pages/MediaDetailPage'));
+const ContactPage = lazy(() => import('./pages/ContactPage'));
+const LoginPage = lazy(() => import('./pages/LoginPage'));
+const ForgotPasswordPage = lazy(() => import('./pages/ForgotPasswordPage'));
+const ProtectedRoute = lazy(() => import('./components/ProtectedRoute'));
+
+// Create a loading component for Suspense fallback
+const Loader = () => <LoadingSpinner size={50} text="Loading page..." />;
 
 // Admin components
 import AdminLayout from './Admin/AdminLayout';
@@ -33,29 +38,111 @@ import FeaturedEvent from './Admin/FeaturedEvent';
 import './styles/global.css';
 
 function App() {
-
   return (
     <Provider store={store}>
       <Router>
         <div className="App">
-          <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} />
+          <ToastContainer 
+            position="top-right" 
+            autoClose={5000} 
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            style={{
+              marginTop: '70px',
+              zIndex: 9999
+            }}
+          />
 
           <Routes>
             {/* Admin Routes */}
-            <Route path="/admin" element={<ProtectedRoute adminOnly={true} />}>
-              <Route element={<AdminLayout />}>
-                <Route path="dashboard" element={<Dashboard />} />
-                <Route path="get-involved" element={<GetInvolved />} />
-                <Route path="projects" element={<Project />} />
-                <Route path="programs" element={<Program />} />
-                <Route path="opportunities" element={<Opportunity />} />
-                <Route path="media" element={<Media />} />
-                <Route path="media/:id" element={<MediaDetailPage />} />
-                <Route path="contact" element={<Contact />} />
-                <Route path="profile" element={<UserProfile />} />
-                <Route path="featured-events" element={<FeaturedEvent />} />
-              </Route>
-            </Route> {/* ✅ Closed admin route properly */}
+            <Route 
+              path="/admin" 
+              element={
+                <Suspense fallback={<Loader />}>
+                  <ProtectedRoute adminOnly={true}>
+                    <AdminLayout />
+                  </ProtectedRoute>
+                </Suspense>
+              }
+            >
+              <Route 
+                index 
+                element={
+                  <Suspense fallback={<Loader />}>
+                    <Dashboard />
+                  </Suspense>
+                } 
+              />
+              <Route 
+                path="dashboard" 
+                element={
+                  <Suspense fallback={<Loader />}>
+                    <Dashboard />
+                  </Suspense>
+                } 
+              />
+              <Route 
+                path="get-involved" 
+                element={
+                  <Suspense fallback={<Loader />}>
+                    <GetInvolved />
+                  </Suspense>
+                } 
+              />
+              <Route 
+                path="projects" 
+                element={
+                  <Suspense fallback={<Loader />}>
+                    <Project />
+                  </Suspense>
+                } 
+              />
+              <Route 
+                path="programs" 
+                element={
+                  <Suspense fallback={<Loader />}>
+                    <Program />
+                  </Suspense>
+                } 
+              />
+              <Route 
+                path="featured-event" 
+                element={
+                  <Suspense fallback={<Loader />}>
+                    <FeaturedEvent />
+                  </Suspense>
+                } 
+              />
+              <Route 
+                path="media" 
+                element={
+                  <Suspense fallback={<Loader />}>
+                    <Media />
+                  </Suspense>
+                } 
+              />
+              <Route 
+                path="contact" 
+                element={
+                  <Suspense fallback={<Loader />}>
+                    <Contact />
+                  </Suspense>
+                } 
+              />
+              <Route 
+                path="profile" 
+                element={
+                  <Suspense fallback={<Loader />}>
+                    <UserProfile />
+                  </Suspense>
+                } 
+              />
+            </Route>
 
             {/* Public Routes */}
             <Route
@@ -64,7 +151,9 @@ function App() {
                 <>
                   <Header />
                   <main>
-                    <HomePage />
+                    <Suspense fallback={<LoadingSpinner />}>
+                      <HomePage />
+                    </Suspense>
                   </main>
                   <Footer />
                 </>
@@ -76,7 +165,9 @@ function App() {
                 <>
                   <Header />
                   <main>
-                    <AboutPage />
+                    <Suspense fallback={<LoadingSpinner />}>
+                      <AboutPage />
+                    </Suspense>
                   </main>
                   <Footer />
                 </>
@@ -88,7 +179,9 @@ function App() {
                 <>
                   <Header />
                   <main>
-                    <OurWorkPage />
+                    <Suspense fallback={<LoadingSpinner />}>
+                      <OurWorkPage />
+                    </Suspense>
                   </main>
                   <Footer />
                 </>
@@ -100,20 +193,23 @@ function App() {
                 <>
                   <Header />
                   <main>
-                    <ProjectDetailPage />
+                    <Suspense fallback={<LoadingSpinner />}>
+                      <ProjectDetailPage />
+                    </Suspense>
                   </main>
                   <Footer />
                 </>
               }
             />
-          
             <Route
               path="/get-involved"
               element={
                 <>
                   <Header />
                   <main>
-                    <GetInvolvedPage />
+                    <Suspense fallback={<LoadingSpinner />}>
+                      <GetInvolvedPage />
+                    </Suspense>
                   </main>
                   <Footer />
                 </>
@@ -125,7 +221,9 @@ function App() {
                 <>
                   <Header />
                   <main>
-                    <MediaPage />
+                    <Suspense fallback={<LoadingSpinner />}>
+                      <MediaPage />
+                    </Suspense>
                   </main>
                   <Footer />
                 </>
@@ -137,7 +235,9 @@ function App() {
                 <>
                   <Header />
                   <main>
-                    <MediaDetailPage />
+                    <Suspense fallback={<LoadingSpinner />}>
+                      <MediaDetailPage />
+                    </Suspense>
                   </main>
                   <Footer />
                 </>
@@ -149,7 +249,9 @@ function App() {
                 <>
                   <Header />
                   <main>
-                    <ContactPage />
+                    <Suspense fallback={<LoadingSpinner />}>
+                      <ContactPage />
+                    </Suspense>
                   </main>
                   <Footer />
                 </>
@@ -160,24 +262,41 @@ function App() {
               element={
                 <>
                   <main>
-                    <LoginPage />
+                    <Suspense fallback={<LoadingSpinner />}>
+                      <LoginPage />
+                    </Suspense>
                   </main>
                 </>
               }
             />
-            {/* 404 - Catch all route 
+            <Route
+              path="/forgot-password"
+              element={
+                <>
+                  <main>
+                    <Suspense fallback={<LoadingSpinner />}>
+                      <ForgotPasswordPage />
+                    </Suspense>
+                  </main>
+                </>
+              }
+            />
+            {/* 404 - Catch all route */}
             <Route
               path="*"
               element={
                 <>
                   <Header />
                   <main>
-                    <NotFoundPage />
+                    <div className="container py-5 text-center">
+                      <h1>404 - Page Not Found</h1>
+                      <p>The page you are looking for does not exist.</p>
+                    </div>
                   </main>
                   <Footer />
                 </>
               }
-            /> */}
+            />
           </Routes>
         </div>
       </Router>
