@@ -45,12 +45,10 @@ const VideoSection = () => {
                   paddingTop: "56.25%", // keeps 16:9 ratio
                 }}
               >
-                <iframe
-                  src="https://www.youtube.com/embed/TqhNILVX8IE?si=3Dc-x-lHLaKXx7Lo"
-                  title="YouTube video player"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  referrerPolicy="strict-origin-when-cross-origin"
-                  allowFullScreen
+                <video
+                  src="/src/assets/video.mp4"
+                  title="Our Story Video"
+                  controls
                   className="rounded-3 shadow-lg"
                   style={{
                     position: "absolute",
@@ -60,33 +58,16 @@ const VideoSection = () => {
                     height: "100%",
                     border: 0,
                     display: "block",
+                    objectFit: "cover"
                   }}
-                ></iframe>
+                />
               </motion.div>
 
-              {/* Video overlay with play button */}
-              <motion.div
-                className="video-overlay position-absolute top-50 start-50 translate-middle"
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-              >
-                <div className="play-button-wrapper">
-                  <motion.div
-                    className="play-button"
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                  >
-                    <i className="fas fa-play text-white fs-2"></i>
-                  </motion.div>
-                </div>
-              </motion.div>
             </div>
           </div>
         </motion.div>
 
-        {/* Rest of your design untouched */}
+        {/* Features Section */}
         <motion.div
           className="row mt-5"
           initial={{ opacity: 0, y: 30 }}

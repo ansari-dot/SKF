@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import logo from '../assets/logo.png';
-import BackgroundAnimation from './BackgroundAnimation';
 import h1 from '../assets/hero/h1.png';
 import h2 from '../assets/hero/h3.png';
 import h3 from '../assets/hero/h1.png';
@@ -59,65 +57,43 @@ const HeroSection = ({ children }) => {
   };
 
   return (
-    <section className="hero-section position-relative overflow-hidden d-flex flex-column" id="home" style={{
-      minHeight: '90vh !important',
+    <section className="hero-section d-flex flex-column" id="home" style={{
+      minHeight: '90vh',
       padding: '2rem 0 4rem',
       position: 'relative',
-      '@media (max-width: 768px)': {
-        minHeight: '85vh',
-        padding: '1.5rem 0 3.5rem'
-      },
-      '@media (max-width: 576px)': {
-        minHeight: '70vh !important',
-        padding: '1rem 0 3rem'
-      }
+      background: '#121212',
+      overflow: 'hidden'
     }}>
-      <BackgroundAnimation />
-      {/* Background Images */}
+      {/* Background Images with Dark Gradient Overlay */}
       <div style={{
         position: 'absolute',
         top: 0,
         left: 0,
         width: '100%',
         height: '100%',
-        zIndex: 0
+        zIndex: 0,
+        background: 'linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.7) 50%, rgba(0,0,0,0.9) 100%)'
       }}>
         {slides.map((slide, index) => (
           <motion.img
             key={index}
             src={slide.image}
             alt={slide.alt}
-            className={`w-100 h-100 object-cover position-absolute top-0 start-0`}
+            className="w-100 h-100 object-cover position-absolute top-0 start-0"
             initial={{ opacity: 0 }}
-            animate={{ opacity: index === currentSlide ? 1 : 0 }}
+            animate={{ opacity: index === currentSlide ? 0.8 : 0 }}
             transition={{ duration: 1 }}
             style={{ 
               objectPosition: 'center 30%',
-              zIndex: 0
+              zIndex: 0,
+              mixBlendMode: 'normal',
+              filter: 'brightness(0.9) contrast(1.1)'
             }}
           />
         ))}
       </div>
       
-      {/* Gradient Overlay */}
-      <div style={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        background: [
-          'linear-gradient(to bottom,',
-          'rgba(0,0,0,0.3) 0%,',
-          'rgba(0,0,0,0.6) 50%,',
-          'rgba(0,0,0,0.9) 100%'
-        ].join(' '),
-        zIndex: 1,
-        pointerEvents: 'none',
-        opacity: 0.8
-      }} />
-      
-      <div className="container position-relative d-flex flex-column h-100" style={{ paddingTop: '8rem' }}>
+      <div className="container position-relative d-flex flex-column h-100" style={{ paddingTop: '5rem', zIndex: 1 }}>
         {children}
         <div className="row justify-content-center" style={{ marginTop: '4rem' }}>
           <div className="col-12 text-center">
