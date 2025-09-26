@@ -60,93 +60,52 @@ const HeroSection = ({ children }) => {
 
   return (
     <section className="hero-section position-relative overflow-hidden d-flex flex-column" id="home" style={{
-      minHeight: '90vh !important',
-      maxHeight: '95vh !important',
+      minHeight: '100vh !important',
+      height: '100vh !important',
       padding: '2rem 0 4rem',
       position: 'relative',
       display: 'flex',
       flexDirection: 'column',
-      '@media (max-width: 768px)': {
-        minHeight: '75vh',
-        maxHeight: '80vh',
-        padding: '1.5rem 0 3rem'
-      },
-      '@media (max-width: 576px)': {
-        minHeight: '65vh !important',
-        maxHeight: '75vh !important',
-        padding: '1rem 0 2.5rem'
-      }
+      alignItems: 'center',
+      justifyContent: 'center'
     }}>
-      <BackgroundAnimation />
       {/* Background Images */}
       <div style={{
         position: 'absolute',
         top: 0,
         left: 0,
-        width: '100%',
-        height: '100%',
-        zIndex: 0,
-        overflow: 'hidden',
-        '@media (max-width: 768px)': {
-          height: '100%',
-          minHeight: '100%'
-        }
+        minHeight: '100vh',
+        height: '100vh'
       }}>
         {slides.map((slide, index) => (
           <motion.img
             key={index}
             src={slide.image}
             alt={slide.alt}
-            className={`w-100 h-100 object-cover position-absolute top-0 start-0`}
+            className="w-100 h-100 position-absolute top-0 start-0"
             initial={{ opacity: 0 }}
             animate={{ opacity: index === currentSlide ? 1 : 0 }}
             transition={{ duration: 1 }}
             style={{ 
-              objectPosition: 'center 30%',
               objectFit: 'cover',
+              objectPosition: 'center 30%',
               zIndex: 0,
-              '@media (max-width: 768px)': {
-                objectPosition: 'center center',
-                objectFit: 'cover',
-                transform: 'scale(1)'
-              },
-              '@media (max-width: 576px)': {
-                objectPosition: 'center 40%',
-                objectFit: 'cover',
-                minHeight: '100%'
-              }
+              width: '100%',
+              height: '100%'
             }}
           />
         ))}
       </div>
       
-      {/* Beautiful Gradient Overlay */}
-      <div style={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        background: [
-          'linear-gradient(135deg,',
-          'rgba(74, 144, 226, 0.4) 0%,',
-          'rgba(127, 176, 105, 0.3) 30%,',
-          'rgba(44, 62, 80, 0.6) 70%,',
-          'rgba(0, 0, 0, 0.8) 100%)'
-        ].join(' '),
-        zIndex: 1,
-        pointerEvents: 'none',
-        opacity: 0.9
-      }} />
-      
-      <div className="container position-relative d-flex flex-column justify-content-between h-100" style={{ 
-        paddingTop: '6rem',
+      <div className="container position-relative d-flex flex-column justify-content-center h-100" style={{ 
+        paddingTop: '10rem',
         minHeight: '100%',
         display: 'flex',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        alignItems: 'center'
       }}>
         {children}
-        <div className="row justify-content-center flex-grow-1 d-flex align-items-center" style={{ marginTop: '2rem' }}>
+        <div className="row justify-content-center flex-grow-1 d-flex align-items-end" style={{ marginTop: '8rem', paddingBottom: '3rem' }}>
           <div className="col-12 text-center">
             <motion.div
               initial={{ opacity: 0, x: -50 }}
@@ -156,7 +115,7 @@ const HeroSection = ({ children }) => {
              
               
               <motion.div 
-                className="quran-verse-container mb-3 p-2 p-md-3 rounded"
+                className="quran-verse-container mb-4 p-3 p-md-4 rounded"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.3 }}
@@ -165,45 +124,37 @@ const HeroSection = ({ children }) => {
                   backdropFilter: 'blur(5px)',
                   borderRight: '4px solid #28a745',
                   maxWidth: '95%',
-                  margin: '0 auto 1rem',
+                  margin: '0 auto 2rem',
                   textAlign: 'center',
-                  padding: '0.8rem',
+                  padding: '1.5rem',
                   width: '100%',
-                  boxSizing: 'border-box',
-                  '@media (max-width: 768px)': {
-                    padding: '0.6rem',
-                    marginBottom: '0.8rem'
-                  },
-                  '@media (max-width: 576px)': {
-                    padding: '0.5rem',
-                    marginBottom: '0.6rem'
-                  }
+                  boxSizing: 'border-box'
                 }}
                 key={currentSlide}
               >
-                <p className="text-white mb-2" style={{ 
+                <p className="text-white mb-3 mb-md-4" style={{ 
                   fontFamily: '"Amiri", serif', 
-                  fontSize: 'clamp(0.9rem, 3vw, 1.4rem)',
-                  lineHeight: '1.6',
+                  fontSize: 'clamp(1.2rem, 4vw, 1.8rem)',
+                  lineHeight: '1.8',
                   direction: 'rtl',
-                  marginBottom: '0.5rem',
-                  padding: '0 0.3rem'
+                  marginBottom: '1rem',
+                  padding: '0 0.5rem'
                 }}>
                   {slides[currentSlide].verse.arabic}
                 </p>
-                <p className="text-white-50 mb-1" style={{ 
+                <p className="text-white-50 mb-3" style={{ 
                   fontStyle: 'italic',
-                  fontSize: 'clamp(0.8rem, 2.5vw, 1rem)',
-                  lineHeight: '1.4',
-                  padding: '0 0.3rem'
+                  fontSize: 'clamp(1rem, 3vw, 1.2rem)',
+                  lineHeight: '1.6',
+                  padding: '0 0.5rem'
                 }}>
                   "{slides[currentSlide].verse.english}"
                 </p>
-                <p className="text-white-50 mt-1 mb-0" style={{ 
-                  fontSize: '0.7rem',
+                <p className="text-white-50 mt-3 mt-md-4 mb-0" style={{ 
+                  fontSize: '0.9rem',
                   fontFamily: '"Poppins", sans-serif',
-                  letterSpacing: '0.3px',
-                  opacity: 0.8
+                  letterSpacing: '0.5px',
+                  opacity: 0.9
                 }}>
                   - {slides[currentSlide].verse.reference}
                 </p>
@@ -211,15 +162,15 @@ const HeroSection = ({ children }) => {
               
             
       {/* Buttons at Bottom */}
-      <div className="mt-auto pt-3 pb-4">
+      <div className="mt-auto pt-4 pb-5">
         <motion.div 
-          className="d-flex flex-wrap gap-3 justify-content-center w-100 px-2"
+          className="d-flex flex-wrap gap-4 justify-content-center w-100 px-3"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
         >
           <motion.button
-            className="btn btn-primary px-3 px-md-4 py-2 position-relative overflow-hidden"
+            className="btn btn-primary px-4 px-md-5 py-3 position-relative overflow-hidden"
             whileHover={{ 
               scale: 1.05, 
               boxShadow: "0 10px 25px rgba(40, 167, 69, 0.5)"
@@ -228,10 +179,10 @@ const HeroSection = ({ children }) => {
             onClick={() => window.location.href = '/get-involved'}
             style={{
               cursor: 'pointer',
-              minWidth: '160px',
-              fontSize: '0.95rem',
+              minWidth: '200px',
+              fontSize: '1.05rem',
               fontWeight: '600',
-              letterSpacing: '0.3px',
+              letterSpacing: '0.5px',
               borderRadius: '50px',
               whiteSpace: 'nowrap',
               display: 'flex',
@@ -242,12 +193,7 @@ const HeroSection = ({ children }) => {
               position: 'relative',
               overflow: 'hidden',
               zIndex: 1,
-              transition: 'all 0.4s ease',
-              '@media (max-width: 576px)': {
-                minWidth: '140px',
-                fontSize: '0.9rem',
-                padding: '0.6rem 1rem'
-              }
+              transition: 'all 0.4s ease'
             }}
           >
             <span style={{ position: 'relative', zIndex: 2 }}>
@@ -275,7 +221,7 @@ const HeroSection = ({ children }) => {
           </motion.button>
           
           <motion.button
-            className="btn btn-outline-light px-3 px-md-4 py-2 position-relative overflow-hidden"
+            className="btn btn-outline-light px-4 px-md-5 py-3 position-relative overflow-hidden"
             whileHover={{ 
               scale: 1.05,
               backgroundColor: 'rgba(255, 255, 255, 0.1)'
@@ -284,11 +230,11 @@ const HeroSection = ({ children }) => {
             onClick={() => window.location.href = '/get-involved'}
             style={{
               cursor: 'pointer',
-              minWidth: '160px',
+              minWidth: '200px',
               border: '2px solid white',
-              fontSize: '0.95rem',
+              fontSize: '1.05rem',
               fontWeight: '600',
-              letterSpacing: '0.3px',
+              letterSpacing: '0.5px',
               borderRadius: '50px',
               whiteSpace: 'nowrap',
               display: 'flex',
@@ -298,12 +244,7 @@ const HeroSection = ({ children }) => {
               color: 'white',
               position: 'relative',
               zIndex: 1,
-              transition: 'all 0.4s ease',
-              '@media (max-width: 576px)': {
-                minWidth: '140px',
-                fontSize: '0.9rem',
-                padding: '0.6rem 1rem'
-              }
+              transition: 'all 0.4s ease'
             }}
           >
             <span style={{ position: 'relative', zIndex: 2 }}>
