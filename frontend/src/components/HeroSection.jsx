@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import h1 from '../assets/hero/h1.png';
-import h2 from '../assets/hero/h3.png';
-import h3 from '../assets/hero/h1.png';
+import h1 from '../assets/hero/h1.webp';
+import h2 from '../assets/hero/h3.webp';
+import h3 from '../assets/hero/h1.webp';
 const HeroSection = ({ children }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   
