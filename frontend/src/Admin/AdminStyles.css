@@ -1,5 +1,4 @@
 /* Modern Admin Dashboard Styles with Green & Blue Brand Colors */
-@import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap');
 
 /* Make all icons and buttons white in admin panel */
 .admin-sidebar .icon,
@@ -927,6 +926,8 @@ button svg,
 }
 
 /* Additional Islamic Typography */
+@import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap');
+
 .arabic-text {
   font-family: 'Amiri', 'Times New Roman', serif;
 }

@@ -1,7 +1,16 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { motion } from 'framer-motion';
+import videoFile from '../assets/video.mp4';
 
 const VideoSection = () => {
+  const videoRef = useRef(null);
+
+  const handlePlayVideo = () => {
+    if (videoRef.current) {
+      videoRef.current.play();
+    }
+  };
+
   return (
     <section className="py-5">
       <div className="container">
@@ -46,9 +55,7 @@ const VideoSection = () => {
                 }}
               >
                 <video
-                  src="/src/assets/video.mp4"
-                  title="Our Story Video"
-                  controls
+                  ref={videoRef}
                   className="rounded-3 shadow-lg"
                   style={{
                     position: "absolute",
@@ -58,16 +65,41 @@ const VideoSection = () => {
                     height: "100%",
                     border: 0,
                     display: "block",
-                    objectFit: "cover"
+                    objectFit: "cover",
                   }}
-                />
+                  controls
+                  poster=""
+                >
+                  <source src={videoFile} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
               </motion.div>
 
+              {/* Video overlay with play button */}
+              <motion.div
+                className="video-overlay position-absolute top-50 start-50 translate-middle"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                onClick={handlePlayVideo}
+                style={{ cursor: 'pointer' }}
+              >
+                <div className="play-button-wrapper">
+                  <motion.div
+                    className="play-button"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                  >
+                    <i className="fas fa-play text-white fs-2"></i>
+                  </motion.div>
+                </div>
+              </motion.div>
             </div>
           </div>
         </motion.div>
 
-        {/* Features Section */}
+        {/* Rest of your design untouched */}
         <motion.div
           className="row mt-5"
           initial={{ opacity: 0, y: 30 }}

@@ -5,14 +5,14 @@
 
 .admin-layout {
     min-height: 100vh;
-    background-color: #f8f9fa;
+    background-color: var(--lofi-dark-blue, #2C3E50);
 }
 
 
 /* Sidebar */
 
 .admin-sidebar {
-    background-color: #343a40;
+    background-color: var(--lofi-dark-blue, #2C3E50);
     color: #fff;
     min-height: 100vh;
     width: 280px;
@@ -42,7 +42,7 @@
 
 .admin-sidebar .nav-link.active {
     color: #fff;
-    background-color: var(--bs-primary);
+    background-color: var(--lofi-blue, #4A90E2);
 }
 
 .admin-sidebar .nav-link i,
@@ -58,13 +58,12 @@
     padding: 1rem;
 }
 
-
 /* Main Content Area */
 
 .admin-content {
     flex: 1;
     padding: 1.5rem;
-    overflow-y: auto;
+    background-color: var(--lofi-cream, #F5F5DC);
 }
 
 
@@ -84,7 +83,7 @@
 }
 
 .admin-card .card-header {
-    background-color: rgba(0, 0, 0, 0.03);
+    background-color: var(--lofi-light-blue, #B8D4E3);
     border-bottom: 1px solid rgba(0, 0, 0, 0.125);
     padding: 1rem 1.25rem;
     font-weight: 600;
@@ -111,13 +110,13 @@
     display: inline-block;
     padding: 1rem;
     border-radius: 50%;
-    background-color: rgba(var(--bs-primary-rgb), 0.1);
-    color: var(--bs-primary);
+    background-color: rgba(74, 144, 226, 0.1);
+    color: var(--lofi-blue, #4A90E2);
 }
 
 .stat-card .stat-title {
     font-size: 1rem;
-    color: #6c757d;
+    color: var(--lofi-dark-blue, #2C3E50);
     margin-bottom: 0.5rem;
 }
 
@@ -214,26 +213,26 @@
 }
 
 .admin-btn-primary {
-    background-color: #1E3A8A !important;
-    border-color: #1E3A8A;
+    background-color: var(--lofi-blue, #4A90E2) !important;
+    border-color: var(--lofi-blue, #4A90E2);
     color: #fff;
 }
 
 .admin-btn-primary:hover {
-    background-color: #3B82F6 !important;
-    border-color: #3B82F6 !important;
+    background-color: var(--lofi-dark-blue, #2C3E50) !important;
+    border-color: var(--lofi-dark-blue, #2C3E50) !important;
     color: #fff !important;
 }
 
 .admin-btn-outline {
     background-color: transparent;
-    border: 1px solid #1E3A8A;
-    color: #1E3A8A;
+    border: 1px solid var(--lofi-blue, #4A90E2);
+    color: var(--lofi-blue, #4A90E2);
 }
 
 .admin-btn-outline:hover {
-    background-color: #3B82F6 !important;
-    border-color: #3B82F6 !important;
+    background-color: var(--lofi-blue, #4A90E2) !important;
+    border-color: var(--lofi-blue, #4A90E2) !important;
     color: #fff !important;
 }
 

@@ -1,7 +1,7 @@
 .profileContainer {
-  background: linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%);
+  background: linear-gradient(135deg, var(--lofi-cream, #F5F5DC) 0%, var(--lofi-light-blue, #B8D4E3) 100%);
   border-radius: 18px;
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+  box-shadow: 0 8px 32px 0 rgba(44, 62, 80, 0.15);
   padding: 2.5rem 2rem;
   max-width: 900px;
   margin: 2rem auto;
@@ -10,7 +10,7 @@
 .profileTitle {
   font-size: 2.5rem;
   font-weight: 700;
-  color: #374151;
+  color: var(--lofi-dark-blue, #2C3E50);
   margin-bottom: 1.5rem;
   text-align: center;
   letter-spacing: 1px;
@@ -27,7 +27,7 @@
 .formLabel {
   font-size: 1rem;
   font-weight: 500;
-  color: #6366f1;
+  color: var(--lofi-blue, #4A90E2);
   margin-bottom: 0.5rem;
   display: block;
 }
@@ -35,39 +35,39 @@
 .formInput {
   width: 100%;
   padding: 0.75rem 1rem;
-  border: 1.5px solid #c7d2fe;
+  border: 1.5px solid var(--lofi-light-blue, #B8D4E3);
   border-radius: 8px;
   font-size: 1rem;
-  background: #f1f5f9;
+  background: var(--lofi-cream, #F5F5DC);
   transition: border-color 0.2s;
   margin-bottom: 1rem;
 }
 .formInput:focus {
-  border-color: #6366f1;
+  border-color: var(--lofi-blue, #4A90E2);
   outline: none;
 }
 
 .formButton {
   width: 100%;
   padding: 0.75rem 1rem;
-  background: linear-gradient(90deg, #6366f1 0%, #60a5fa 100%);
+  background: linear-gradient(90deg, var(--lofi-blue, #4A90E2) 0%, var(--lofi-mint, #A8D5BA) 100%);
   color: #fff;
   font-size: 1.1rem;
   font-weight: 600;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.15);
+  box-shadow: 0 2px 8px rgba(74, 144, 226, 0.15);
   transition: background 0.2s;
   margin-top: 0.5rem;
 }
 .formButton:hover {
-  background: linear-gradient(90deg, #60a5fa 0%, #6366f1 100%);
+  background: linear-gradient(90deg, var(--lofi-mint, #A8D5BA) 0%, var(--lofi-blue, #4A90E2) 100%);
 }
 
 .successMsg {
-  background: #d1fae5;
-  color: #065f46;
+  background: var(--lofi-mint, #A8D5BA);
+  color: var(--lofi-dark-green, #5A8B4A);
   border-radius: 8px;
   padding: 1rem;
   margin-bottom: 1rem;

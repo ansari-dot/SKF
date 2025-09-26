@@ -23,24 +23,24 @@
 /* Primary button */
 .btn-primary,
 .admin-btn-primary {
-  background-color: var(--primary-blue, #1a73e8);
-  border: 1px solid var(--dark-blue, #1557b0);
+  background-color: var(--lofi-blue, #4A90E2);
+  border: 1px solid var(--lofi-dark-blue, #2C3E50);
 }
 
 .btn-primary:hover,
 .admin-btn-primary:hover {
-  background-color: var(--dark-blue, #0d47a1);
+  background-color: var(--lofi-dark-blue, #2C3E50);
   transform: translateY(-1px);
 }
 
 /* Success button */
 .btn-success {
-  background-color: var(--primary-green, #28a745);
-  border: 1px solid var(--dark-green, #1e7e34);
+  background-color: var(--lofi-green, #7FB069);
+  border: 1px solid var(--lofi-dark-green, #5A8B4A);
 }
 
 .btn-success:hover {
-  background-color: var(--dark-green, #1e7e34);
+  background-color: var(--lofi-dark-green, #5A8B4A);
   transform: translateY(-1px);
 }
 

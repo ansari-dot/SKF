@@ -9,11 +9,11 @@
 .navbar-nav .nav-link i,
 .fas,
 .far {
-  background: linear-gradient(135deg, #7FB069);
+  background: linear-gradient(135deg, var(--lofi-green));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  text-fill-color: transparent;
+  color: transparent;
   transition: all 0.3s ease;
 }
 
@@ -27,8 +27,8 @@
 .navbar-nav .nav-link:focus i,
 .fas:hover,
 .far:hover {
-  -webkit-text-fill-color: #4A90E2 !important;
-  color: #4A90E2 !important;
+  -webkit-text-fill-color: var(--lofi-blue) !important;
+  color: var(--lofi-blue) !important;
   transition: all 0.3s ease;
 }
 
@@ -46,19 +46,19 @@
 
 /* Ensure all navigation icons have gradient by default */
 .navbar-nav .nav-link i {
-  background: linear-gradient(135deg,#7FB069);
+  background: linear-gradient(135deg,var(--lofi-green));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  text-fill-color: transparent;
+  color: transparent;
   transition: all 0.3s ease;
 }
 
 /* Hover effect for navigation icons */
 .navbar-nav .nav-link:hover i,
 .navbar-nav .nav-link:focus i {
-  background: #4A90E2 !important;
-  -webkit-text-fill-color: #4A90E2 !important;
-  color: #4A90E2 !important;
+  background: var(--lofi-blue) !important;
+  -webkit-text-fill-color: var(--lofi-blue) !important;
+  color: var(--lofi-blue) !important;
   transition: all 0.3s ease;
 }

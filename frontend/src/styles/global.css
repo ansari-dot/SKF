@@ -1,38 +1,10 @@
 /* Global Styles for Shehryar Khan Foundation Website */
 
-/* Preconnect to external domains */
-@import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap');
-/* Load Bootstrap CSS */
+
+/* Import Bootstrap CSS */
+
 @import url('https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css');
-/* Load Font Awesome */
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css');
-
-/* Font face for Amiri with font-display: swap */
-@font-face {
-  font-family: 'Amiri';
-  font-style: normal;
-  font-weight: 400 700;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/amiri/v26/J7aRnpd8CGxBHpUrtLMA7w.woff2) format('woff2');
-  unicode-range: U+0600-06FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE80-FEFC;
-}
-
-/* Font face for Font Awesome with font-display: swap */
-@font-face {
-  font-family: 'Font Awesome 6 Free';
-  font-style: normal;
-  font-weight: 900;
-  font-display: swap;
-  src: url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/webfonts/fa-solid-900.woff2') format('woff2');
-}
-
-@font-face {
-  font-family: 'Font Awesome 6 Brands';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/webfonts/fa-brands-400.woff2') format('woff2');
-}
 
 /* Custom CSS Variables - Lofi Color Palette */
 
@@ -547,7 +519,65 @@ body::after {
 }
 
 
-/* Hero Section Styles */
+/* Hero Section Mobile Optimization */
+@media (max-width: 768px) {
+  .hero-section {
+    background-attachment: scroll !important;
+    background-size: cover !important;
+    background-position: center center !important;
+    min-height: 75vh !important;
+    max-height: 80vh !important;
+  }
+  
+  .hero-section img {
+    object-fit: cover !important;
+    object-position: center center !important;
+    transform: none !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+  
+  .hero-section .container {
+    padding-top: 3rem !important;
+    padding-bottom: 1.5rem !important;
+  }
+  
+  .hero-section .quran-verse-container {
+    margin-bottom: 0.8rem !important;
+    padding: 0.6rem !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero-section {
+    min-height: 65vh !important;
+    max-height: 75vh !important;
+    background-size: cover !important;
+    background-position: center 40% !important;
+  }
+  
+  .hero-section img {
+    object-fit: cover !important;
+    object-position: center 40% !important;
+    min-height: 100% !important;
+  }
+  
+  .hero-section .container {
+    padding-top: 2.5rem !important;
+    padding-bottom: 1rem !important;
+  }
+  
+  .hero-section .quran-verse-container {
+    margin-bottom: 0.6rem !important;
+    padding: 0.5rem !important;
+  }
+  
+  .hero-section .btn {
+    min-width: 140px !important;
+    font-size: 0.9rem !important;
+    padding: 0.6rem 1rem !important;
+  }
+}
 
 .hero-section {
     position: relative;
@@ -1200,94 +1230,114 @@ footer .form-control:focus {
 /* Responsive Design */
 
 @media (max-width: 768px) {
-    .hero-section {
-        min-height: 100vh;
-        background: linear-gradient(135deg, var(--brand-color) 0%, var(--brand-color-dark) 100%);
-        background-attachment: scroll;
-    }
-    .hero-section .container {
-        height: 100vh;
-        padding-top: 80px;
-        padding-bottom: 80px;
-    }
-    .hero-section .hero-bg img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: center center;
-        min-height: 100%;
-        min-width: 100%;
-        max-width: none;
-        max-height: none;
-    }
-    .display-1 {
-        font-size: 3rem;
-    }
-    .display-2 {
-        font-size: 2rem;
-    }
-    .display-3 {
-        font-size: 1.5rem;
-    }
-    .btn {
-        padding: 0.5rem 1rem;
-        font-size: 0.9rem;
-    }
-    .card-body {
-        padding: 1.5rem;
-    }
-    .video-section .ratio {
-        height: 300px;
-    }
-    .hero-section .card {
-        margin-top: 20px;
-    }
+  .hero-section {
+    min-height: 75vh !important;
+    max-height: 80vh !important;
+    background: linear-gradient(135deg, var(--brand-color) 0%, var(--brand-color-dark) 100%);
+    background-attachment: scroll !important;
+  }
+  
+  .hero-section .container {
+    height: auto;
+    padding-top: 3rem;
+    padding-bottom: 1.5rem;
+  }
+  
+  .hero-section .hero-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    min-height: 100%;
+    min-width: 100%;
+    max-width: none;
+    max-height: none;
+  }
+  
+  .display-1 {
+    font-size: 3rem;
+  }
+  
+  .display-2 {
+    font-size: 2rem;
+  }
+  
+  .display-3 {
+    font-size: 1.5rem;
+  }
+  
+  .btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .card-body {
+    padding: 1.5rem;
+  }
+  
+  .video-section .ratio {
+    height: 300px;
+  }
+  
+  .hero-section .card {
+    margin-top: 20px;
+  }
 }
 
 
 /* Extra mobile tweaks for home hero */
 
 @media (max-width: 576px) {
-    .hero-section {
-        min-height: 75vh;
-        background: linear-gradient(135deg, var(--brand-color) 0%, var(--brand-color-dark) 100%);
-        background-attachment: scroll;
-    }
-    .hero-section .container {
-        height: 75vh;
-        padding-top: 60px;
-        padding-bottom: 60px;
-    }
-    .hero-section .hero-bg img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: center center;
-        min-height: 100%;
-        min-width: 100%;
-        max-width: none;
-        max-height: none;
-    }
-    .display-1 {
-        font-size: 2.5rem;
-    }
-    .display-2 {
-        font-size: 1.8rem;
-    }
-    .display-3 {
-        font-size: 1.25rem;
-    }
-    .hero-section .lead {
-        font-size: 1rem;
-    }
-    .hero-section .btn {
-        padding: 0.6rem 1rem;
-        font-size: 0.95rem;
-        width: 100%;
-    }
-    .hero-section .card {
-        margin-top: 15px;
-    }
+  .hero-section {
+    min-height: 65vh !important;
+    max-height: 75vh !important;
+    background: linear-gradient(135deg, var(--brand-color) 0%, var(--brand-color-dark) 100%);
+    background-attachment: scroll;
+  }
+  
+  .hero-section .container {
+    height: auto;
+    padding-top: 2.5rem;
+    padding-bottom: 1rem;
+  }
+  
+  .hero-section .hero-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 40%;
+    min-height: 100%;
+    min-width: 100%;
+    max-width: none;
+    max-height: none;
+  }
+  
+  .display-1 {
+    font-size: 2.5rem;
+  }
+  
+  .display-2 {
+    font-size: 1.8rem;
+  }
+  
+  .display-3 {
+    font-size: 1.25rem;
+  }
+  
+  .hero-section .lead {
+    font-size: 1rem;
+  }
+  
+  .hero-section .btn {
+    padding: 0.6rem 1rem;
+    font-size: 0.95rem;
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+  
+  .hero-section .card {
+    margin-top: 15px;
+  }
 }
 
 

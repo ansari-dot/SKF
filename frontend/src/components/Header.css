@@ -3,9 +3,9 @@
 }
 
 .scrolled .hamburger-icon {
-    color: black !important;
+    color: var(--lofi-dark-blue, #2C3E50) !important;
 }
 
 .not-scrolled .hamburger-icon {
-    color: #228B22 !important;
+    color: var(--lofi-green, #7FB069) !important;
 }
