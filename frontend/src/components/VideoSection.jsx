@@ -26,25 +26,44 @@ const VideoSection = () => {
           transition={{ duration: 0.8, delay: 0.2 }}
         >
           <div className="col-lg-8">
-            <div className="video-container position-relative">
+            <div
+              className="video-container position-relative"
+              style={{
+                position: "relative",
+                width: "100%",
+                maxWidth: "100%",
+                overflow: "hidden",
+              }}
+            >
               <motion.div
                 className="video-wrapper"
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.3 }}
+                style={{
+                  position: "relative",
+                  width: "100%",
+                  paddingTop: "56.25%", // keeps 16:9 ratio
+                }}
               >
-                <div className="ratio ratio-16x9">
-                  <iframe
-                    src="https://www.youtube.com/embed/TqhNILVX8IE?si=3Dc-x-lHLaKXx7Lo"
-                    title="YouTube video player"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerPolicy="strict-origin-when-cross-origin"
-                    allowFullScreen
-                    className="rounded-3 shadow-lg"
-                  ></iframe>
-                </div>
+                <iframe
+                  src="https://www.youtube.com/embed/TqhNILVX8IE?si=3Dc-x-lHLaKXx7Lo"
+                  title="YouTube video player"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  allowFullScreen
+                  className="rounded-3 shadow-lg"
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                    border: 0,
+                    display: "block",
+                  }}
+                ></iframe>
               </motion.div>
-              
+
               {/* Video overlay with play button */}
               <motion.div
                 className="video-overlay position-absolute top-50 start-50 translate-middle"
@@ -67,6 +86,7 @@ const VideoSection = () => {
           </div>
         </motion.div>
 
+        {/* Rest of your design untouched */}
         <motion.div
           className="row mt-5"
           initial={{ opacity: 0, y: 30 }}
@@ -85,12 +105,12 @@ const VideoSection = () => {
               </motion.div>
               <h5 className="fw-bold mb-2">Compassionate Care</h5>
               <p className="text-muted">
-                We provide compassionate care and support to those in need, 
+                We provide compassionate care and support to those in need,
                 ensuring everyone feels valued and heard.
               </p>
             </div>
           </div>
-          
+
           <div className="col-lg-4">
             <div className="text-center">
               <motion.div
@@ -102,12 +122,12 @@ const VideoSection = () => {
               </motion.div>
               <h5 className="fw-bold mb-2">Community Support</h5>
               <p className="text-muted">
-                Our dedicated team works tirelessly to support communities 
+                Our dedicated team works tirelessly to support communities
                 through various programs and initiatives.
               </p>
             </div>
           </div>
-          
+
           <div className="col-lg-4">
             <div className="text-center">
               <motion.div
@@ -119,7 +139,7 @@ const VideoSection = () => {
               </motion.div>
               <h5 className="fw-bold mb-2">Excellence</h5>
               <p className="text-muted">
-                We strive for excellence in everything we do, 
+                We strive for excellence in everything we do,
                 ensuring the highest quality of service and support.
               </p>
             </div>
@@ -131,3 +151,4 @@ const VideoSection = () => {
 };
 
 export default VideoSection;
+
