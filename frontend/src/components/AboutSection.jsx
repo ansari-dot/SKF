@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
-
+import a1 from '../assets/hero/a1.webp';
+import a2 from '../assets/hero/a2.webp';
 const AboutSection = () => {
   return (
     <section className="py-5">
@@ -15,7 +16,7 @@ const AboutSection = () => {
               transition={{ duration: 0.8 }}>
               <div className="main-image-wrapper position-relative">
                 <motion.img
-                  src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80"
+                  src={a1}
                   alt="About Us"
                   className="img-fluid rounded-4 shadow-lg"
                   whileHover={{ scale: 1.02 }}
@@ -43,7 +44,7 @@ const AboutSection = () => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.4 }}>
                 <img
-                  src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
+                  src={a2}
                   alt="Our Team"
                   className="img-fluid rounded-4 border border-4 border-white shadow"
                   style={{
