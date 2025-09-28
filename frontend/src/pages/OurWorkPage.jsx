@@ -188,7 +188,7 @@ const OurWorkPage = () => {
                         )}
                       </div>
 
-                          <div className="text-primary text-center mb-3">
+                          <div className="text-center mb-3" style={{ color: 'var(--brand-primary)' }}>
                             <i className="fas fa-tasks fa-3x"></i>
                         </div>
                       </div>
@@ -201,7 +201,7 @@ const OurWorkPage = () => {
                             {program.keyFeatures &&
                               program.keyFeatures.map((feature, idx) => (
                             <li key={idx} className="mb-2">
-                               <i className="fas fa-check text-primary me-2"></i>
+                               <i className="fas fa-check me-2" style={{ color: 'var(--brand-primary)' }}></i>
                               {feature}
                             </li>
                           ))}
@@ -209,15 +209,15 @@ const OurWorkPage = () => {
 
                         <div className="row text-center">
                             <div className="col-4">
-                              <div className="fw-bold text-primary">{program.impact.beneficiaries}+</div>
+                              <div className="fw-bold" style={{ color: 'var(--brand-primary)' }}>{program.impact.beneficiaries}+</div>
                               <small className="text-muted">Beneficiaries</small>
                             </div>
                             <div className="col-4">
-                              <div className="fw-bold text-primary">{program.impact.locations}+</div>
+                              <div className="fw-bold" style={{ color: 'var(--brand-primary)' }}>{program.impact.locations}+</div>
                               <small className="text-muted">Locations</small>
                             </div>
                             <div className="col-4">
-                              <div className="fw-bold text-primary">{program.impact.responseTime}</div>
+                              <div className="fw-bold" style={{ color: 'var(--brand-primary)' }}>{program.impact.responseTime}</div>
                               <small className="text-muted">Response Time</small>
                             </div>
                         </div>
@@ -265,10 +265,10 @@ const OurWorkPage = () => {
               >
                 <div className="card border-0 shadow-sm text-center">
                   <div className="card-body p-4">
-                    <div className="text-primary mb-3">
+                    <div className="mb-3" style={{ color: 'var(--brand-primary)' }}>
                       <i className={`${stat.icon} fa-3x`}></i>
                     </div>
-                    <h3 className="fw-bold text-primary mb-2">{stat.number}</h3>
+                    <h3 className="fw-bold mb-2" style={{ color: 'var(--brand-primary)' }}>{stat.number}</h3>
                     <p className="text-muted mb-0">{stat.label}</p>
                   </div>
                 </div>
@@ -356,7 +356,7 @@ const OurWorkPage = () => {
                     </p>
                     <p className="card-text text-muted">{project.shortDescription}</p>
                     <div className="mt-3 d-flex justify-content-between align-items-center">
-                        <strong className="text-primary">
+                        <strong className="text-primary" style={{ color: 'var(--brand-primary)' }}>
                           {project.impact?.familiesAssisted || 0} families assisted
                           {project.impact?.otherImpact && ` - ${project.impact.otherImpact}`}
                         </strong>

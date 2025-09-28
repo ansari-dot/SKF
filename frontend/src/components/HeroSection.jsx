@@ -5,9 +5,12 @@ import BackgroundAnimation from './BackgroundAnimation';
 import h1 from '../assets/hero/h1.webp';
 import h2 from '../assets/hero/h3.webp';
 import h3 from '../assets/hero/h1.webp';
+import { preloadImages } from '../utils/imageUtils';
+
 const HeroSection = ({ children }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  
+  const [imagesLoaded, setImagesLoaded] = useState(false);
+
   const slides = [
     {
       image: h1,
@@ -19,7 +22,7 @@ const HeroSection = ({ children }) => {
       }
     },
     {
-      image: h2, 
+      image: h2,
       alt: "Happy Children",
       verse: {
         arabic: "إِنَّمَا نُطْعِمُكُمْ لِوَجْهِ اللَّهِ لَا نُرِيدُ مِنكُمْ جَزَاءً وَلَا شُكُورًا",
@@ -37,6 +40,20 @@ const HeroSection = ({ children }) => {
       }
     }
   ];
+
+  // Preload images for better performance
+  useEffect(() => {
+    const imageSources = slides.map(slide => slide.image);
+
+    preloadImages(imageSources)
+      .then(() => {
+        setImagesLoaded(true);
+      })
+      .catch((error) => {
+        console.error('Failed to preload images:', error);
+        setImagesLoaded(true); // Continue even if preloading fails
+      });
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -61,8 +78,8 @@ const HeroSection = ({ children }) => {
   return (
     <section className="hero-section position-relative overflow-hidden d-flex flex-column" id="home" style={{
       minHeight: '100vh !important',
-      height: '100vh !important',
-      padding: '2rem 0 4rem',
+      height: 'clamp(78vh, 100vh, 100vh) !important',
+      padding: '1rem 0 2rem',
       position: 'relative',
       display: 'flex',
       flexDirection: 'column',
@@ -75,7 +92,7 @@ const HeroSection = ({ children }) => {
         top: 0,
         left: 0,
         minHeight: '100vh',
-        height: '100vh'
+        height: 'clamp(78vh, 100vh, 100vh)'
       }}>
         {slides.map((slide, index) => (
           <motion.img
@@ -86,35 +103,37 @@ const HeroSection = ({ children }) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: index === currentSlide ? 1 : 0 }}
             transition={{ duration: 1 }}
-            style={{ 
+            style={{
               objectFit: 'cover',
               objectPosition: 'center 30%',
               zIndex: 0,
               width: '100%',
               height: '100%'
             }}
+            // Add fetchpriority for LCP optimization
+            loading={index === 0 ? 'eager' : 'lazy'}
           />
         ))}
       </div>
-      
-      <div className="container position-relative d-flex flex-column justify-content-center h-100" style={{ 
-        paddingTop: '10rem',
+
+      <div className="container position-relative d-flex flex-column justify-content-center h-100" style={{
+        paddingTop: '8rem',
         minHeight: '100%',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center'
       }}>
         {children}
-        <div className="row justify-content-center flex-grow-1 d-flex align-items-end" style={{ marginTop: '8rem', paddingBottom: '3rem' }}>
+        <div className="row justify-content-center flex-grow-1 d-flex align-items-center" style={{ marginTop: '6rem', paddingBottom: '8rem' }}>
           <div className="col-12 text-center">
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
             >
-             
-              
-              <motion.div 
+
+
+              <motion.div
                 className="quran-verse-container mb-4 p-3 p-md-4 rounded"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -132,8 +151,8 @@ const HeroSection = ({ children }) => {
                 }}
                 key={currentSlide}
               >
-                <p className="text-white mb-3 mb-md-4" style={{ 
-                  fontFamily: '"Amiri", serif', 
+                <p className="text-white mb-3 mb-md-4" style={{
+                  fontFamily: '"Amiri", serif',
                   fontSize: 'clamp(1.2rem, 4vw, 1.8rem)',
                   lineHeight: '1.8',
                   direction: 'rtl',
@@ -142,7 +161,7 @@ const HeroSection = ({ children }) => {
                 }}>
                   {slides[currentSlide].verse.arabic}
                 </p>
-                <p className="text-white-50 mb-3" style={{ 
+                <p className="text-white-50 mb-3" style={{
                   fontStyle: 'italic',
                   fontSize: 'clamp(1rem, 3vw, 1.2rem)',
                   lineHeight: '1.6',
@@ -150,7 +169,7 @@ const HeroSection = ({ children }) => {
                 }}>
                   "{slides[currentSlide].verse.english}"
                 </p>
-                <p className="text-white-50 mt-3 mt-md-4 mb-0" style={{ 
+                <p className="text-white-50 mt-3 mt-md-4 mb-0" style={{
                   fontSize: '0.9rem',
                   fontFamily: '"Poppins", sans-serif',
                   letterSpacing: '0.5px',
@@ -159,11 +178,15 @@ const HeroSection = ({ children }) => {
                   - {slides[currentSlide].verse.reference}
                 </p>
               </motion.div>
-              
-            
+
+            </motion.div>
+          </div>
+        </div>
+      </div>
+
       {/* Buttons at Bottom */}
-      <div className="mt-auto pt-4 pb-5">
-        <motion.div 
+      <div className="position-absolute bottom-0 w-100 pb-4" style={{ bottom: 0, left: 0, right: 0 }}>
+        <motion.div
           className="d-flex flex-wrap gap-4 justify-content-center w-100 px-3"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -171,8 +194,8 @@ const HeroSection = ({ children }) => {
         >
           <motion.button
             className="btn btn-primary px-4 px-md-5 py-3 position-relative overflow-hidden"
-            whileHover={{ 
-              scale: 1.05, 
+            whileHover={{
+              scale: 1.05,
               boxShadow: "0 10px 25px rgba(40, 167, 69, 0.5)"
             }}
             whileTap={{ scale: 0.98 }}
@@ -200,7 +223,7 @@ const HeroSection = ({ children }) => {
               <i className="fas fa-hands-helping me-2"></i>
               Join Volunteer
             </span>
-            <motion.span 
+            <motion.span
               className="position-absolute"
               style={{
                 position: 'absolute',
@@ -219,10 +242,10 @@ const HeroSection = ({ children }) => {
               }}
             />
           </motion.button>
-          
+
           <motion.button
             className="btn btn-outline-light px-4 px-md-5 py-3 position-relative overflow-hidden"
-            whileHover={{ 
+            whileHover={{
               scale: 1.05,
               backgroundColor: 'rgba(255, 255, 255, 0.1)'
             }}
@@ -251,7 +274,7 @@ const HeroSection = ({ children }) => {
               <i className="fas fa-hand-holding-people me-2"></i>
               Get Involved
             </span>
-            <motion.span 
+            <motion.span
               className="position-absolute"
               style={{
                 position: 'absolute',
@@ -271,10 +294,6 @@ const HeroSection = ({ children }) => {
             />
           </motion.button>
         </motion.div>
-      </div>
-            </motion.div>
-          </div>
-        </div>
       </div>
     </section>
   );

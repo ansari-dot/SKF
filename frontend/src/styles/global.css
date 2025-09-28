@@ -208,8 +208,7 @@ button:not(.hero-section button):not(.hero-banner button):not(.navbar-toggler):n
 .fab:not(.hero-section .fab):not(.hero-banner .fab):not(.navbar-toggler .fab):not(.mobile-menu .fab):not(footer .fab),
 .fa:not(.hero-section .fa):not(.hero-banner .fa):not(.navbar-toggler .fa):not(.mobile-menu .fa):not(footer .fa),
 .bi:not(.hero-section .bi):not(.hero-banner .bi):not(.navbar-toggler .bi):not(.mobile-menu .bi):not(footer .bi) {
-    color: var(--brand-primary);
-    color: wheat !important;
+    color: var(--brand-primary) !important;
     transition: color 0.3s ease !important;
 }
 
@@ -869,7 +868,7 @@ body::after {
         border-radius: 8px;
     }
     .navbar-collapse .nav-link.active {
-        background: rgba(74, 144, 226, 0.12);
+        background: rgba(184, 212, 227, 0.12);
     }
     .navbar .btn {
         width: 100%;
@@ -1095,7 +1094,7 @@ body::after {
 .btn-info,
 .btn-warning,
 .btn-danger {
-    background: #1E3A8A;
+    background: var(--brand-primary);
     border: none;
 }
 
@@ -1104,7 +1103,7 @@ body::after {
 .btn-info:hover,
 .btn-warning:hover,
 .btn-danger:hover {
-    background: #3B82F6;
+    background: var(--brand-accent);
     border: none;
 }
 
@@ -1187,7 +1186,7 @@ section {
 .form-control:focus,
 .form-select:focus {
     border-color: var(--brand-primary);
-    box-shadow: 0 0 0 0.2rem rgba(74, 144, 226, 0.25);
+    box-shadow: 0 0 0 0.2rem rgba(127, 176, 105, 0.25);
 }
 
 
@@ -1221,7 +1220,7 @@ section {
 .accordion-button:focus {
     background-color: var(--brand-primary);
     color: white;
-    box-shadow: 0 0 0 0.2rem rgba(74, 144, 226, 0.25);
+    box-shadow: 0 0 0 0.2rem rgba(127, 176, 105, 0.25);
 }
 
 .accordion-body {
@@ -1591,7 +1590,7 @@ img[alt*="logo"]:hover {
 .signup-page .form-control:focus,
 .forgot-password-page .form-control:focus {
     border-color: var(--brand-primary);
-    box-shadow: 0 0 0 0.2rem rgba(74, 144, 226, 0.15);
+    box-shadow: 0 0 0 0.2rem rgba(127, 176, 105, 0.15);
 }
 
 .login-page .input-group-text,
@@ -1951,7 +1950,7 @@ img[alt*="logo"]:hover {
     background-color: var(--brand-primary) !important;
     color: #ffffff !important;
     border-color: var(--brand-primary) !important;
-    box-shadow: 0 0 0 0.2rem rgba(0, 128, 0, 0.25) !important;
+    box-shadow: 0 0 0 0.2rem rgba(127, 176, 105, 0.25) !important;
     transform: scale(1.1) !important;
 }
 
