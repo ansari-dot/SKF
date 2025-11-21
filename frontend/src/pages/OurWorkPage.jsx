@@ -83,14 +83,12 @@ const OurWorkPage = () => {
                   <div className="card-body p-5">
                     <div className="row g-4">
                       <div className="col-md-4">
-                      <img
+                       <img
   src={getAbsoluteImageUrl(program.image)}
   alt={program.name}
   className="img-fluid rounded mb-3"
   style={{ height: '200px', objectFit: 'cover' }}
-  onError={(e) => {
-    e.target.src = '/placeholder-logo.png';
-  }}
+  onError={(e) => { e.target.src = '/placeholder-logo.png'; }}
 />
 
                           <div className="text-primary text-center mb-3">
