@@ -1,44 +1,43 @@
-// -------------------------------
-// getAbsoluteImageUrl.js
-// -------------------------------
+// utils/imageUtils.js
 
+// Get absolute URL for any image path
 const getAbsoluteImageUrl = (imagePath) => {
   try {
     // Handle null, undefined, or empty string
-    if (!imagePath) {
-      return '/placeholder-logo.png';
-    }
+    if (!imagePath) return '/placeholder-logo.png';
 
     // If it's already a full URL, return as is
     if (typeof imagePath === 'string' && (imagePath.startsWith('http://') || imagePath.startsWith('https://'))) {
       return imagePath;
     }
 
-    // Handle case where imagePath might be an object (like from Cloudinary)
+    // If imagePath is an object (like from Cloudinary)
     if (typeof imagePath === 'object' && imagePath !== null) {
-      // Try common URL properties
       return imagePath.url || imagePath.secure_url || imagePath.publicUrl || '/placeholder-logo.png';
     }
 
     // Convert to string in case it's a number or other type
-    const path = String(imagePath);
+    let path = String(imagePath);
 
-    // Case 1: Already has /uploads/images/
-    if (path.includes('/uploads/images/')) {
+    // Handle paths starting with "uploads" or "/uploads"
+    if (path.startsWith('uploads')) {
+      const apiUrl = import.meta.env.VITE_API_URL || '';
+      const apiBaseUrl = apiUrl.replace('/api', '');
+
+      // Development: localhost
+      if (window.location.hostname === 'local' && apiBaseUrl) {
+        return `${apiBaseUrl}/${path}`;
+      }
+
+      // Production: use current domain
+      return `${window.location.origin}/${path}`;
+    }
+
+    if (path.startsWith('/uploads')) {
       return `${window.location.origin}${path}`;
     }
 
-    // Case 2: Only filename (no /uploads/)
-    if (!path.startsWith('/uploads')) {
-      return `${window.location.origin}/uploads/images/${path}`;
-    }
-
-    // Case 3: Starts with /uploads but missing /images
-    if (path.startsWith('/uploads')) {
-      return `${window.location.origin}/uploads/images/${path.replace('/uploads/', '')}`;
-    }
-
-    // Fallback: return as is
+    // Default: public assets
     return path;
   } catch (error) {
     console.error('Error processing image URL:', error, 'Image path:', imagePath);
@@ -46,21 +45,14 @@ const getAbsoluteImageUrl = (imagePath) => {
   }
 };
 
-// -------------------------------
-// Image optimization utility
-// -------------------------------
+// Image optimization (optional, can integrate Cloudinary later)
 export const optimizeImageSrc = (src, width = 1200, quality = 80) => {
-  if (src.includes('?') || src.startsWith('http')) {
-    return src;
-  }
-
-  // Add your image optimization logic here if needed
-  return src;
+  if (!src) return '/placeholder-logo.png';
+  if (src.startsWith('http') || src.includes('?')) return src;
+  return src; // Return original for now
 };
 
-// -------------------------------
-// Generate responsive images
-// -------------------------------
+// Generate responsive image data
 export const generateResponsiveImages = (baseSrc, alt, className = '') => {
   const sources = [
     { media: '(max-width: 768px)', width: 800 },
@@ -68,53 +60,36 @@ export const generateResponsiveImages = (baseSrc, alt, className = '') => {
     { media: '(min-width: 1201px)', width: 1600 }
   ];
 
-  return {
-    src: baseSrc,
-    alt,
-    className,
-    loading: 'lazy',
-    sources
-  };
+  return { src: baseSrc, alt, className, loading: 'lazy', sources };
 };
 
-// -------------------------------
-// Image preloader utility
-// -------------------------------
-export const preloadImage = (src) => {
-  return new Promise((resolve, reject) => {
+// Preload a single image
+export const preloadImage = (src) =>
+  new Promise((resolve, reject) => {
     const img = new Image();
     img.onload = () => resolve(src);
     img.onerror = () => reject(new Error(`Failed to load image: ${src}`));
     img.src = src;
   });
-};
 
-// Batch preloader
-export const preloadImages = (imageSources) => {
-  const promises = imageSources.map(src => preloadImage(src));
-  return Promise.all(promises);
-};
+// Preload multiple images
+export const preloadImages = (imageSources) => Promise.all(imageSources.map(src => preloadImage(src)));
 
-// -------------------------------
-// Lazy loading with IntersectionObserver
-// -------------------------------
+// Lazy-load image using IntersectionObserver
 export const createLazyImage = (imgElement, src) => {
-  const imageObserver = new IntersectionObserver((entries, observer) => {
+  const observer = new IntersectionObserver((entries, obs) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         const img = entry.target;
         img.src = src;
         img.classList.remove('lazy');
-        observer.unobserve(img);
+        obs.unobserve(img);
       }
     });
   });
 
-  imageObserver.observe(imgElement);
-  return imageObserver;
+  observer.observe(imgElement);
+  return observer;
 };
 
-// -------------------------------
-// Export default
-// -------------------------------
 export default getAbsoluteImageUrl;
