@@ -87,8 +87,8 @@ const HeroSection = ({ children }) => {
 
   return (
     <section className="hero-section position-relative overflow-hidden d-flex flex-column" id="home" style={{
-        minHeight: '100vh',
-        height: '100vh',
+        minHeight: '90vh',
+        height: '90vh',
         padding: '0',
         position: 'absolute',
         top: '0',
@@ -107,7 +107,7 @@ const HeroSection = ({ children }) => {
           left: 0,
           width: '100%',
           height: '100%',
-          minHeight: '100vh',
+          minHeight: '90vh',
           zIndex: 0
         }}>
           {slides.map((slide, index) => (

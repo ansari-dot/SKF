@@ -7,6 +7,9 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './styles/global.css';
 
+// Scroll animation component
+const ScrollToTop = lazy(() => import('./components/ScrollToTop'));
+
 // ✅ Lazy imports (Code splitting)
 const Header = lazy(() => import('./components/Header'));
 const Footer = lazy(() => import('./components/Footer'));
@@ -39,6 +42,7 @@ function App() {
   return (
     <Provider store={store}>
       <Router>
+        <ScrollToTop />
         <div className="App">
           <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} />
 

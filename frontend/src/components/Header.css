@@ -184,6 +184,40 @@
 /* When navbar is transparent (top of hero), make nav links white for visibility */
 .navbar-transparent .modern-nav-link {
     color: #FFFFFF !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5), 0 0 8px rgba(0, 0, 0, 0.3);
+    font-weight: 600;
+}
+
+/* Override any other color styles for transparent navbar - make ALL nav items white */
+.navbar-transparent .nav-link,
+.navbar-transparent a.nav-link,
+.navbar-transparent .navbar-nav .nav-link,
+.navbar-transparent .modern-nav-link,
+.navbar-transparent [class*="nav-link"] {
+    color: #FFFFFF !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5) !important;
+    font-weight: 600 !important;
+}
+
+/* For non-homepage pages, always use dark text regardless of scroll state */
+:not(.navbar-transparent) .nav-link,
+:not(.navbar-transparent) .modern-nav-link,
+:not(.navbar-transparent) .navbar-nav .nav-link {
+    color: #2C3E50 !important;
+    text-shadow: none !important;
+}
+
+/* Additional override for homepage transparent navbar - ensure ALL text is white */
+.navbar-transparent.hero-header .nav-link,
+.navbar-transparent.hero-header .modern-nav-link,
+.navbar-transparent.hero-header .navbar-nav .nav-link,
+.navbar-transparent.hero-header .nav-link span,
+.navbar-transparent.hero-header .modern-nav-link span,
+.navbar-transparent.hero-header .nav-link.active,
+.navbar-transparent.hero-header .modern-nav-link.active {
+    color: #FFFFFF !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5) !important;
+    font-weight: 600 !important;
 }
 
 .modern-nav-link::after {
@@ -205,6 +239,64 @@
 .modern-nav-link.active::after {
     width: 80%;
     background: var(--brand-accent);
+}
+
+/* ULTIMATE OVERRIDE - Force white text on homepage transparent navbar */
+.navbar.navbar-transparent.hero-header .navbar-nav .nav-link,
+.navbar.navbar-transparent.hero-header .navbar-nav .nav-link.active,
+.navbar.navbar-transparent.hero-header .navbar-nav .nav-link:hover,
+.navbar.navbar-transparent.hero-header .modern-nav-link,
+.navbar.navbar-transparent.hero-header .modern-nav-link.active,
+.navbar.navbar-transparent.hero-header .modern-nav-link:hover,
+.navbar.navbar-transparent.hero-header a.nav-link,
+.navbar.navbar-transparent.hero-header [class*="nav-link"] {
+    color: #FFFFFF !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5), 0 0 8px rgba(0, 0, 0, 0.3) !important;
+    font-weight: 600 !important;
+    -webkit-text-fill-color: #FFFFFF !important;
+}
+
+/* Force white background when navbar is scrolled */
+.navbar.navbar-scrolled {
+    background-color: #FFFFFF !important;
+    backdrop-filter: blur(8px) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Additional override for scrolled state on homepage */
+.navbar.navbar-scrolled.hero-header {
+    background-color: #FFFFFF !important;
+    backdrop-filter: blur(8px) !important;
+}
+
+/* Force black text when navbar is scrolled (white background) */
+.navbar.navbar-scrolled .nav-link,
+.navbar.navbar-scrolled .modern-nav-link,
+.navbar.navbar-scrolled .navbar-nav .nav-link,
+.navbar.navbar-scrolled a.nav-link,
+.navbar.navbar-scrolled [class*="nav-link"] {
+    color: #2C3E50 !important;
+    text-shadow: none !important;
+    font-weight: 500 !important;
+    -webkit-text-fill-color: #2C3E50 !important;
+}
+
+/* Ensure text inside spans is also black when scrolled */
+.navbar.navbar-scrolled .nav-link span,
+.navbar.navbar-scrolled .modern-nav-link span {
+    color: #2C3E50 !important;
+    text-shadow: none !important;
+    -webkit-text-fill-color: #2C3E50 !important;
+}
+
+/* Ensure text inside spans is also white */
+.navbar.navbar-transparent.hero-header .nav-link span,
+.navbar.navbar-transparent.hero-header .modern-nav-link span {
+    color: #FFFFFF !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5), 0 0 8px rgba(0, 0, 0, 0.3) !important;
+    -webkit-text-fill-color: #FFFFFF !important;
+    font-weight: 700 !important;
 }
 
 /* Improved Dropdown Styles */

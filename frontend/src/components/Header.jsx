@@ -15,8 +15,9 @@ const Header = ({ isHeroHeader }) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const isScrolled = window.scrollY > 50;
+      const isScrolled = window.scrollY > 30;
       setScrolled(isScrolled);
+      console.log('Scroll state changed:', isScrolled, 'Scroll Y:', window.scrollY);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -67,27 +68,27 @@ const Header = ({ isHeroHeader }) => {
       <motion.nav
         className={`navbar navbar-expand-lg fixed-top modern-navbar ${
           scrolled ? 'navbar-scrolled' : 'navbar-transparent'
-        } ${isHeroHeader ? 'hero-header' : ''}`}
+        } ${isHomePage ? 'hero-header' : ''}`}
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         style={{
           top: '35px',
-          minHeight: '90px',
-          maxHeight: '90px',
+          minHeight: '100px',
+          maxHeight: '100px',
           display: 'flex',
           alignItems: 'center',
-          padding: '0.5rem 0',
-          backdropFilter: scrolled ? 'blur(16px) saturate(180%)' : 'blur(10px) saturate(150%)',
-          backgroundColor: isHeroHeader && !scrolled
+          padding: '1rem 0',
+          backdropFilter: scrolled ? 'blur(8px)' : (isHomePage && !scrolled ? 'blur(10px) saturate(150%)' : 'blur(10px) saturate(150%)'),
+          backgroundColor: isHomePage && !scrolled
             ? 'transparent'
-            : (scrolled || !isHomePage
-              ? 'rgba(255, 255, 255, 0.95)'
-              : 'rgba(0, 0, 0, 0.12)'),
+            : (scrolled 
+              ? '#FFFFFF'
+              : (!isHomePage ? 'rgba(255, 255, 255, 0.95)' : 'rgba(0, 0, 0, 0.12)')),
           boxShadow: scrolled
-            ? '0 8px 32px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.6)'
+            ? '0 4px 20px rgba(0, 0, 0, 0.08)'
             : '0 2px 8px rgba(0, 0, 0, 0.05)',
           transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-          borderBottom: scrolled ? '1px solid rgba(127, 176, 105, 0.1)' : 'none',
+          borderBottom: scrolled ? '1px solid rgba(0, 0, 0, 0.05)' : 'none',
         }}
         transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
       >
@@ -106,7 +107,7 @@ const Header = ({ isHeroHeader }) => {
             whileTap={{ scale: 0.95 }}
             style={{
               marginRight: '3rem',
-              height: '70px',
+              height: '80px',
               display: 'flex',
               alignItems: 'center',
               zIndex: 10,
@@ -163,6 +164,9 @@ const Header = ({ isHeroHeader }) => {
               style={{
                 fontSize: '2.25rem',
                 transition: 'all 0.3s ease',
+                filter: !scrolled && isHomePage
+                  ? 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5))'
+                  : 'none',
               }}
             ></i>
           </button>
@@ -192,11 +196,6 @@ const Header = ({ isHeroHeader }) => {
                         borderRadius: '14px',
                         fontWeight: isActive(item.path) ? '600' : '500',
                         fontSize: '1.1rem',
-                        color: !scrolled && isHeroHeader
-                          ? '#FFFFFF'
-                          : (scrolled
-                              ? (isActive(item.path) ? 'var(--brand-primary)' : '#2C3E50')
-                              : '#FFFFFF'),
                         transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                         position: 'relative',
                         letterSpacing: '0.5px',
@@ -221,7 +220,7 @@ const Header = ({ isHeroHeader }) => {
                             borderRadius: '14px',
                             background: scrolled
                               ? 'rgba(127, 176, 105, 0.06)'
-                              : 'rgba(255, 255, 255, 0.1)',
+                              : (isHomePage && !scrolled ? 'rgba(255, 255, 255, 0.15)' : 'rgba(255, 255, 255, 0.1)'),
                             opacity: 0,
                             transition: 'opacity 0.3s ease',
                             zIndex: 1,
