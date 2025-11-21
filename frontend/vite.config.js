@@ -1,11 +1,18 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import purgeCss from 'vite-plugin-purgecss'
 import { brotliCompressSync } from 'zlib'
 import { gzipSync } from 'zlib'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    purgeCss({
+      content: ['./index.html', './src/**/*.{js,jsx,ts,tsx}'],
+      safelist: [/^fa-/, /^btn-/, /^bg-/, /^text-/, /^navbar-/, /^dropdown-/, /^carousel-/, /^badge/, /^col-/, /^row/, /^container/]
+    })
+  ],
   server: {
     port: 3000,
     open: true

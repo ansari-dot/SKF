@@ -38,98 +38,11 @@ const OurWorkPage = () => {
   }, []);
 
   return (
-    <div className="pt-5">
+    <div className="pt-5" style={{ marginTop: 'calc(-1 * var(--header-height) - 35px)' }}>
 
 
       {/* Main Programs */}
-      {/* Projects Section 
       <section className="py-5">
-        <div className="container">
-          <motion.div
-            className="text-center mb-5"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="display-5 fw-bold mb-3">Our Projects</h2>
-            <p className="lead text-muted">Making a difference through our initiatives</p>
-          </motion.div>
-          
-          <div className="row g-4">
-            {loading ? (
-              <div className="col-12 text-center py-5">
-                <div className="spinner-border text-primary" role="status">
-                  <span className="visually-hidden">Loading...</span>
-                </div>
-                <p className="mt-3 text-muted">Loading projects...</p>
-              </div>
-            ) : projects.length === 0 ? (
-              <div className="col-12 text-center py-5">
-                <i className="fas fa-project-diagram fa-3x text-muted mb-3"></i>
-                <h4 className="text-muted">No projects available</h4>
-                <p className="text-muted">Check back later for updates.</p>
-              </div>
-            ) : (
-              projects.map((project, index) => (
-                <motion.div
-                  key={project._id || index}
-                  className="col-md-6 col-lg-4"
-                  initial={{ opacity: 0, y: 50 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                >
-                  <div className="card h-100 border-0 shadow-sm hover-shadow transition-all">
-                    <div className="position-relative" style={{ height: '200px', overflow: 'hidden' }}>
-                      <img
-                        src={getAbsoluteImageUrl(project.images?.[0]?.url || project.image || '/placeholder-logo.png')}
-                        alt={project.title}
-                        className="w-100 h-100 object-cover"
-                        onError={(e) => {
-                          e.target.onerror = null;
-                          e.target.src = '/placeholder-logo.png';
-                        }}
-                      />
-                      {project.status && (
-                        <span className="position-absolute top-2 end-2 badge bg-primary">
-                          {project.status}
-                        </span>
-                      )}
-                    </div>
-                    <div className="card-body">
-                      <h5 className="card-title">{project.title}</h5>
-                      <p className="card-text text-muted">
-                        {project.shortDescription?.substring(0, 100)}...
-                      </p>
-                      <div className="d-flex justify-content-between align-items-center">
-                        <span className="badge bg-light text-dark">
-                          <i className="fas fa-map-marker-alt me-1"></i>
-                          {typeof project.location === 'string' 
-                            ? project.location 
-                            : project.location?.address || 
-                              project.location?.city || 
-                              project.location?.country || 
-                              'Location not specified'}
-                        </span>
-                        <Link 
-                          to={`/projects/${project._id}`}
-                          className="btn btn-outline-primary btn-sm"
-                        >
-                          View Details
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              ))
-            )}
-          </div>
-        </div>
-      </section>*/}
-      
-      {/* Programs Section */}
-      <section className="py-5 bg-light">
         <div className="container">
           <motion.div
             className="text-center mb-5"
@@ -170,25 +83,17 @@ const OurWorkPage = () => {
                   <div className="card-body p-5">
                     <div className="row g-4">
                       <div className="col-md-4">
-                      <div className="position-relative" style={{ height: '200px', backgroundColor: '#f8f9fa', borderRadius: '8px', overflow: 'hidden' }}>
-                        {program.image ? (
-                          <img
-                            src={getAbsoluteImageUrl(program.image)}
-                            alt={program.name || 'Program Image'}
-                            className="img-fluid h-100 w-100"
-                            style={{ objectFit: 'cover' }}
-                            onError={(e) => {
-                              e.target.src = '/placeholder-logo.png';
-                            }}
-                          />
-                        ) : (
-                          <div className="d-flex align-items-center justify-content-center h-100">
-                            <i className="fas fa-image fa-3x text-muted"></i>
-                          </div>
-                        )}
-                      </div>
+                      <img
+  src={getAbsoluteImageUrl(program.image)}
+  alt={program.name}
+  className="img-fluid rounded mb-3"
+  style={{ height: '200px', objectFit: 'cover' }}
+  onError={(e) => {
+    e.target.src = '/placeholder-logo.png';
+  }}
+/>
 
-                          <div className="text-center mb-3" style={{ color: 'var(--brand-primary)' }}>
+                          <div className="text-primary text-center mb-3">
                             <i className="fas fa-tasks fa-3x"></i>
                         </div>
                       </div>
@@ -201,7 +106,7 @@ const OurWorkPage = () => {
                             {program.keyFeatures &&
                               program.keyFeatures.map((feature, idx) => (
                             <li key={idx} className="mb-2">
-                               <i className="fas fa-check me-2" style={{ color: 'var(--brand-primary)' }}></i>
+                               <i className="fas fa-check text-primary me-2"></i>
                               {feature}
                             </li>
                           ))}
@@ -209,15 +114,15 @@ const OurWorkPage = () => {
 
                         <div className="row text-center">
                             <div className="col-4">
-                              <div className="fw-bold" style={{ color: 'var(--brand-primary)' }}>{program.impact.beneficiaries}+</div>
+                              <div className="fw-bold text-primary">{program.impact.beneficiaries}+</div>
                               <small className="text-muted">Beneficiaries</small>
                             </div>
                             <div className="col-4">
-                              <div className="fw-bold" style={{ color: 'var(--brand-primary)' }}>{program.impact.locations}+</div>
+                              <div className="fw-bold text-primary">{program.impact.locations}+</div>
                               <small className="text-muted">Locations</small>
                             </div>
                             <div className="col-4">
-                              <div className="fw-bold" style={{ color: 'var(--brand-primary)' }}>{program.impact.responseTime}</div>
+                              <div className="fw-bold text-primary">{program.impact.responseTime}</div>
                               <small className="text-muted">Response Time</small>
                             </div>
                         </div>
@@ -265,10 +170,10 @@ const OurWorkPage = () => {
               >
                 <div className="card border-0 shadow-sm text-center">
                   <div className="card-body p-4">
-                    <div className="mb-3" style={{ color: 'var(--brand-primary)' }}>
+                    <div className="text-primary mb-3">
                       <i className={`${stat.icon} fa-3x`}></i>
                     </div>
-                    <h3 className="fw-bold mb-2" style={{ color: 'var(--brand-primary)' }}>{stat.number}</h3>
+                    <h3 className="fw-bold text-primary mb-2">{stat.number}</h3>
                     <p className="text-muted mb-0">{stat.label}</p>
                   </div>
                 </div>
@@ -318,14 +223,8 @@ const OurWorkPage = () => {
               >
                 <div className="card h-100 border-0 shadow-sm">
                 <img
-                    src={getAbsoluteImageUrl(project.images[0].url)}
-                    alt={project.title}
-                    className="img-fluid rounded shadow"
-                    style={{ maxHeight: '300px', objectFit: 'cover' }}
-                    onError={(e) => {
-                      e.target.src = '/placeholder-logo.png';
-                    }}
-                  />
+  src={getAbsoluteImageUrl(project.image)}
+/>
 
                   <div className="card-body">
                     <div className="d-flex justify-content-between align-items-center mb-2">
@@ -347,26 +246,24 @@ const OurWorkPage = () => {
                     <h5 className="card-title fw-bold">{project.title}</h5>
                     <p className="text-muted mb-2">
                       <i className="fas fa-map-marker-alt me-1"></i>
-                      {typeof project.location === 'string' 
-                        ? project.location 
-                        : project.location?.address || 
-                          project.location?.city || 
-                          project.location?.country || 
-                          'Location not specified'}
+                      {typeof project.location === 'string' ? project.location : (project.location?.address || project.location?.city || project.location?.country || 'Location not specified')}
                     </p>
-                    <p className="card-text text-muted">{project.shortDescription}</p>
-                    <div className="mt-3 d-flex justify-content-between align-items-center">
-                        <strong className="text-primary" style={{ color: 'var(--brand-primary)' }}>
-                          {project.impact?.familiesAssisted || 0} families assisted
-                          {project.impact?.otherImpact && ` - ${project.impact.otherImpact}`}
+                    <p className="card-text text-muted">{project.description}</p>
+                    <div className="mt-3">
+                        <strong className="text-primary">
+                          {project.impact.familiesAssisted} families assisted
+                          {project.impact.otherImpact && ` - ${project.impact.otherImpact}`}
                         </strong>
-                        <Link 
-                          to={`/projects/${project._id}`}
-                          className="btn btn-outline-primary"
-                        >
-                          Learn More
-                        </Link>
                     </div>
+                 <Link to={`/projects/${project._id}`} style={{ textDecoration: 'none' }}>
+                      <motion.button
+                        className="btn btn-outline-primary mt-3"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        Learn More
+                      </motion.button>
+                    </Link>
                   </div>
                 </div>
               </motion.div>

@@ -214,47 +214,75 @@ const ProjectDetailPage = () => {
       {/* Overview */}
       <section className="py-5 bg-white">
         <div className="container">
-          <h2 className="fw-bold mb-4 text-success">Project Overview</h2>
-          <div>
-            {project.detailedDescription ? (
-              <div dangerouslySetInnerHTML={{ 
-                __html: project.detailedDescription.replace(/\n/g, '<br>') 
-              }} />
-            ) : (
-              <p className="text-muted fs-5">No detailed description available for this project.</p>
-            )}
-          </div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="p-4 p-md-5 rounded-4"
+            style={{
+              background: 'linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%)',
+              borderRadius: '20px',
+              boxShadow: '0 8px 24px rgba(0, 0, 0, 0.08)'
+            }}
+          >
+            <h2 className="fw-bold mb-4" style={{ color: 'var(--brand-primary)' }}>Project Overview</h2>
+            <div style={{ lineHeight: '1.8', color: '#444' }}>
+              {project.detailedDescription ? (
+                <div dangerouslySetInnerHTML={{ 
+                  __html: project.detailedDescription.replace(/\n/g, '<br>') 
+                }} />
+              ) : (
+                <p className="text-muted fs-5">No detailed description available for this project.</p>
+              )}
+            </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Key Stats */}
-      <section className="py-5 bg-light">
+      <section className="py-5" style={{ background: 'linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%)' }}>
         <div className="container">
           <div className="row g-4">
-            <div className="col-6 col-md-3 text-center">
-              <div className="display-5 fw-bold text-success mb-2">
-                {project.impact?.familiesAssisted || '0'}
-              </div>
-              <div className="text-muted">Families Assisted</div>
-            </div>
-            <div className="col-6 col-md-3 text-center">
-              <div className="display-5 fw-bold text-success mb-2">
-                {project.impact?.individualsBenefited || '0'}
-              </div>
-              <div className="text-muted">People Helped</div>
-            </div>
-            <div className="col-6 col-md-3 text-center">
-              <div className="display-5 fw-bold text-success mb-2">
-                {project.impact?.volunteersInvolved || '0'}
-              </div>
-              <div className="text-muted">Volunteers</div>
-            </div>
-            <div className="col-6 col-md-3 text-center">
-              <div className="display-5 fw-bold text-success mb-2">
-                {project.category || 'N/A'}
-              </div>
-              <div className="text-muted">Category</div>
-            </div>
+            {[
+              { value: project.impact?.familiesAssisted || '0', label: 'Families Assisted', icon: 'fas fa-users' },
+              { value: project.impact?.individualsBenefited || '0', label: 'People Helped', icon: 'fas fa-hand-holding-heart' },
+              { value: project.impact?.volunteersInvolved || '0', label: 'Volunteers', icon: 'fas fa-hands-helping' },
+              { value: project.category || 'N/A', label: 'Category', icon: 'fas fa-tag' }
+            ].map((stat, index) => (
+              <motion.div 
+                key={index}
+                className="col-6 col-md-3 text-center"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                viewport={{ once: true }}
+              >
+                <motion.div
+                  className="p-4 rounded-4 h-100"
+                  whileHover={{ y: -5, scale: 1.05 }}
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(127, 176, 105, 0.1), rgba(255, 255, 255, 1))',
+                    borderRadius: '20px',
+                    boxShadow: '0 8px 24px rgba(0, 0, 0, 0.08)',
+                    border: '2px solid rgba(127, 176, 105, 0.2)'
+                  }}
+                >
+                  <motion.div
+                    animate={{ y: [0, -5, 0] }}
+                    transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
+                    className="mb-3"
+                    style={{ color: 'var(--brand-primary)' }}
+                  >
+                    <i className={stat.icon}></i>
+                  </motion.div>
+                  <div className="display-5 fw-bold mb-2" style={{ color: 'var(--brand-primary)' }}>
+                    {stat.value}
+                  </div>
+                  <div className="text-muted fw-semibold">{stat.label}</div>
+                </motion.div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
@@ -271,17 +299,23 @@ const ProjectDetailPage = () => {
               {project.impact.keyAchievements.map((achievement, index) => (
                 <div key={index} className="col-md-6 col-lg-4">
                   <motion.div
-                    className="card h-100 border-0 shadow-sm"
-                    whileHover={{ y: -5, boxShadow: '0 10px 20px rgba(0,0,0,0.1)' }}
+                    className="card h-100 border-0 modern-achievement-card"
+                    whileHover={{ y: -8, scale: 1.02 }}
                     transition={{ duration: 0.3 }}
+                    style={{
+                      borderRadius: '20px',
+                      boxShadow: '0 8px 24px rgba(0, 0, 0, 0.08)',
+                      background: 'linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%)',
+                      borderLeft: '4px solid var(--brand-primary)'
+                    }}
                   >
-                    <div className="card-body">
+                    <div className="card-body p-4">
                       <div className="d-flex align-items-start">
-                        <div className="bg-success bg-opacity-10 p-2 rounded-circle me-3">
-                          <i className="fas fa-check-circle text-success"></i>
+                        <div className="p-3 rounded-circle me-3" style={{ background: 'rgba(127, 176, 105, 0.1)' }}>
+                          <i className="fas fa-check-circle" style={{ color: 'var(--brand-primary)', fontSize: '1.5rem' }}></i>
                         </div>
                         <div>
-                          <h5 className="mb-0">{achievement}</h5>
+                          <h5 className="mb-0 fw-semibold" style={{ color: '#2C3E50' }}>{achievement}</h5>
                         </div>
                       </div>
                     </div>
@@ -338,12 +372,18 @@ const ProjectDetailPage = () => {
       )}
 
       {/* Gallery */}
-      <section className="py-5" style={{ backgroundColor: '#f8f9fa' }}>
+      <section className="py-5" style={{ background: 'linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%)' }}>
         <div className="container">
-          <div className="section-header text-center mb-5">
-            <h2 style={{ color: brandColors.primary }}>Project Gallery</h2>
+          <motion.div 
+            className="text-center mb-5"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+          >
+            <h2 style={{ color: 'var(--brand-primary)', fontWeight: '700' }}>Project Gallery</h2>
             <p className="text-muted">Browse through our project images</p>
-          </div>
+          </motion.div>
           <div className="row g-4">
             {project.images && project.images.length > 0 ? (
               project.images.map((img, idx) => (
@@ -355,21 +395,31 @@ const ProjectDetailPage = () => {
                   transition={{ duration: 0.5, delay: idx * 0.1 }}
                   viewport={{ once: true }}
                 >
-                  <div className="card h-100 border-0 shadow-sm overflow-hidden">
-                    <img 
+                  <motion.div 
+                    className="card h-100 border-0 overflow-hidden modern-gallery-card"
+                    whileHover={{ y: -8, scale: 1.02 }}
+                    style={{
+                      borderRadius: '20px',
+                      boxShadow: '0 8px 24px rgba(0, 0, 0, 0.1)',
+                      cursor: 'pointer'
+                    }}
+                    onClick={() => setActiveImageIndex(idx)}
+                  >
+                    <motion.img 
                       src={getAbsoluteImageUrl(img.url || img)} 
                       alt={`${project.title} - ${idx + 1}`}
                       className="img-fluid w-100"
-                      style={{ height: '250px', objectFit: 'cover', cursor: 'pointer' }}
-                      onClick={() => setActiveImageIndex(idx)}
+                      style={{ height: '280px', objectFit: 'cover' }}
+                      whileHover={{ scale: 1.1 }}
+                      transition={{ duration: 0.3 }}
                     />
-                  </div>
+                  </motion.div>
                 </motion.div>
               ))
             ) : (
               <div className="col-12 text-center py-5">
                 <i className="fas fa-images fa-3x text-muted mb-3"></i>
-                <p>No images available for this project</p>
+                <p className="text-muted">No images available for this project</p>
               </div>
             )}
           </div>
@@ -378,28 +428,48 @@ const ProjectDetailPage = () => {
 
       {/* Image Modal */}
       {activeImageIndex >= 0 && (
-        <div className="modal show fade" style={{ display: 'block' }}>
-          <div className="modal-dialog modal-lg modal-dialog-centered">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">{project.title}</h5>
+        <motion.div 
+          className="modal show fade" 
+          style={{ display: 'block', backgroundColor: 'rgba(0, 0, 0, 0.85)', backdropFilter: 'blur(10px)' }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+        >
+          <div className="modal-dialog modal-xl modal-dialog-centered">
+            <motion.div 
+              className="modal-content"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              style={{
+                borderRadius: '24px',
+                overflow: 'hidden',
+                border: 'none',
+                boxShadow: '0 20px 60px rgba(0, 0, 0, 0.3)'
+              }}
+            >
+              <div className="modal-header border-0 pb-2" style={{ background: 'transparent' }}>
+                <h5 className="modal-title fw-bold" style={{ color: '#2C3E50' }}>{project.title}</h5>
                 <button 
                   type="button" 
                   className="btn-close" 
                   onClick={() => setActiveImageIndex(-1)}
+                  style={{ fontSize: '1.5rem' }}
                 ></button>
               </div>
-              <div className="modal-body text-center">
-                <img
+              <div className="modal-body text-center p-4">
+                <motion.img
                   src={getAbsoluteImageUrl(project.images[activeImageIndex]?.url)}
                   alt={project.title}
-                  className="img-fluid"
-                  style={{ maxHeight: '70vh', objectFit: 'contain' }}
+                  className="img-fluid rounded-4"
+                  style={{ maxHeight: '75vh', objectFit: 'contain', boxShadow: '0 10px 30px rgba(0, 0, 0, 0.2)' }}
+                  initial={{ scale: 0.95 }}
+                  animate={{ scale: 1 }}
+                  transition={{ duration: 0.3 }}
                 />
               </div>
-            </div>
+            </motion.div>
           </div>
-        </div>
+        </motion.div>
       )}
     </div>
   );

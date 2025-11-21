@@ -235,7 +235,7 @@ const GetInvolvedPage = () => {
   };
 
   return (
-    <div className="pt-5">
+    <div style={{ background: '#ffffff', marginTop: 'calc(-1 * var(--header-height) - 35px)' }}>
 
 
       {/* Ways to Get Involved */}

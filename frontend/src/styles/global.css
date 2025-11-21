@@ -6,6 +6,9 @@
 @import url('https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css');
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css');
 
+/* Import Professional Fonts - Unique Premium Selection */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&family=Roboto:wght@300;400;500;700;900&family=Merriweather:wght@300;400;700;900&family=Source+Sans+Pro:wght@300;400;600;700;900&family=Amiri:wght@400;700&display=swap');
+
 /* Custom CSS Variables - Lofi Color Palette */
 
 :root {
@@ -49,8 +52,11 @@
     --islamic-gold: var(--brand-accent);
     --islamic-blue: var(--brand-accent);
     --islamic-cream: var(--lofi-cream);
-    /* Typography */
-    --font-family-primary: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* Professional Typography - Unique Premium Fonts */
+    --font-family-primary: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    --font-family-headings: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-family-display: 'Source Sans Pro', 'Nunito', sans-serif;
+    --font-family-accent: 'Merriweather', Georgia, 'Times New Roman', serif;
     --font-family-arabic: 'Amiri', serif;
     /* Override Bootstrap CSS variables to use green for buttons */
     --bs-primary: var(--brand-primary);
@@ -374,7 +380,7 @@ body {
 
 body {
     font-family: var(--font-family-primary);
-    line-height: 1.6;
+    line-height: 1.75;
     color: var(--dark-color);
     background-image: url('../assets/background.jpg');
     background-size: cover;
@@ -384,67 +390,14 @@ body {
     min-height: 100vh;
     position: relative;
     overflow-x: hidden;
+    font-weight: 400;
+    font-size: 1rem !important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    letter-spacing: 0.01em;
 }
 
-
-/* Background image animation layer */
-
-body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('../assets/background.jpg');
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
-    z-index: -2;
-    opacity: 0.8;
-    animation: backgroundShift 20s ease-in-out infinite alternate;
-}
-
-
-/* Animated particles overlay */
-
-body::after {
-    content: '';
-    position: fixed;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(2px 2px at 20% 30%, rgba(74, 144, 226, 0.4), transparent), radial-gradient(2px 2px at 40% 70%, rgba(127, 176, 105, 0.4), transparent), radial-gradient(1px 1px at 90% 40%, rgba(74, 144, 226, 0.3), transparent), radial-gradient(1px 1px at 50% 80%, rgba(127, 176, 105, 0.3), transparent), radial-gradient(2px 2px at 80% 10%, rgba(74, 144, 226, 0.4), transparent);
-    background-repeat: repeat;
-    background-size: 200px 200px;
-    animation: particleFloat 25s linear infinite;
-    z-index: -1;
-}
-
-@keyframes backgroundShift {
-    0% {
-        transform: scale(1) translateX(0px);
-        background-position: center center;
-    }
-    50% {
-        transform: scale(1.05) translateX(-10px);
-        background-position: center right;
-    }
-    100% {
-        transform: scale(1) translateX(0px);
-        background-position: center center;
-    }
-}
-
-@keyframes particleFloat {
-    0% {
-        transform: translateY(0px) translateX(0px);
-    }
-    100% {
-        transform: translateY(-200px) translateX(-50px);
-    }
-}
 
 
 /* Islamic Geometric Patterns */
@@ -456,29 +409,8 @@ body::after {
 }
 
 
-/* Generic page hero (for all pages except Home hero) */
 
-.page-hero {
-    position: relative;
-    min-height: 40vh;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    display: flex;
-    align-items: center;
-}
 
-.page-hero::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.45);
-}
-
-.page-hero>.container {
-    position: relative;
-    z-index: 1;
-}
 
 .islamic-border {
     border: 2px solid var(--islamic-gold);
@@ -524,8 +456,14 @@ body::after {
     background-attachment: scroll !important;
     background-size: cover !important;
     background-position: center center !important;
-    min-height: 75vh !important;
+    min-height: 80vh !important;
     max-height: 80vh !important;
+    height: 80vh !important;
+  }
+  
+  .hero-section > div:first-child {
+    min-height: 80vh !important;
+    height: 80vh !important;
   }
   
   .hero-section img {
@@ -537,62 +475,182 @@ body::after {
   }
   
   .hero-section .container {
-    padding-top: 3rem !important;
-    padding-bottom: 1.5rem !important;
+    padding-top: 7rem !important;
+    padding-bottom: 2rem !important;
   }
   
   .hero-section .quran-verse-container {
-    margin-bottom: 0.8rem !important;
-    padding: 0.6rem !important;
+    margin-bottom: 1.5rem !important;
+    padding: 1.2rem 1rem !important;
+    max-width: 95% !important;
   }
+  
+  .hero-section .row {
+    margin-top: 3rem !important;
+    padding-bottom: 3rem !important;
+  }
+}
+
+.our-work .our-work-card {
+    border-radius: 24px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    background: #ffffff;
+}
+
+.our-work .our-work-media {
+    position: relative;
+    overflow: hidden;
+    height: 280px;
+}
+
+.our-work .our-work-media img {
+    object-fit: cover;
+}
+
+.our-work .badge-container {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 0.4rem 0.8rem;
+}
+
+.our-work .program-media {
+    height: 220px;
+    background-color: #f8f9fa;
+    border-radius: 16px;
+    overflow: hidden;
 }
 
 @media (max-width: 576px) {
   .hero-section {
-    min-height: 65vh !important;
-    max-height: 75vh !important;
+    min-height: 80vh !important;
+    max-height: 80vh !important;
+    height: 80vh !important;
     background-size: cover !important;
     background-position: center 40% !important;
+  }
+  
+  .hero-section > div:first-child {
+    min-height: 80vh !important;
+    height: 80vh !important;
   }
   
   .hero-section img {
     object-fit: cover !important;
     object-position: center 40% !important;
     min-height: 100% !important;
+    height: 100% !important;
   }
   
   .hero-section .container {
-    padding-top: 2.5rem !important;
-    padding-bottom: 1rem !important;
+    padding-top: 6rem !important;
+    padding-bottom: 2rem !important;
   }
   
   .hero-section .quran-verse-container {
-    margin-bottom: 0.6rem !important;
-    padding: 0.5rem !important;
+    margin-bottom: 1.2rem !important;
+    padding: 1rem 0.8rem !important;
+    max-width: 98% !important;
+    border-radius: 16px !important;
+  }
+  
+  .hero-section .quran-verse-container p {
+    font-size: clamp(1rem, 4vw, 1.3rem) !important;
+    line-height: 1.6 !important;
+    margin-bottom: 0.8rem !important;
   }
   
   .hero-section .btn {
-    min-width: 140px !important;
+    min-width: 180px !important;
+    font-size: 0.95rem !important;
+    padding: 0.85rem 1.5rem !important;
+    margin: 0.5rem !important;
+  }
+  
+  .hero-section .modern-cta-button,
+  .hero-section .modern-cta-button-secondary {
+    width: 90% !important;
+    max-width: 280px !important;
+  }
+  
+  .hero-section .hero-buttons-container {
+    padding-bottom: 2rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-section {
+    min-height: 80vh !important;
+    max-height: 80vh !important;
+    height: 80vh !important;
+  }
+  
+  .hero-section .container {
+    padding-top: 5.5rem !important;
+    padding-bottom: 1.5rem !important;
+  }
+  
+  .hero-section .quran-verse-container {
+    padding: 0.9rem 0.7rem !important;
+    margin-bottom: 1rem !important;
+  }
+  
+  .hero-section .quran-verse-container p:first-child {
+    font-size: clamp(0.95rem, 4vw, 1.15rem) !important;
+    line-height: 1.5 !important;
+  }
+  
+  .hero-section .modern-cta-button,
+  .hero-section .modern-cta-button-secondary {
+    width: 85% !important;
+    min-width: 160px !important;
+    padding: 0.75rem 1.25rem !important;
     font-size: 0.9rem !important;
-    padding: 0.6rem 1rem !important;
+  }
+  
+  .hero-section .hero-buttons-container {
+    padding-bottom: 1.5rem !important;
+  }
+  
+  .hero-section > div:first-child {
+    min-height: 80vh !important;
+    height: 80vh !important;
   }
 }
 
 .hero-section {
     position: relative;
     top: 0;
-    min-height: 100vh;
-    max-height: 95vh;
+    min-height: 100vh !important; /* fill full viewport but eliminate excessive scroll */
+    max-height: 100vh !important;
     background: linear-gradient(135deg, var(--brand-color) 0%, var(--brand-color-dark) 100%);
-    margin-top: calc(-1 * var(--header-height) - 70px);
-    /* Further increased negative margin */
+    margin-top: calc(-1 * var(--header-height) - 35px); /* shift hero 35px higher to sit fully under navbar offset */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Subtle dark overlay to improve text readability over background photos */
+.hero-background-container::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0.8) 100%);
+    pointer-events: none;
+    mix-blend-mode: multiply;
+    z-index: 1;
 }
 
 /* Desktop and laptop specific adjustments */
 @media (min-width: 769px) {
   .hero-section {
-    min-height: 90vh;
-    max-height: 95vh;
+    min-height: 110vh !important;
+    max-height: 110vh !important;
   }
   
   .hero-section .container {
@@ -615,8 +673,8 @@ body::after {
 
 @media (min-width: 1200px) {
   .hero-section {
-    min-height: 85vh;
-    max-height: 90vh;
+    min-height: 110vh !important;
+    max-height: 110vh !important;
   }
   
   .hero-section .container {
@@ -633,8 +691,8 @@ body::after {
   
 @media (min-width: 1400px) {
   .hero-section {
-    min-height: 80vh;
-    max-height: 85vh;
+    min-height: 110vh !important;
+    max-height: 110vh !important;
   }
   
   .hero-section .container {
@@ -664,8 +722,8 @@ body::after {
 
 @media (min-width: 1600px) {
   .hero-section {
-    min-height: 75vh;
-    max-height: 80vh;
+    min-height: 110vh !important;
+    max-height: 110vh !important;
   }
   
   .hero-section .container {
@@ -808,13 +866,133 @@ body::after {
     white-space: nowrap;
 }
 
-.nav-link:hover {
-    color: var(--brand-accent) !important;
+/* Remove all hover effects and text decorations from nav links */
+.nav-link,
+.nav-link:hover,
+.nav-link:focus,
+.nav-link:active {
+    color: inherit !important;
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+    text-decoration-style: solid !important;
+    text-decoration-thickness: auto !important;
+    text-decoration-skip-ink: none !important;
+    text-underline-offset: 0 !important;
+    text-underline-position: under !important;
+    text-shadow: none !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    outline: none !important;
+    transform: none !important;
+    transition: none !important;
 }
 
-.nav-link.active {
+/* Remove all decorations from all links in header */
+.navbar .nav-link,
+.navbar .dropdown-item,
+.navbar .dropdown-item:hover,
+.navbar .dropdown-item:focus {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+    text-decoration-style: solid !important;
+    text-decoration-thickness: auto !important;
+    background-color: transparent !important;
+    color: inherit !important;
+}
+
+/* Remove all hover and focus states */
+.navbar-nav .nav-item .nav-link,
+.navbar-nav .nav-item:hover .nav-link,
+.navbar-nav .nav-item:focus .nav-link,
+.navbar-nav .nav-item:active .nav-link {
+    background-color: transparent !important;
+    color: inherit !important;
+}
+
+/* Disable all transitions and transforms */
+.navbar *,
+.navbar *:hover,
+.navbar *:focus,
+.navbar *:active {
+    transition: none !important;
+    transform: none !important;
+    animation: none !important;
+}
+
+/* Remove focus ring and outline for all elements */
+*:focus,
+*:active,
+*:focus-visible,
+*:focus-within {
+    outline: none !important;
+    box-shadow: none !important;
+    text-decoration: none !important;
+}
+
+/* Remove tap highlight color on mobile */
+* {
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Remove all text decorations from links */
+a,
+a:hover,
+a:focus,
+a:active,
+.nav-link,
+.nav-link:hover,
+.nav-link:focus,
+.nav-link:active {
+    text-decoration: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* Active navigation item styles - No decorations */
+.nav-link.active,
+.nav-link.active:hover,
+.nav-link.active:focus {
     color: var(--brand-accent) !important;
     font-weight: 600;
+    /* Remove all text decorations */
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+    text-decoration-style: solid !important;
+    text-decoration-thickness: 0 !important;
+    text-underline-offset: 0 !important;
+    text-decoration-skip-ink: none !important;
+    /* Remove any background or border */
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    /* Reset any transforms or animations */
+    transform: none !important;
+    transition: none !important;
+    /* Prevent any pseudo-elements */
+    position: relative;
+}
+
+/* Remove any pseudo-elements that might be creating decorations */
+.nav-link.active::before,
+.nav-link.active::after,
+.nav-link.active:hover::before,
+.nav-link.active:hover::after,
+.nav-link.active:focus::before,
+.nav-link.active:focus::after {
+    display: none !important;
+    content: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    background: none !important;
+    border: none !important;
+}
+
+/* Mobile menu active state */
+.navbar-collapse .nav-link.active,
+.navbar-collapse .nav-link.active:hover,
+.navbar-collapse .nav-link.active:focus {
+    background: transparent !important;
+    color: var(--brand-accent) !important;
 }
 
 
@@ -1082,11 +1260,14 @@ body::after {
 /* Button Styles */
 
 .btn {
-    border-radius: 8px;
-    font-weight: 600;
+    font-family: var(--font-family-headings);
+    border-radius: 10px;
+    font-weight: 700;
     transition: all 0.3s ease;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
+    font-size: 0.9375rem;
+    padding: 0.75rem 1.75rem;
 }
 
 .btn-primary,
@@ -1111,26 +1292,50 @@ body::after {
 /* Card Styles */
 
 .card {
-    border-radius: 12px;
+    border-radius: 16px;
     border: none;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    background: #ffffff;
 }
 
 .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
 }
 
 .card-body {
     padding: 2rem;
 }
 
+/* Modern Card Variants */
+.modern-card {
+    border-radius: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    background: #ffffff;
+}
+
+.modern-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.18);
+    border-color: var(--brand-primary);
+}
+
 
 /* Section Styles */
 
 section {
-    padding: 4rem 0;
+    padding: 5rem 0;
+}
+
+@media (max-width: 768px) {
+    section {
+        padding: 3rem 0;
+    }
 }
 
 .bg-light {
@@ -1138,7 +1343,49 @@ section {
 }
 
 
-/* Typography */
+/* Typography - Premium Professional Fonts */
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+    font-family: var(--font-family-headings);
+    font-weight: 700;
+    line-height: 1.35;
+    letter-spacing: -0.015em;
+    color: var(--lofi-dark-blue);
+    margin-bottom: 1.25rem;
+    text-rendering: optimizeLegibility;
+}
+
+h1, .h1 {
+    font-size: 2.75rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+h2, .h2 {
+    font-size: 2.25rem;
+    font-weight: 700;
+}
+
+h3, .h3 {
+    font-size: 1.875rem;
+    font-weight: 700;
+}
+
+h4, .h4 {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+h5, .h5 {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+h6, .h6 {
+    font-size: 1.125rem;
+    font-weight: 600;
+}
 
 .display-1,
 .display-2,
@@ -1146,13 +1393,74 @@ section {
 .display-4,
 .display-5,
 .display-6 {
+    font-family: var(--font-family-display);
     font-weight: 700;
     line-height: 1.2;
+    letter-spacing: -0.025em;
+}
+
+.display-1 {
+    font-size: clamp(3.5rem, 8vw, 6.5rem);
+    font-weight: 800;
+}
+
+.display-2 {
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    font-weight: 800;
+}
+
+.display-3 {
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 700;
+}
+
+.display-4 {
+    font-size: clamp(2rem, 4vw, 3.75rem);
+    font-weight: 700;
+}
+
+.display-5 {
+    font-size: clamp(1.75rem, 3.5vw, 3.25rem);
+    font-weight: 700;
+}
+
+.display-6 {
+    font-size: clamp(1.5rem, 3vw, 2.75rem);
+    font-weight: 700;
 }
 
 .lead {
-    font-size: 1.25rem;
+    font-family: var(--font-family-primary);
+    font-size: 1.3rem;
     font-weight: 400;
+    line-height: 1.8;
+    letter-spacing: 0.01em;
+    color: #4a5568;
+}
+
+p {
+    font-family: var(--font-family-primary);
+    font-size: 1.0625rem;
+    line-height: 1.85;
+    margin-bottom: 1.25rem;
+    letter-spacing: 0.01em;
+    color: #4a5568;
+}
+
+/* Special Display Font for Hero Titles */
+.hero-title,
+.page-title {
+    font-family: var(--font-family-display);
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    line-height: 1.15;
+}
+
+/* Accent Text */
+.text-accent {
+    font-family: var(--font-family-accent);
+    font-style: italic;
+    font-weight: 500;
 }
 
 
@@ -1177,16 +1485,33 @@ section {
 
 .form-control,
 .form-select {
-    border-radius: 8px;
-    border: 2px solid #e9ecef;
-    padding: 0.75rem 1rem;
+    font-family: var(--font-family-primary);
+    border-radius: 10px;
+    border: 2px solid #e2e8f0;
+    padding: 0.875rem 1.25rem;
     transition: all 0.3s ease;
+    font-size: 1.0625rem;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    line-height: 1.6;
 }
 
 .form-control:focus,
 .form-select:focus {
     border-color: var(--brand-primary);
-    box-shadow: 0 0 0 0.2rem rgba(127, 176, 105, 0.25);
+    box-shadow: 0 0 0 0.25rem rgba(127, 176, 105, 0.2);
+    outline: none;
+}
+
+.form-label {
+    font-family: var(--font-family-headings);
+    font-weight: 700;
+    font-size: 0.9375rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--lofi-dark-blue);
+    margin-bottom: 0.625rem;
+    display: block;
 }
 
 
@@ -1330,56 +1655,7 @@ footer .form-control:focus {
 
 /* Extra mobile tweaks for home hero */
 
-@media (max-width: 576px) {
-  .hero-section {
-    min-height: 110vh !important;
-    height: 110vh !important;
-    background: linear-gradient(135deg, var(--brand-color) 0%, var(--brand-color-dark) 100%);
-    background-attachment: scroll;
-  }
-  
-  .hero-section .container {
-    height: auto;
-    padding-top: 4rem;
-    padding-bottom: 1.5rem;
-  }
-  
-  .hero-section .hero-bg img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center 40%;
-    min-height: 100%;
-    min-width: 100%;
-    max-width: none;
-    max-height: none;
-  }
-  
-  .hero-section .quran-verse-container {
-    margin-bottom: 1.2rem !important;
-    padding: 0.8rem !important;
-  }
-  
-  .hero-section .row {
-    margin-top: 3rem !important;
-    padding-bottom: 1.5rem;
-  }
-  
-  .hero-section .lead {
-    font-size: 1rem;
-  }
-  
-  .hero-section .btn {
-    padding: 0.6rem 1rem;
-    font-size: 0.95rem;
-    width: 100%;
-    margin-bottom: 0.5rem;
-  }
-  
-  .hero-section .card {
-    margin-top: 15px;
-  }
-}
+/* Removed duplicate mobile styles - using the one above */
 
 
 /* Hero slider controls */
@@ -2047,5 +2323,751 @@ img[alt*="logo"]:hover {
         min-width: 120px !important;
         font-size: 0.85rem !important;
         padding: 0.5rem 0.8rem !important;
+    }
+}
+
+/* ============================================
+   MODERN DESIGN ENHANCEMENTS
+   ============================================ */
+
+/* Modern Card Styles */
+.modern-feature-card,
+.modern-news-card,
+.modern-mission-card,
+.modern-vision-card,
+.modern-values-card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.modern-feature-card:hover,
+.modern-news-card:hover,
+.modern-mission-card:hover,
+.modern-vision-card:hover,
+.modern-values-card:hover {
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12) !important;
+}
+
+/* Modern Form Inputs */
+.modern-input:focus {
+    border-color: var(--brand-primary) !important;
+    box-shadow: 0 0 0 0.2rem rgba(127, 176, 105, 0.15) !important;
+    outline: none !important;
+}
+
+/* Smooth Section Transitions */
+section {
+    transition: all 0.3s ease;
+}
+
+/* Improved Spacing Utilities */
+.modern-section {
+    padding: 4rem 0;
+}
+
+@media (max-width: 768px) {
+    .modern-section {
+        padding: 3rem 0;
+    }
+}
+
+/* Enhanced Button Styles */
+.btn-primary {
+    border-radius: 50px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.3px !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 20px rgba(127, 176, 105, 0.35) !important;
+}
+
+.btn-outline-primary {
+    border-radius: 50px !important;
+    font-weight: 600 !important;
+    border-width: 2px !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.btn-outline-primary:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 20px rgba(127, 176, 105, 0.25) !important;
+}
+
+/* Consistent Card Shadows */
+.card {
+    border-radius: 20px !important;
+    transition: all 0.3s ease !important;
+}
+
+/* Smooth Scroll Behavior */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Enhanced Typography */
+h1, h2, h3, h4, h5, h6 {
+    line-height: 1.3 !important;
+    letter-spacing: -0.02em !important;
+}
+
+p, .lead {
+    line-height: 1.7 !important;
+}
+
+/* Modern Container Spacing */
+.container {
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1140px;
+    }
+}
+
+/* Improved Image Display */
+img {
+    border-radius: 12px;
+    transition: transform 0.3s ease;
+}
+
+.card-img-top {
+    border-radius: 20px 20px 0 0 !important;
+}
+
+/* Footer Link Hover */
+.footer-link:hover {
+    color: #ffffff !important;
+    text-decoration: underline !important;
+}
+
+/* Enhanced Responsive Design */
+@media (max-width: 991.98px) {
+    .display-5 {
+        font-size: 2rem !important;
+    }
+    
+    .lead {
+        font-size: 1rem !important;
+    }
+    
+    .card-body {
+        padding: 1.5rem !important;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .display-5 {
+        font-size: 1.75rem !important;
+    }
+    
+    section {
+        padding: 2.5rem 0 !important;
+    }
+    
+    .btn-lg {
+        padding: 0.75rem 1.5rem !important;
+        font-size: 1rem !important;
+    }
+}
+
+/* ========================================
+   MODERN DESIGN SYSTEM - SCROLL ANIMATIONS
+   ======================================== */
+
+/* Fade In Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Animation Classes */
+.animate-on-scroll {
+    opacity: 0;
+    animation: fadeIn 0.8s ease-out forwards;
+}
+
+.animate-fade-left {
+    opacity: 0;
+    animation: fadeInLeft 0.8s ease-out forwards;
+}
+
+.animate-fade-right {
+    opacity: 0;
+    animation: fadeInRight 0.8s ease-out forwards;
+}
+
+.animate-scale {
+    opacity: 0;
+    animation: scaleIn 0.6s ease-out forwards;
+}
+
+/* Stagger Animation Delays */
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
+.delay-500 { animation-delay: 0.5s; }
+.delay-600 { animation-delay: 0.6s; }
+
+/* ========================================
+   MODERN SPACING UTILITIES
+   ======================================== */
+
+.section-padding {
+    padding: 5rem 0;
+}
+
+.section-padding-sm {
+    padding: 3rem 0;
+}
+
+.section-padding-lg {
+    padding: 7rem 0;
+}
+
+@media (max-width: 768px) {
+    .section-padding {
+        padding: 3rem 0;
+    }
+    
+    .section-padding-lg {
+        padding: 4rem 0;
+    }
+}
+
+/* ========================================
+   MODERN SHADOW UTILITIES
+   ======================================== */
+
+.shadow-soft {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+}
+
+.shadow-medium {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12) !important;
+}
+
+.shadow-strong {
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.18) !important;
+}
+
+.shadow-hover {
+    transition: box-shadow 0.3s ease;
+}
+
+.shadow-hover:hover {
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* ========================================
+   MODERN BORDER RADIUS UTILITIES
+   ======================================== */
+
+.rounded-modern {
+    border-radius: 16px !important;
+}
+
+.rounded-modern-lg {
+    border-radius: 20px !important;
+}
+
+.rounded-modern-xl {
+    border-radius: 24px !important;
+}
+
+/* ========================================
+   MODERN GRADIENT BACKGROUNDS
+   ======================================== */
+
+.gradient-primary {
+    background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-accent) 100%) !important;
+}
+
+.gradient-light {
+    background: linear-gradient(135deg, #ffffff 0%, var(--lofi-cream) 100%) !important;
+}
+
+.gradient-overlay {
+    position: relative;
+}
+
+.gradient-overlay::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(127, 176, 105, 0.1) 0%, rgba(74, 144, 226, 0.1) 100%);
+    pointer-events: none;
+}
+
+/* ========================================
+   MODERN BUTTON ENHANCEMENTS
+   ======================================== */
+
+.btn-modern {
+    border-radius: 12px;
+    padding: 0.875rem 2rem;
+    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.btn-modern:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.btn-modern:active {
+    transform: translateY(0);
+}
+
+.btn-modern-lg {
+    padding: 1.125rem 2.5rem;
+    font-size: 1.125rem;
+    border-radius: 14px;
+}
+
+/* ========================================
+   MODERN TEXT UTILITIES
+   ======================================== */
+
+.text-gradient {
+    background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.text-shadow-soft {
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* ========================================
+   MODERN HOVER EFFECTS
+   ======================================== */
+
+.hover-lift {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+    transform: translateY(-5px);
+}
+
+.hover-scale {
+    transition: transform 0.3s ease;
+}
+
+.hover-scale:hover {
+    transform: scale(1.05);
+}
+
+.hover-brightness {
+    transition: filter 0.3s ease;
+}
+
+.hover-brightness:hover {
+    filter: brightness(1.1);
+}
+
+/* ========================================
+   MODERN SECTION DIVIDERS
+   ======================================== */
+
+.section-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, var(--brand-primary) 50%, transparent 100%);
+    margin: 3rem 0;
+    opacity: 0.3;
+}
+
+/* ========================================
+   MODERN ICON STYLES
+   ======================================== */
+
+.icon-box {
+    width: 70px;
+    height: 70px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+    background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-accent) 100%);
+    color: #ffffff;
+    font-size: 1.75rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(127, 176, 105, 0.3);
+}
+
+.icon-box:hover {
+    transform: translateY(-5px) rotate(5deg);
+    box-shadow: 0 8px 25px rgba(127, 176, 105, 0.4);
+}
+
+.icon-box-outline {
+    width: 70px;
+    height: 70px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+    border: 2px solid var(--brand-primary);
+    background: #ffffff;
+    color: var(--brand-primary);
+    font-size: 1.75rem;
+    transition: all 0.3s ease;
+}
+
+.icon-box-outline:hover {
+    background: var(--brand-primary);
+    color: #ffffff;
+    transform: translateY(-5px);
+}
+
+/* ========================================
+   MODERN OVERLAY EFFECTS
+   ======================================== */
+
+.overlay-dark {
+    position: relative;
+}
+
+.overlay-dark::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.overlay-dark > * {
+    position: relative;
+    z-index: 2;
+}
+
+.overlay-gradient {
+    position: relative;
+}
+
+.overlay-gradient::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(127, 176, 105, 0.8) 0%, rgba(74, 144, 226, 0.8) 100%);
+    z-index: 1;
+}
+
+.overlay-gradient > * {
+    position: relative;
+    z-index: 2;
+}
+
+/* ========================================
+   MODERN RESPONSIVE UTILITIES
+   ======================================== */
+
+@media (max-width: 768px) {
+    .icon-box,
+    .icon-box-outline {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+    }
+    
+    .btn-modern {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.95rem;
+    }
+    
+    .btn-modern-lg {
+        padding: 0.875rem 2rem;
+        font-size: 1rem;
+    }
+}
+
+/* ========================================
+   ACCESSIBILITY IMPROVEMENTS
+   ======================================== */
+
+.skip-to-content {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--brand-primary);
+    color: #ffffff;
+    padding: 8px;
+    text-decoration: none;
+    z-index: 100;
+}
+
+.skip-to-content:focus {
+    top: 0;
+}
+
+/* Focus visible for keyboard navigation */
+*:focus-visible {
+    outline: 2px solid var(--brand-accent);
+    outline-offset: 2px;
+}
+
+/* ========================================
+   PROFESSIONAL TYPOGRAPHY UTILITIES
+   ======================================== */
+
+/* Font Weight Utilities */
+.fw-light { font-weight: 300 !important; }
+.fw-normal { font-weight: 400 !important; }
+.fw-medium { font-weight: 500 !important; }
+.fw-semibold { font-weight: 600 !important; }
+.fw-bold { font-weight: 700 !important; }
+.fw-extrabold { font-weight: 800 !important; }
+.fw-black { font-weight: 900 !important; }
+
+/* Font Family Utilities */
+.font-primary { font-family: var(--font-family-primary) !important; }
+.font-headings { font-family: var(--font-family-headings) !important; }
+.font-display { font-family: var(--font-family-display) !important; }
+.font-arabic { font-family: var(--font-family-arabic) !important; }
+
+/* Letter Spacing Utilities */
+.tracking-tight { letter-spacing: -0.05em !important; }
+.tracking-normal { letter-spacing: -0.01em !important; }
+.tracking-wide { letter-spacing: 0.025em !important; }
+.tracking-wider { letter-spacing: 0.05em !important; }
+.tracking-widest { letter-spacing: 0.1em !important; }
+
+/* Line Height Utilities */
+.leading-none { line-height: 1 !important; }
+.leading-tight { line-height: 1.25 !important; }
+.leading-snug { line-height: 1.375 !important; }
+.leading-normal { line-height: 1.5 !important; }
+.leading-relaxed { line-height: 1.7 !important; }
+.leading-loose { line-height: 2 !important; }
+
+/* Text Size Utilities */
+.text-xs { font-size: 0.75rem !important; }
+.text-sm { font-size: 0.875rem !important; }
+.text-base { font-size: 1rem !important; }
+.text-lg { font-size: 1.125rem !important; }
+.text-xl { font-size: 1.25rem !important; }
+.text-2xl { font-size: 1.5rem !important; }
+.text-3xl { font-size: 1.875rem !important; }
+.text-4xl { font-size: 2.25rem !important; }
+.text-5xl { font-size: 3rem !important; }
+
+/* Professional Text Styles */
+.text-professional {
+    font-family: var(--font-family-primary);
+    font-weight: 400;
+    line-height: 1.7;
+    letter-spacing: -0.01em;
+}
+
+.heading-professional {
+    font-family: var(--font-family-headings);
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+}
+
+.display-professional {
+    font-family: var(--font-family-display);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+}
+
+/* Card Title Typography */
+.card-title {
+    font-family: var(--font-family-headings);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--lofi-dark-blue);
+}
+
+.card-text {
+    font-family: var(--font-family-primary);
+    font-weight: 400;
+    line-height: 1.7;
+    letter-spacing: -0.01em;
+}
+
+/* Navigation Typography */
+.nav-link {
+    font-family: var(--font-family-headings);
+    font-weight: 500;
+    letter-spacing: 0.3px;
+}
+
+/* Footer Typography */
+footer {
+    font-family: var(--font-family-primary);
+}
+
+footer h1, footer h2, footer h3, 
+footer h4, footer h5, footer h6 {
+    font-family: var(--font-family-headings);
+    font-weight: 700;
+}
+
+/* Blockquote Styling */
+blockquote {
+    font-family: var(--font-family-display);
+    font-size: 1.25rem;
+    font-style: italic;
+    line-height: 1.8;
+    border-left: 4px solid var(--brand-primary);
+    padding-left: 1.5rem;
+    margin: 2rem 0;
+    color: var(--lofi-dark-blue);
+}
+
+/* List Typography */
+ul, ol {
+    font-family: var(--font-family-primary);
+    line-height: 1.8;
+}
+
+/* Table Typography */
+table {
+    font-family: var(--font-family-primary);
+}
+
+table th {
+    font-family: var(--font-family-headings);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+}
+
+/* Link Typography */
+a {
+    font-family: inherit;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+/* Small Text */
+small, .small {
+    font-size: 0.875rem;
+    font-weight: 400;
+}
+
+/* Strong/Bold Text */
+strong, b {
+    font-weight: 700;
+}
+
+/* Emphasis */
+em, i {
+    font-style: italic;
+}
+
+/* Code Typography */
+code, pre {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.875rem;
+}
+
+/* Responsive Typography */
+@media (max-width: 768px) {
+    body {
+        font-size: 15px;
+    }
+    
+    h1, .h1 { font-size: 2.25rem !important; }
+    h2, .h2 { font-size: 1.875rem !important; }
+    h3, .h3 { font-size: 1.625rem !important; }
+    h4, .h4 { font-size: 1.375rem !important; }
+    h5, .h5 { font-size: 1.1875rem !important; }
+    h6, .h6 { font-size: 1.0625rem !important; }
+    
+    p {
+        font-size: 1rem;
+        line-height: 1.8;
+    }
+    
+    .lead {
+        font-size: 1.1875rem !important;
+        line-height: 1.75;
+    }
+    
+    .btn {
+        font-size: 0.875rem;
+        padding: 0.625rem 1.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    body {
+        font-size: 14px;
+    }
+    
+    h1, .h1 { font-size: 2rem !important; }
+    h2, .h2 { font-size: 1.625rem !important; }
+    h3, .h3 { font-size: 1.375rem !important; }
+    h4, .h4 { font-size: 1.1875rem !important; }
+    h5, .h5 { font-size: 1.0625rem !important; }
+    h6, .h6 { font-size: 1rem !important; }
+    
+    p {
+        font-size: 0.9375rem;
+        line-height: 1.75;
+    }
+    
+    .lead {
+        font-size: 1.0625rem !important;
+        line-height: 1.7;
+    }
+    
+    .btn {
+        font-size: 0.8125rem;
+        padding: 0.5625rem 1.25rem;
+        letter-spacing: 0.75px;
     }
 }

@@ -52,7 +52,7 @@ const HomePage = () => {
 
       
       {/* Latest News Section */}
-      <section className="py-5">
+      <section className="py-5 modern-news-section" style={{ background: '#ffffff' }}>
         <div className="container">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -61,13 +61,13 @@ const HomePage = () => {
             viewport={{ once: true }}
             className="text-center mb-5"
           >
-            <h2 className="display-5 fw-bold text-dark mb-3">Latest News & Updates</h2>
-            <p className="lead text-muted">Stay informed about our latest initiatives and community impact</p>
+            <h2 className="display-5 fw-bold mb-3" style={{ color: '#2C3E50' }}>Latest News & Updates</h2>
+            <p className="text-muted">Stay informed about our latest initiatives and community impact</p>
           </motion.div>
           
           {loading ? (
             <div className="text-center py-5">
-              <div className="spinner-border text-primary" role="status">
+              <div className="spinner-border text-primary" role="status" style={{ width: '3rem', height: '3rem' }}>
                 <span className="visually-hidden">Loading...</span>
               </div>
               <p className="mt-3 text-muted">Loading latest news...</p>
@@ -89,26 +89,63 @@ const HomePage = () => {
                   transition={{ duration: 0.8, delay: index * 0.2 }}
                   viewport={{ once: true }}
                 >
-                  <div className="card h-100 shadow-sm border-0">
-                  <img
-  src={getAbsoluteImageUrl(item.image)}
-  className="card-img-top"
-  alt={item.heading}
-  style={{ height: '200px', objectFit: 'cover' }}
-  onError={(e) => {
-    e.target.src = '/placeholder-logo.png';
-  }}
-/>
-
-                    <div className="card-body">
-                      <div className="d-flex justify-content-between align-items-center mb-2">
-                        <span className="badge bg-primary">{item.category}</span>
-                        <small className="text-muted">
-                          {new Date(item.createdAt).toLocaleDateString()}
-                        </small>
+                  <motion.div 
+                    className="card h-100 border-0 modern-news-card"
+                    whileHover={{ y: -8, scale: 1.02 }}
+                    style={{
+                      borderRadius: '20px',
+                      boxShadow: '0 8px 24px rgba(0, 0, 0, 0.08)',
+                      overflow: 'hidden',
+                      transition: 'all 0.3s ease'
+                    }}
+                  >
+                    <div style={{ position: 'relative', overflow: 'hidden' }}>
+                      <img
+                        src={getAbsoluteImageUrl(item.image)}
+                        className="card-img-top"
+                        alt={item.heading}
+                        style={{ 
+                          height: '220px', 
+                          objectFit: 'cover',
+                          transition: 'transform 0.3s ease'
+                        }}
+                        onError={(e) => {
+                          e.target.src = '/placeholder-logo.png';
+                        }}
+                      />
+                      <div style={{
+                        position: 'absolute',
+                        top: '12px',
+                        right: '12px',
+                        background: 'rgba(255, 255, 255, 0.95)',
+                        backdropFilter: 'blur(10px)',
+                        borderRadius: '20px',
+                        padding: '0.4rem 0.8rem'
+                      }}>
+                        <span className="badge" style={{ 
+                          background: 'var(--brand-primary)',
+                          color: 'white',
+                          fontSize: '0.75rem',
+                          fontWeight: '600'
+                        }}>{item.category}</span>
                       </div>
-                      <h5 className="card-title fw-bold">{item.heading}</h5>
-                      <p className="card-text text-muted">
+                    </div>
+
+                    <div className="card-body p-4">
+                      <small className="text-muted d-block mb-2">
+                        <i className="fas fa-calendar-alt me-1"></i>
+                        {new Date(item.createdAt).toLocaleDateString()}
+                      </small>
+                      <h5 className="card-title fw-bold mb-3" style={{ 
+                        color: '#2C3E50',
+                        lineHeight: '1.4'
+                      }}>
+                        {item.heading}
+                      </h5>
+                      <p className="card-text text-muted mb-4" style={{ 
+                        lineHeight: '1.7',
+                        minHeight: '60px'
+                      }}>
                         {item.description.length > 100 
                           ? item.description.substring(0, 100) + '...' 
                           : item.description
@@ -116,15 +153,26 @@ const HomePage = () => {
                       </p>
                       <motion.button
                         className="btn btn-outline-primary"
-                        whileHover={{ scale: 1.05 }}
+                        whileHover={{ 
+                          scale: 1.05,
+                          backgroundColor: 'var(--brand-primary)',
+                          color: 'white',
+                          borderColor: 'var(--brand-primary)'
+                        }}
                         whileTap={{ scale: 0.95 }}
                         onClick={() => window.open(item.link, '_blank')}
-                        style={{ cursor: 'pointer' }}
+                        style={{ 
+                          cursor: 'pointer',
+                          borderRadius: '50px',
+                          padding: '0.6rem 1.5rem',
+                          fontWeight: '600',
+                          borderWidth: '2px'
+                        }}
                       >
-                        Read More
+                        Read More <i className="fas fa-arrow-right ms-2"></i>
                       </motion.button>
                     </div>
-                  </div>
+                  </motion.div>
                 </motion.div>
               ))}
             </div>
@@ -138,13 +186,19 @@ const HomePage = () => {
             viewport={{ once: true }}
           >
             <motion.button
-              className="btn btn-primary btn-lg px-4 py-3"
-              whileHover={{ scale: 1.05 }}
+              className="btn btn-primary btn-lg px-5 py-3"
+              whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => window.location.href = '/media'}
-              style={{ cursor: 'pointer' }}
+              style={{ 
+                cursor: 'pointer',
+                borderRadius: '50px',
+                fontWeight: '600',
+                border: 'none',
+                boxShadow: '0 4px 12px rgba(127, 176, 105, 0.3)'
+              }}
             >
-              View All News
+              View All News <i className="fas fa-arrow-right ms-2"></i>
             </motion.button>
           </motion.div>
         </div>

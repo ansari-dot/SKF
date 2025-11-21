@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import axios from '../utils/axiosConfig';
 import { toast } from 'react-toastify';
-import '../styles/BrandIcons.css';
 
 const ContactPage = () => {
   const [contactForm, setContactForm] = useState({
@@ -15,54 +14,36 @@ const ContactPage = () => {
   });
 
   const [submitting, setSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState(null); // 'success', 'error', or null
 
   const API_URL = import.meta.env.VITE_API_URL;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitting(true);
-    setSubmitStatus(null);
 
     try {
       const response = await axios.post(`${API_URL}/contact/add`, contactForm);
+      toast.success('Message sent successfully! We will get back to you soon.');
       
-      // Show success state
-      setSubmitStatus('success');
-      
-      // Reset form after a delay
-      setTimeout(() => {
-        setContactForm({
-          firstName: '',
-          lastName: '',
-          email: '',
-          phone: '',
-          subject: '',
-          message: ''
-        });
-        
-        // Reset button state after showing success
-        setTimeout(() => {
-          setSubmitStatus(null);
-          setSubmitting(false);
-        }, 2000);
-        
-      }, 1000);
-      
+      // Reset form
+      setContactForm({
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        subject: '',
+        message: ''
+      });
     } catch (error) {
       console.error('Error submitting contact form:', error);
-      setSubmitStatus('error');
-      
-      // Reset error state after a delay
-      setTimeout(() => {
-        setSubmitStatus(null);
-        setSubmitting(false);
-      }, 3000);
+      toast.error('Failed to send message. Please try again.');
+    } finally {
+      setSubmitting(false);
     }
   };
 
   return (
-    <div className="pt-5">
+    <div className="pt-5" style={{ marginTop: 'calc(-1 * var(--header-height) - 35px)' }}>
 
 
       {/* Contact Information */}
@@ -146,111 +127,15 @@ const ContactPage = () => {
                       onChange={(e) => setContactForm(prev => ({ ...prev, message: e.target.value }))}
                     ></textarea>
                   </div>
-                  <div className="col-12 position-relative">
+                  <div className="col-12">
                     <motion.button
                       type="submit"
-                      className="btn btn-primary btn-lg position-relative overflow-hidden"
+                      className="btn btn-primary btn-lg"
                       disabled={submitting}
-                      style={{
-                        background: '#7FB069',
-                        border: 'none',
-                        padding: '0.75rem 2rem',
-                        minWidth: '220px',
-                        borderRadius: '50px',
-                        color: 'white',
-                        fontWeight: '600',
-                        position: 'relative',
-                        zIndex: 1,
-                        transition: 'all 0.3s ease',
-                        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
-                      }}
-                      whileHover={{ 
-                        scale: 1.03,
-                        boxShadow: '0 5px 15px rgba(127, 176, 105, 0.4)'
-                      }}
-                      whileTap={{ scale: 0.98 }}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
                     >
-                      {/* Default state - Send Message */}
-                      <motion.span 
-                        animate={{ 
-                          y: (submitting || submitStatus) ? 30 : 0,
-                          opacity: (submitting || submitStatus) ? 0 : 1,
-                          display: (submitStatus === null && !submitting) ? 'inline-block' : 'none'
-                        }}
-                        style={{
-                          position: 'relative',
-                          zIndex: 2
-                        }}
-                      >
-                        Send Message
-                      </motion.span>
-                      
-                      {/* Loading state */}
-                      <motion.span
-                        className="position-absolute d-flex align-items-center justify-content-center"
-                        initial={{ y: -30, opacity: 0 }}
-                        animate={{ 
-                          y: submitting && !submitStatus ? 0 : -30,
-                          opacity: submitting && !submitStatus ? 1 : 0,
-                          display: (submitting && !submitStatus) ? 'flex' : 'none'
-                        }}
-                        style={{
-                          left: 0,
-                          right: 0,
-                          top: 0,
-                          bottom: 0,
-                          zIndex: 2
-                        }}
-                      >
-                        <div className="spinner-border spinner-border-sm me-2" role="status">
-                          <span className="visually-hidden">Loading...</span>
-                        </div>
-                        Sending...
-                      </motion.span>
-                      
-                      {/* Success state */}
-                      <motion.span
-                        className="position-absolute d-flex align-items-center justify-content-center w-100 h-100"
-                        initial={{ y: 30, opacity: 0 }}
-                        animate={{ 
-                          y: submitStatus === 'success' ? 0 : 30,
-                          opacity: submitStatus === 'success' ? 1 : 0,
-                          display: submitStatus === 'success' ? 'flex' : 'none',
-                          background: '#7FB069'
-                        }}
-                        style={{
-                          left: 0,
-                          top: 0,
-                          zIndex: 3,
-                          color: 'white',
-                          borderRadius: '50px'
-                        }}
-                      >
-                        <i className="fas fa-check-circle me-2"></i>
-                        Message Sent!
-                      </motion.span>
-                      
-                      {/* Error state */}
-                      <motion.span
-                        className="position-absolute d-flex align-items-center justify-content-center w-100 h-100"
-                        initial={{ y: 30, opacity: 0 }}
-                        animate={{ 
-                          y: submitStatus === 'error' ? 0 : 30,
-                          opacity: submitStatus === 'error' ? 1 : 0,
-                          display: submitStatus === 'error' ? 'flex' : 'none',
-                          background: '#dc3545'
-                        }}
-                        style={{
-                          left: 0,
-                          top: 0,
-                          zIndex: 3,
-                          color: 'white',
-                          borderRadius: '50px'
-                        }}
-                      >
-                        <i className="fas fa-times-circle me-2"></i>
-                        Failed to Send
-                      </motion.span>
+                      {submitting ? 'Sending...' : 'Send Message'}
                     </motion.button>
                   </div>
                 </div>
@@ -269,8 +154,8 @@ const ContactPage = () => {
                   <h3 className="fw-bold mb-4">Contact Information</h3>
                   
                   <div className="mb-4">
-                    <h6 className="fw-bold mb-3">
-                      <i className="fas fa-map-marker-alt me-2 contact-icon"></i>
+                    <h6 className="fw-bold text-primary mb-3">
+                      <i className="fas fa-map-marker-alt me-2"></i>
                       Main Office
                     </h6>
                     <p className="text-muted mb-0">
@@ -280,8 +165,8 @@ const ContactPage = () => {
                   </div>
 
                   <div className="mb-4">
-                    <h6 className="fw-bold mb-3">
-                      <i className="fas fa-phone me-2 contact-icon"></i>
+                    <h6 className="fw-bold text-primary mb-3">
+                      <i className="fas fa-phone me-2"></i>
                       Phone Number
                     </h6>
                     <p className="text-muted mb-0">
@@ -290,8 +175,8 @@ const ContactPage = () => {
                   </div>
 
                   <div className="mb-4">
-                    <h6 className="fw-bold mb-3">
-                      <i className="fas fa-envelope me-2 contact-icon"></i>
+                    <h6 className="fw-bold text-primary mb-3">
+                      <i className="fas fa-envelope me-2"></i>
                       Email Address
                     </h6>
                     <p className="text-muted mb-0">
@@ -300,8 +185,8 @@ const ContactPage = () => {
                   </div>
 
                   <div className="mb-4">
-                    <h6 className="fw-bold mb-3">
-                      <i className="fas fa-map-marked-alt me-2 contact-icon"></i>
+                    <h6 className="fw-bold text-primary mb-3">
+                      <i className="fas fa-map-marked-alt me-2"></i>
                       Our Location
                     </h6>
                     <div className="map-responsive">

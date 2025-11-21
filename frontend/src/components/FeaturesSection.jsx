@@ -49,7 +49,7 @@ const FeaturesSection = () => {
   };
 
   return (
-    <section className="py-5">
+    <section className="py-5 modern-features-section">
       <div className="container">
         <motion.div
           className="row g-4"
@@ -64,39 +64,80 @@ const FeaturesSection = () => {
                 className="feature-card h-100"
                 variants={itemVariants}
                 whileHover={{ 
-                  y: -10,
-                  boxShadow: "0 20px 40px rgba(0,0,0,0.1)"
+                  y: -12,
+                  scale: 1.02
                 }}
                 transition={{ duration: 0.3 }}
               >
-                <div className="card border-0 shadow-sm h-100 text-center p-4">
-                  <div className="card-body">
+                <div className="card border-0 h-100 text-center p-4 modern-feature-card" style={{
+                  borderRadius: '20px',
+                  boxShadow: '0 8px 24px rgba(0, 0, 0, 0.08)',
+                  transition: 'all 0.3s ease',
+                  background: '#ffffff',
+                  overflow: 'hidden',
+                  position: 'relative'
+                }}>
+                  {/* Gradient Background on Hover */}
+                  <div style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    background: 'linear-gradient(135deg, rgba(127, 176, 105, 0.05), rgba(74, 144, 226, 0.05))',
+                    opacity: 0,
+                    transition: 'opacity 0.3s ease'
+                  }} className="hover-gradient"></div>
+                  
+                  <div className="card-body position-relative" style={{ zIndex: 1 }}>
                     <motion.div
                       className="mb-4 mx-auto d-flex align-items-center justify-content-center rounded-circle"
                       style={{
-                        width: '80px',
-                        height: '80px',
-                        border: '2px solid #7FB069',
+                        width: '90px',
+                        height: '90px',
+                        background: 'linear-gradient(135deg, rgba(127, 176, 105, 0.1), rgba(74, 144, 226, 0.1))',
+                        border: '3px solid var(--brand-primary)',
                         transition: 'all 0.3s ease'
                       }}
                       whileHover={{ 
-                        rotate: 360,
-                        borderColor: '#4A90E2',
-                        boxShadow: '0 0 15px rgba(127, 176, 105, 0.5)'
+                        rotate: [0, -10, 10, -10, 0],
+                        scale: 1.1,
+                        borderColor: 'var(--brand-accent)',
+                        boxShadow: '0 8px 20px rgba(127, 176, 105, 0.3)'
                       }}
                       transition={{ duration: 0.6 }}
                     >
-                      <i className={`${feature.icon} fs-2`} style={{ color: '#7FB069' }}></i>
+                      <i className={`${feature.icon} fs-2`} style={{ color: 'var(--brand-primary)' }}></i>
                     </motion.div>
                     
-                    <h4 className="card-title fw-bold mb-3">{feature.title}</h4>
-                    <p className="card-text text-muted">{feature.description}</p>
+                    <h4 className="card-title fw-bold mb-3" style={{ color: '#2C3E50', fontSize: '1.4rem' }}>
+                      {feature.title}
+                    </h4>
+                    <p className="card-text text-muted mb-4" style={{ 
+                      lineHeight: '1.7',
+                      fontSize: '0.95rem',
+                      minHeight: '60px'
+                    }}>
+                      {feature.description}
+                    </p>
                     
                     <motion.button
-                      className={`btn btn-outline-${feature.color} mt-3`}
-                      whileHover={{ scale: 1.05 }}
+                      className={`btn btn-outline-primary mt-auto`}
+                      whileHover={{ 
+                        scale: 1.05,
+                        backgroundColor: 'var(--brand-primary)',
+                        color: 'white',
+                        borderColor: 'var(--brand-primary)'
+                      }}
                       whileTap={{ scale: 0.95 }}
                       onClick={feature.onClick}
+                      style={{
+                        borderRadius: '50px',
+                        padding: '0.6rem 1.5rem',
+                        fontWeight: '600',
+                        borderWidth: '2px',
+                        transition: 'all 0.3s ease'
+                      }}
                     >
                       Learn More
                     </motion.button>
@@ -107,6 +148,15 @@ const FeaturesSection = () => {
           ))}
         </motion.div>
       </div>
+      
+      <style>{`
+        .modern-feature-card:hover .hover-gradient {
+          opacity: 1;
+        }
+        .modern-feature-card:hover {
+          box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12) !important;
+        }
+      `}</style>
     </section>
   );
 };
